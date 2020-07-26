@@ -15,6 +15,11 @@
         <module>gulimall-common-dependencies</module>
         <module>gulimall-gateway</module>
         <module>gulimall-third-party</module>
+        <module>gulimall-product</module>
+        <module>gulimall-member</module>
+        <module>gulimall-order</module>
+        <module>gulimall-ware</module>
+        <module>gulimall-coupon</module>
     </modules>
 
     <properties>
@@ -37,6 +42,8 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>Hoxton.SR1</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <!--spring-cloud-alibaba 依赖管理-->
             <dependency>
@@ -73,7 +80,7 @@
         <repository>
             <id>public</id>
             <name>a-li-yun</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <url>http://maven.aliyun.com/nexus/content/repositories/central/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
