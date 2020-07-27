@@ -2,10 +2,9 @@ package com.gulimall.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
-import lombok.Data;
 
 /**
  * 商品三级分类
@@ -43,7 +42,7 @@ public class CategoryEntity implements Serializable {
 	/**
 	 * 排序
 	 */
-	private Integer sort;
+	private int sort;
 	/**
 	 * 图标地址
 	 */
@@ -56,5 +55,4 @@ public class CategoryEntity implements Serializable {
 	 * 商品数量
 	 */
 	private Integer productCount;
-
 }
