@@ -12,12 +12,6 @@
     <artifactId>gulimall-member</artifactId>
 
 <dependencies>
-    <!-- 公共依赖模块-->
-    <dependency>
-        <groupId>com.gulimall</groupId>
-        <artifactId>gulimall-common-dependencies</artifactId>
-        <version>${project.version}</version>
-    </dependency>
     <!-- service 依赖模块-->
     <dependency>
         <groupId>com.gulimall</groupId>
