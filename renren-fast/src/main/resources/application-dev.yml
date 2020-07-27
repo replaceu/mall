@@ -3,7 +3,8 @@ spring:
         type: com.alibaba.druid.pool.DruidDataSource
         druid:
             driver-class-name: com.mysql.jdbc.Driver
-            url: jdbc:mysql://localhost:3306/renren_fast?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+#            url: jdbc:mysql://localhost:3306/gulimll-admin?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+            url: jdbc:mysql://66.88.88.200:3306/gulimall_admin?useUnicode=true&characterEncoding=UTF-8
             username: root
             password: root
 
