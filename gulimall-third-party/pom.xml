@@ -10,4 +10,18 @@
     <modelVersion>4.0.0</modelVersion>
     <description>三方应用</description>
     <artifactId>gulimall-third-party</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.gulimall</groupId>
+            <artifactId>gulimall-common-dependencies</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- 阿里云 oos 服务 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alicloud-oss</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>
