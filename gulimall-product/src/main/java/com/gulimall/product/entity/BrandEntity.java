@@ -2,10 +2,9 @@ package com.gulimall.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
-import lombok.Data;
 
 /**
  * 品牌
@@ -48,5 +47,4 @@ public class BrandEntity implements Serializable {
 	 * 排序
 	 */
 	private Integer sort;
-
 }

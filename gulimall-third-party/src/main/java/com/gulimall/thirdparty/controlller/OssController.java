@@ -32,13 +32,15 @@ public class OssController {
     @Value("${spring.cloud.alicloud.access-key}")
     private String accessId;
 
+    /**
+     * 获取 云存储 签名
+     */
     @GetMapping("/oss/policy")
     public CommonResult policy() {
         String host = String.format("https://%s.%s", bucket, endpoint);
 
         String dir = LocalDate.now()
                 .format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) ;
-
         Map<String, String> respMap = null;
         try {
             long expireTime = 30;

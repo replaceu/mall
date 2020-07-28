@@ -1,5 +1,6 @@
 package com.gulimall.common.utils;
 
+import com.gulimall.common.exception.ErrorCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,14 +38,21 @@ public class CommonResult {
         return new CommonResult(0 ,"成功", 200,  null);
     }
     public static CommonResult ok(String msg) {
-        return new CommonResult(0,msg, 200,  null);
+        return new CommonResult(0,msg, 500,  null);
     }
     public static CommonResult fail() {
-        return new CommonResult(1,"失败", 200,  null);
+        return new CommonResult(1,"失败", 500,  null);
     }
     public static CommonResult fail(String msg) {
-        return new CommonResult(1,msg, 200, null);
+        return new CommonResult(1,msg, 500, null);
     }
+    public static CommonResult fail(int code , String msg) {
+        return new CommonResult(1,msg, code, null);
+    }
+    public static CommonResult fail(ErrorCode errorCode) {
+        return new CommonResult(1,errorCode.getMsg() , errorCode.getCode() , null);
+    }
+
     public CommonResult data(Object data) {
         this.data = data ;
         return this ;

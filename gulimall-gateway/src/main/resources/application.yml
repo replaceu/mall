@@ -1,6 +1,8 @@
 server:
   port: 88
 spring:
+  application:
+    name: gulimall-gateway
   cloud:
     nacos:
       discovery:
@@ -11,12 +13,22 @@ spring:
           uri: https://www.baidu.com
           predicates:
             - Query=url,baidu
+
+        # 三方服务路由
+        - id: gulimall_thirdparty_router
+          uri: lb://gulimall-third-party
+          predicates:
+            - Path=/api/thirdparty/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+        # 商品服务路由
         - id: gulimall_product_router
           uri: lb://gulimall-product
           predicates:
             - Path=/api/product/**
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
+        # 人人路由
         - id: renren_fast_router
           uri: lb://renren-fast
           predicates:
