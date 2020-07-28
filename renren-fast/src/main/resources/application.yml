@@ -1,3 +1,4 @@
+
 # Tomcat
 server:
   tomcat:
@@ -10,6 +11,14 @@ server:
     context-path: /renren-fast
 
 spring:
+  application:
+    name: renren-fast
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+
   # 环境 dev|test|prod
   profiles:
     active: dev
@@ -37,6 +46,7 @@ spring:
         min-idle: 5       # 连接池中的最小空闲连接
   mvc:
     throw-exception-if-no-handler-found: true
+
 #  resources:
 #    add-mappings: false
 
