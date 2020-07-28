@@ -1,5 +1,6 @@
 package com.gulimall.product.controller;
 
+import com.gulimall.common.utils.CommonResult;
 import com.gulimall.common.utils.R;
 import com.gulimall.product.entity.BrandEntity;
 import com.gulimall.product.service.BrandService;
@@ -32,7 +33,6 @@ public class BrandController {
    // @RequiresPermissions("product:brand:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = brandService.queryPage(params);
-
         return R.ok().put("page", page);
     }
 
@@ -51,23 +51,31 @@ public class BrandController {
     /**
      * 保存
      */
-    @RequestMapping("/save")
+    @PostMapping("/save")
 //    @RequiresPermissions("product:brand:save")
-    public R save(@RequestBody BrandEntity brand){
+    public CommonResult save(@RequestBody BrandEntity brand){
 		brandService.save(brand);
-
-        return R.ok();
+        return CommonResult.ok("品牌添加成功");
     }
 
     /**
-     * 修改
+     * 品牌信息 修改
      */
-    @RequestMapping("/update")
+    @PutMapping("/update")
 //   @RequiresPermissions("product:brand:update")
-    public R update(@RequestBody BrandEntity brand){
+    public CommonResult update(@RequestBody BrandEntity brand){
 		brandService.updateById(brand);
+        return CommonResult.ok("品牌信息修改成功");
+    }
 
-        return R.ok();
+    /**
+     * 更新品牌 状态
+     * @param brandEntity 包含 id 与 状态
+     */
+    @PutMapping("/update/status")
+    public CommonResult updateStatus(@RequestBody BrandEntity brandEntity){
+        brandService.updateById(brandEntity)  ;
+        return CommonResult.ok("状态更新成功") ;
     }
 
     /**
