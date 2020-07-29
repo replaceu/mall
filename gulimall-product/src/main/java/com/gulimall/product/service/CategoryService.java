@@ -1,7 +1,7 @@
 package com.gulimall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.gulimall.product.dto.CategoryDto;
+import com.gulimall.common.product.dto.CategoryDto;
 import com.gulimall.product.entity.CategoryEntity;
 import com.gulimall.service.utils.PageUtils;
 

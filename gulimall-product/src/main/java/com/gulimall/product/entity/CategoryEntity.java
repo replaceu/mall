@@ -44,7 +44,7 @@ public class CategoryEntity implements Serializable {
 	/**
 	 * 排序
 	 */
-	private int sort;
+	private Integer sort;
 	/**
 	 * 图标地址
 	 */

@@ -1,4 +1,4 @@
-package com.gulimall.product.dto;
+package com.gulimall.common.product.dto;
 
 import com.gulimall.common.valid.AddGroup;
 import com.gulimall.common.valid.ListValue;
@@ -7,19 +7,16 @@ import com.gulimall.common.valid.UpdateStatusGroup;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 
 /**
- * @author aqiang9  2020-07-28
+ * 品牌
+ * @author aqiang9  2020-07-29
  */
 @Data
 public class BrandDto implements Serializable {
-
     private static final long serialVersionUID = 826584587834L;
-
     /**
      * 品牌id
      */
@@ -45,15 +42,19 @@ public class BrandDto implements Serializable {
      * 显示状态[0-不显示；1-显示]
      */
     @NotNull(message = "请指定显示状态", groups = {UpdateStatusGroup.class})
-    @ListValue(vals = {0,1})
+    @ListValue(value = {0,1} ,groups = {AddGroup.class ,UpdateGroup.class , UpdateStatusGroup.class})
     private Integer showStatus;
     /**
      * 检索首字母
      */
-    @NotEmpty(message = "请指定显示状态")
+    @NotEmpty(message = "请指定检索首字母")
+
+    @Pattern(regexp = "^[a-zA-Z]$", message = "请指定检索首字母a-zA-Z", groups = {AddGroup.class, UpdateGroup.class})
     private String firstLetter;
     /**
      * 排序
      */
+    @PositiveOrZero(message = "排序字段必须大于等于0",groups = {AddGroup.class , UpdateGroup.class})
     private Integer sort;
 }
+

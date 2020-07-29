@@ -1,6 +1,6 @@
 package com.gulimall.product.convert;
 
-import com.gulimall.product.dto.CategoryDto;
+import com.gulimall.common.product.dto.CategoryDto;
 import com.gulimall.product.entity.CategoryEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

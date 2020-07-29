@@ -1,7 +1,9 @@
 package com.gulimall.product.controller;
 
+import com.gulimall.common.product.dto.CategoryDto;
 import com.gulimall.common.utils.CommonResult;
-import com.gulimall.product.dto.CategoryDto;
+import com.gulimall.common.valid.AddGroup;
+import com.gulimall.product.convert.CategoryConvert;
 import com.gulimall.product.entity.CategoryEntity;
 import com.gulimall.product.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,8 +54,11 @@ public class CategoryController {
      */
     @PostMapping("/save")
 //    @RequiresPermissions("product:category:save")
-    public CommonResult save(@RequestBody CategoryEntity category) {
-        categoryService.save(category);
+    public CommonResult save(@RequestBody @Validated({AddGroup.class}) CategoryDto category) {
+        // 数据转换
+        CategoryEntity categoryEntity = CategoryConvert.INSTANCE.dto2entity(category);
+        categoryService.save(categoryEntity);
+
         return CommonResult.ok(category.getName() + " 菜单 保存成功");
     }
 
