@@ -115,7 +115,7 @@ export default {
     deleteCateRelationHandle(id, brandId) {
       this.$http({
         url: this.$http.adornUrl("/product/categorybrandrelation/delete"),
-        method: "post",
+        method: "delete",
         data: this.$http.adornData([id], false)
       }).then(({ data }) => {
         this.getCateRelation();
@@ -149,9 +149,9 @@ export default {
           key: this.dataForm.key
         })
       }).then(({ data }) => {
-        if (data && data.code === 0) {
-          this.dataList = data.page.list;
-          this.totalPage = data.page.totalCount;
+        if (data && data.status === 0) {
+          this.dataList = data.data.list;
+          this.totalPage = data.data.totalCount;
         } else {
           this.dataList = [];
           this.totalPage = 0;
@@ -212,7 +212,7 @@ export default {
       ).then(() => {
         this.$http({
           url: this.$http.adornUrl("/product/brand/delete"),
-          method: "post",
+          method: "delete",
           data: this.$http.adornData(ids, false)
         }).then(({ data }) => {
           if (data && data.code === 0) {
