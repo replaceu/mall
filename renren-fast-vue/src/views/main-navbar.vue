@@ -20,7 +20,7 @@
         <el-menu-item index="1" @click="$router.push({ name: 'theme' })">
           <template slot="title">
             <el-badge value="new">
-              <icon-svg name="shezhi" class="el-icon-setting"></icon-svg>
+              <icon-svg name="shezhi" class="el-icon-setting">主题设置</icon-svg>
             </el-badge>
           </template>
         </el-menu-item>
@@ -31,10 +31,10 @@
         </el-menu-item>
         <el-submenu index="3">
           <template slot="title">Git源码</template>
-          <!-- <el-menu-item index="2-1"><a href="127.0.0.1:8848/nacos" target="_blank"></a></el-menu-item> -->
-          <el-menu-item index="2-2"><a href="https://gitee.com/renrenio/renren-fast" target="_blank">后台</a></el-menu-item>
-          <el-menu-item index="2-3"><a href="https://gitee.com/renrenio/renren-generator" target="_blank">代码生成器</a></el-menu-item>
-        </el-submenu>
+          <el-menu-item index="2-1"><a href="https://gitee.com/aqiang9/gulimall" target="_blank">gitee</a></el-menu-item>
+          <el-menu-item index="2-2"><a href="https://easydoc.xyz/s/78237135/ZUqEdvA4/4XuREIJe" target="_blank">接口文档</a></el-menu-item>
+          <el-menu-item index="2-3"><a href="http://www.dmanywhere.cn/" target="_blank">数据库表</a></el-menu-item>
+         </el-submenu>
         <el-menu-item class="site-navbar__avatar" index="3">
           <el-dropdown :show-timeout="0" placement="bottom">
             <span class="el-dropdown-link">

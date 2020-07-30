@@ -34,7 +34,7 @@ public class BrandController {
      */
     @GetMapping("/list")
     // @RequiresPermissions("product:brand:list")
-    public CommonResult list(@RequestParam PageVo pageParam) {
+    public CommonResult list(PageVo pageParam) {
         PageUtils page = brandService.queryPage(pageParam);
         return CommonResult.ok().data(page);
     }

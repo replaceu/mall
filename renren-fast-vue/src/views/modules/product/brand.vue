@@ -149,7 +149,7 @@ export default {
           key: this.dataForm.key
         })
       }).then(({ data }) => {
-        if (data && data.status === 0) {
+        if (data && data.code === 0) {
           this.dataList = data.data.list;
           this.totalPage = data.data.totalCount;
         } else {

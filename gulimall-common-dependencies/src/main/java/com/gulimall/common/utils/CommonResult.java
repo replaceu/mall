@@ -11,15 +11,12 @@ import lombok.Setter;
 @Setter
 public class CommonResult {
     /**
-     * 状态 0 为 成功    1 为 失败
-     */
-    private int status ;
-    /**
      * 响应消息
      */
     private String msg;
     /**
      * 转态码
+     * 状态 0 为 成功 其他为失败
      */
     private Integer code;
     /**
@@ -27,30 +24,30 @@ public class CommonResult {
      */
     private Object data;
 
-    private CommonResult(int status , String msg, Integer code, Object data) {
-        this.status = status ;
+    private CommonResult(String msg, Integer code) {
         this.msg = msg;
         this.code = code;
-        this.data = data;
     }
     public static CommonResult ok() {
-
-        return new CommonResult(0 ,"成功", 200,  null);
+        return new CommonResult("success", 0 );
     }
     public static CommonResult ok(String msg) {
-        return new CommonResult(0,msg, 500,  null);
+        return new CommonResult(msg, 0);
     }
+
     public static CommonResult fail() {
-        return new CommonResult(1,"失败", 500,  null);
+        return new CommonResult("fail", 1);
     }
     public static CommonResult fail(String msg) {
-        return new CommonResult(1,msg, 500, null);
+        return new CommonResult(msg, 1);
     }
     public static CommonResult fail(int code , String msg) {
-        return new CommonResult(1,msg, code, null);
+        return new CommonResult(msg, code);
     }
+
+
     public static CommonResult fail(ErrorCode errorCode) {
-        return new CommonResult(1,errorCode.getMsg() , errorCode.getCode() , null);
+        return new CommonResult(errorCode.getMsg() , errorCode.getCode());
     }
 
     public CommonResult data(Object data) {

@@ -17,16 +17,27 @@ import java.util.Map;
  */
 public interface CategoryService extends IService<CategoryEntity> {
     PageUtils queryPage(Map<String, Object> params);
+
     /**
      * 查询所有的分类， 并组装成父子结构
+     *
      * @return
      */
     List<CategoryDto> listCategoryWithTree();
 
     /**
      * 通过菜单id 批量删除 菜单
+     *
      * @param catIds
      */
     void removeMenuByIds(List<Long> catIds);
+
+    /**
+     * 获取 此三级 分类的 完整路径
+     *
+     * @param categoryId 三级分 类的 id
+     * @return List<Long> 完整路径
+     */
+    List<Long> findCategoryPath(Long categoryId);
 }
 
