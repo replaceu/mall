@@ -13,7 +13,7 @@ import java.util.Map;
 
 
 /**
- * 属性&属性分组关联
+ * 属性 & 属性分组关联
  *
  * @author aqiang9
  * @email 2903780002@qq.com

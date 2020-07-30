@@ -1,6 +1,8 @@
 package com.gulimall.product.controller;
 
+import com.gulimall.common.utils.CommonResult;
 import com.gulimall.common.utils.R;
+import com.gulimall.common.vo.PageVo;
 import com.gulimall.product.entity.CategoryBrandRelationEntity;
 import com.gulimall.product.service.CategoryBrandRelationService;
 import com.gulimall.service.utils.PageUtils;
@@ -13,7 +15,7 @@ import java.util.Map;
 
 
 /**
- * 品牌分类关联
+ * 品牌 & 分类关联
  *
  * @author aqiang9
  * @email 2903780002@qq.com
@@ -34,6 +36,14 @@ public class CategoryBrandRelationController {
         PageUtils page = categoryBrandRelationService.queryPage(params);
 
         return R.ok().put("page", page);
+    }
+    @RequestMapping("/category/list")
+   // @RequiresPermissions("product:categorybrandrelation:list")
+    public CommonResult list(PageVo pageParams){
+        PageUtils page = categoryBrandRelationService.queryPage(params);
+
+
+        return CommonResult.ok().data() ;
     }
 
 
