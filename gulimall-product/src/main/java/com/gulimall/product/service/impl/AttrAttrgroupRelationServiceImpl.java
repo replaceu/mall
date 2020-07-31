@@ -60,4 +60,11 @@ public class AttrAttrgroupRelationServiceImpl extends ServiceImpl<AttrAttrgroupR
     public void removeBranchRelation(List<AttrAttrgroupRelationEntity> attrgroupRelationEntities) {
         baseMapper.removeBranchRelation(attrgroupRelationEntities) ;
     }
+
+    @Override
+    public List<AttrAttrgroupRelationEntity> getByAttrGroupIds(List<Long> allGroupIds) {
+        return baseMapper.selectList(
+                new LambdaQueryWrapper<AttrAttrgroupRelationEntity>()
+                        .in(AttrAttrgroupRelationEntity::getAttrGroupId, allGroupIds));
+    }
 }

@@ -34,5 +34,7 @@ public interface AttrAttrgroupRelationService extends IService<AttrAttrgroupRela
      * @param attrgroupRelationEntities 关联信息
      */
     void removeBranchRelation(List<AttrAttrgroupRelationEntity> attrgroupRelationEntities);
+
+    List<AttrAttrgroupRelationEntity>  getByAttrGroupIds(List<Long> allGroupIds);
 }
 

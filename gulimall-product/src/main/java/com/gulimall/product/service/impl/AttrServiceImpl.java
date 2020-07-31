@@ -110,7 +110,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         baseMapper.insert(attrEntity);
 
         // 保存关联关系
-        if (attrVo.getAttrType() == ProductConstant.BASE_ATTR_TYPE) {
+        if (attrVo.getAttrType() == ProductConstant.BASE_ATTR_TYPE && attrVo.getAttrGroupId() !=null ) {
             AttrAttrgroupRelationEntity attrAttrgroupRelationEntity = new AttrAttrgroupRelationEntity();
             attrAttrgroupRelationEntity.setAttrId(attrEntity.getAttrId());
             attrAttrgroupRelationEntity.setAttrGroupId(attrVo.getAttrGroupId());
@@ -132,7 +132,6 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
                 attrRespVo.setAttrGroupName(attrGroup.getAttrGroupName());
             }
         }
-
         // 查询分类信息
         CategoryEntity categoryEntity = categoryService.getById(attrEntity.getCategoryId());
         if (categoryEntity != null) {
@@ -191,7 +190,46 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
 
         List<AttrAttrgroupRelationEntity> attrgroupRelationEntities = AttrConvert.INSTANCE.listVo2listEntity(relationVo);
 
-        attrAttrgroupRelationService.removeBranchRelation(attrgroupRelationEntities) ;
+        attrAttrgroupRelationService.removeBranchRelation(attrgroupRelationEntities);
+    }
+
+    @Override
+    public PageUtils getNoRelationAttr(PageVo pageParams, Long attrGroupId) {
+        // 本分类 没有关联的属性
+
+        // 1 、只能是当前 分类 的属性
+        AttrGroupEntity attrGroupEntity = attrGroupService.getById(attrGroupId);
+        Long categoryId = attrGroupEntity.getCategoryId();
+
+        // 查到所有 分组
+        // 2、当前分组只能关联别的分组没有引用的 属性
+        // 2.1 通过分类id 查询当前分类 所有分组
+        List<AttrGroupEntity> allGroupByCategory = attrGroupService.getAllGroupByCategoryId(categoryId);
+        List<Long> allGroupIds = allGroupByCategory.stream().map(AttrGroupEntity::getAttrGroupId).collect(Collectors.toList());
+//        2.2 这些分组的所有属性
+        List<AttrAttrgroupRelationEntity> attrgroupRelation = attrAttrgroupRelationService.getByAttrGroupIds(allGroupIds);
+        List<Long> attrIds = attrgroupRelation.stream().map(AttrAttrgroupRelationEntity::getAttrId).collect(Collectors.toList());
+
+//        2。3 从当前分类的所有属性中移除这些属性
+        LambdaQueryWrapper<AttrEntity> wrapper = new LambdaQueryWrapper<AttrEntity>()
+                .eq(AttrEntity::getCategoryId, categoryId)
+                .eq(AttrEntity::getAttrType , ProductConstant.BASE_ATTR_TYPE );
+        if (attrIds.size() > 0 ) {
+             wrapper.notIn(AttrEntity::getAttrId, attrIds);
+        }
+        // 拼装检索信息
+        if (!StringUtils.isEmpty(pageParams.getKey())) {
+            wrapper.and(w->{
+                w.eq(AttrEntity::getAttrId , pageParams.getKey() )
+                        .or()
+                        .likeRight(AttrEntity::getAttrName, pageParams.getKey() ) ;
+            }) ;
+        }
+        IPage<AttrEntity> attrEntityIPage = baseMapper.selectPage(new QueryPage<AttrEntity>().getPage(pageParams),
+                wrapper);
+        return new PageUtils(attrEntityIPage);
+
+
     }
 
 }

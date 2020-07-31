@@ -60,5 +60,10 @@ public interface AttrService extends IService<AttrEntity> {
 
 
     void removeRelation(List<AttrGroupRelationVo> relationVo);
+
+    /**
+     *
+    */
+    PageUtils getNoRelationAttr(PageVo pageParams, Long attrGroupId);
 }
 

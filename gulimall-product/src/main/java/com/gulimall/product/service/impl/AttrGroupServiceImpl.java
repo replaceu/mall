@@ -48,10 +48,6 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
 //        baseMapper.selectPage() ;
 
         return null ;
-
-
-
-
     }
 
     @Override
@@ -61,5 +57,12 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
         AttrGroupVo attrGroupVo = AttrConvert.INSTANCE.entity2vo(attrGroup);
         attrGroupVo.setCategoryPath(categoryPath);
         return attrGroupVo ;
+    }
+
+    @Override
+    public List<AttrGroupEntity> getAllGroupByCategoryId(Long categoryId ) {
+       return baseMapper.selectList(
+                new LambdaQueryWrapper<AttrGroupEntity>()
+                        .eq(AttrGroupEntity::getCategoryId , categoryId)) ;
     }
 }
