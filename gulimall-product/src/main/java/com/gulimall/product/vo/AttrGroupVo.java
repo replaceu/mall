@@ -1,4 +1,4 @@
-package com.gulimall.common.product.dto;
+package com.gulimall.product.vo;
 
 import com.gulimall.common.valid.AddGroup;
 import com.gulimall.common.valid.UpdateGroup;
@@ -6,7 +6,6 @@ import com.gulimall.common.valid.UpdateStatusGroup;
 import lombok.Data;
 
 import javax.validation.constraints.*;
-import java.io.Serializable;
 import java.util.List;
 
 
@@ -14,8 +13,7 @@ import java.util.List;
  * @author aqiang9  2020-07-30
  */
 @Data
-public class AttrGroupDto implements Serializable {
-    private static final long serialVersionUID = -3120256193340611688L;
+public class AttrGroupVo  {
 
     /**
      * 分组id

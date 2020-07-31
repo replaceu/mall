@@ -3,6 +3,7 @@ package com.gulimall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.gulimall.common.vo.PageVo;
 import com.gulimall.product.entity.BrandEntity;
+import com.gulimall.product.vo.BrandVo;
 import com.gulimall.service.utils.PageUtils;
 
 /**
@@ -15,5 +16,11 @@ import com.gulimall.service.utils.PageUtils;
 public interface BrandService extends IService<BrandEntity> {
 
     PageUtils queryPage(PageVo pageParams);
+
+    /**
+     * 更新详细信息
+     * @param brandVo 前端传输的数据
+     */
+    void updateDetail(BrandVo brandVo);
 }
 

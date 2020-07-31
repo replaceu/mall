@@ -9,6 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <description>公共依赖</description>
+    <packaging>pom</packaging>
     <artifactId>gulimall-common-dependencies</artifactId>
     <dependencies>
         <!--注册配置中心-->

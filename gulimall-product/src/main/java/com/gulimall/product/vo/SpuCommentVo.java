@@ -1,16 +1,14 @@
-package com.gulimall.common.product.dto;
+package com.gulimall.product.vo;
 
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author aqiang9  2020-07-29
  */
 @Data
-public class SpuCommentDto implements Serializable {
-    private static final long serialVersionUID = 85326009058282801L;
+public class SpuCommentVo  {
     /**
      * id
      */

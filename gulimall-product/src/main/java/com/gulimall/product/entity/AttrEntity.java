@@ -50,10 +50,14 @@ public class AttrEntity implements Serializable {
 	/**
 	 * 所属分类
 	 */
-	private Long catelogId;
+	private Long categoryId;
 	/**
 	 * 快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整
 	 */
 	private Integer showDesc;
 
+	/**
+	 * 值类型 0 单选 1 多选
+	 */
+	private int valueType ;
 }

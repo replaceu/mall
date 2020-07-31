@@ -1,7 +1,7 @@
 package com.gulimall.product.convert;
 
-import com.gulimall.common.product.dto.SpuCommentDto;
 import com.gulimall.product.entity.SpuCommentEntity;
+import com.gulimall.product.vo.SpuCommentVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -12,7 +12,7 @@ import org.mapstruct.factory.Mappers;
 public interface SpuCommentConvert {
     SpuCommentConvert INSTANCE = Mappers.getMapper(SpuCommentConvert.class);
 
-    SpuCommentDto entity2dto(SpuCommentEntity entity);
+    SpuCommentVo entity2vo(SpuCommentEntity entity);
 
-    SpuCommentEntity dto2entity(SpuCommentDto dto);
+    SpuCommentEntity vo2entity(SpuCommentVo dto);
 }

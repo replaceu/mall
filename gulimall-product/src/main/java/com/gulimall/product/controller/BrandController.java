@@ -1,6 +1,5 @@
 package com.gulimall.product.controller;
 
-import com.gulimall.common.product.dto.BrandDto;
 import com.gulimall.common.utils.CommonResult;
 import com.gulimall.common.utils.R;
 import com.gulimall.common.valid.UpdateGroup;
@@ -9,6 +8,7 @@ import com.gulimall.common.vo.PageVo;
 import com.gulimall.product.convert.BrandConvert;
 import com.gulimall.product.entity.BrandEntity;
 import com.gulimall.product.service.BrandService;
+import com.gulimall.product.vo.BrandVo;
 import com.gulimall.service.utils.PageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -62,21 +62,24 @@ public class BrandController {
      * 品牌信息 修改
      */
     @PutMapping("/update")
-    public CommonResult update(@RequestBody @Validated(value = {UpdateGroup.class}) BrandDto brandDto) {
-        BrandEntity brandEntity = BrandConvert.INSTANCE.dto2entity(brandDto);
-        brandService.updateById(brandEntity);
+    public CommonResult update(@RequestBody @Validated(value = {UpdateGroup.class}) BrandVo brandVo) {
+        brandService.updateDetail(brandVo) ;
+
         return CommonResult.ok("品牌信息修改成功");
     }
 
     /**
      * 更新品牌 状态
      *
-     * @param brandDto 包含 id 与 状态
+     * @param brandVo 包含 id 与 状态
      */
     @PutMapping("/update/status")
-    public CommonResult updateStatus(@RequestBody @Validated(UpdateStatusGroup.class) BrandDto brandDto) {
-        BrandEntity brandEntity = BrandConvert.INSTANCE.dto2entity(brandDto);
+    public CommonResult updateStatus(@RequestBody @Validated(UpdateStatusGroup.class) BrandVo brandVo) {
+        BrandEntity brandEntity = BrandConvert.INSTANCE.vo2entity(brandVo);
         brandService.updateById(brandEntity);
+
+
+
         return CommonResult.ok("状态更新成功");
     }
 

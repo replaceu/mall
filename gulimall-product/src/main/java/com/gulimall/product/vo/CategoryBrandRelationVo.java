@@ -1,4 +1,4 @@
-package com.gulimall.common.product.dto;
+package com.gulimall.product.vo;
 
 import com.gulimall.common.valid.AddGroup;
 import lombok.Data;
@@ -11,7 +11,7 @@ import javax.validation.constraints.Positive;
  * @author aqiang9  2020-07-30
  */
 @Data
-public class CategoryBrandRelationDto {
+public class CategoryBrandRelationVo {
     private Long id;
     /**
      * 品牌id

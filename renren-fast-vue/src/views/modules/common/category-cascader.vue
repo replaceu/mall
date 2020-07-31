@@ -47,7 +47,7 @@ export default {
     paths(v) {
       this.$emit("update:catelogPath", v);
       //还可以使用pubsub-js进行传值
-      // PubSub.publish("catPath", v);
+      PubSub.publish("catPath", v);
     }
   },
   //方法集合

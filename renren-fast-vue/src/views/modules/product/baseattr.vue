@@ -39,19 +39,19 @@
               <div slot="content">
                 <span v-for="(i,index) in scope.row.valueSelect.split(';')" :key="index">{{i}}<br /></span>
               </div>
-              <el-tag>{{scope.row.valueSelect.split(";")[0]+" ..."}}</el-tag>
+              <el-tag >{{scope.row.valueSelect.split(";")[0]+" ..."}}</el-tag>
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column prop="enable" header-align="center" align="center" label="启用">
+        <el-table-column prop="enable" header-align="center" align="center" label="启用" width="50">
           <template slot-scope="scope">
             <i class="el-icon-success" v-if="scope.row.enable==1"></i>
             <i class="el-icon-error" v-else></i>
           </template>
         </el-table-column>
-        <el-table-column prop="catelogName" header-align="center" align="center" label="所属分类"></el-table-column>
-        <el-table-column v-if="attrtype == 1" prop="groupName" header-align="center" align="center" label="所属分组"></el-table-column>
-        <el-table-column v-if="attrtype == 1" prop="showDesc" header-align="center" align="center" label="快速展示">
+        <el-table-column prop="categoryName" header-align="center" align="center" label="所属分类"></el-table-column>
+        <el-table-column v-if="attrtype == 1" prop="attrGroupName" header-align="center" align="center" label="所属分组"></el-table-column>
+        <el-table-column v-if="attrtype == 1" prop="showDesc" header-align="center" align="center" label="快速展示" width="85">
           <template slot-scope="scope">
             <i class="el-icon-success" v-if="scope.row.showDesc==1"></i>
             <i class="el-icon-error" v-else></i>
@@ -120,9 +120,10 @@ export default {
     // 获取数据列表
     getDataList() {
       this.dataListLoading = true;
-      let type = this.attrtype == 0 ? "sale" : "base";
+      // let type = this.attrtype == 0 ? "sale" : "base";  // 0 为销售属性 1 为基本 2 为 两者
       this.$http({
-        url: this.$http.adornUrl(`/product/attr/${type}/list/${this.catId}`),
+        // url: this.$http.adornUrl(`/product/attr/${type}/list/${this.catId}`),
+        url: this.$http.adornUrl(`/product/attr/${this.attrtype}/list/${this.catId}`),
         method: "get",
         params: this.$http.adornParams({
           page: this.pageIndex,
@@ -131,8 +132,8 @@ export default {
         })
       }).then(({ data }) => {
         if (data && data.code === 0) {
-          this.dataList = data.page.list;
-          this.totalPage = data.page.totalCount;
+          this.dataList = data.data.list;
+          this.totalPage = data.data.totalCount;
         } else {
           this.dataList = [];
           this.totalPage = 0;
@@ -164,8 +165,7 @@ export default {
     },
     // 删除
     deleteHandle(id) {
-      var ids = id ?
-        [id] :
+      var ids = id ? [id] :
         this.dataListSelections.map(item => {
           return item.attrId;
         });
@@ -178,8 +178,8 @@ export default {
         }
       ).then(() => {
         this.$http({
-          url: this.$http.adornUrl("/product/attr/delete"),
-          method: "post",
+          url: this.$http.adornUrl(`/product/attr/delete/${this.attrtype}`),
+          method: "delete",
           data: this.$http.adornData(ids, false)
         }).then(({ data }) => {
           if (data && data.code === 0) {

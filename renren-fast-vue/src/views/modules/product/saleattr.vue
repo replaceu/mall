@@ -1,7 +1,7 @@
 <template>
-  <div>
-      <base-attr :attrtype="0"></base-attr>
-  </div>
+<div>
+  <base-attr :attrtype="0"></base-attr>
+</div>
 </template>
 
 <script>
@@ -10,7 +10,7 @@
 import BaseAttr from './baseattr'
 export default {
   //import引入的组件需要注入到对象中才能使用
-  components: {BaseAttr},
+  components: { BaseAttr },
   props: {},
   data() {
     //这里存放数据
@@ -35,5 +35,6 @@ export default {
   activated() {} //如果页面有keep-alive缓存功能，这个函数会触发
 };
 </script>
+
 <style scoped>
 </style>

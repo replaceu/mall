@@ -2,10 +2,9 @@ package com.gulimall.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
-import lombok.Data;
 
 /**
  * 品牌分类关联
@@ -31,14 +30,13 @@ public class CategoryBrandRelationEntity implements Serializable {
 	/**
 	 * 分类id
 	 */
-	private Long catelogId;
+	private Long categoryId;
 	/**
-	 * 
+	 *  品牌名
 	 */
 	private String brandName;
 	/**
-	 * 
+	 * 分类名
 	 */
-	private String catelogName;
-
+	private String categoryName;
 }

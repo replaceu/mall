@@ -37,3 +37,20 @@
 ### 5、SPU-SKU-属性表
 
 ![](./assert/image-20200729171038652.png)
+
+## 二、Object 划分
+### 1、PO (Persistent Object) 持久对象
+对应表中的记录
+### 2、DO (Domain Object) 领域对象
+从现实世界中抽象出来的有形或无形的业务实体
+### 3、TO (Transfer Object) 数据传输对象
+不同的应用程序之间的对象传输
+### 4、DTO (Data Transfer Object) 数据传输对象
+概率来源于J2EE的设计模式，原来的目的是为了EJB的分布式应用提供粗粒度的数据实体，以减少分布式调用次数，从而提高调用性能和降低网络负载，但在这里用于展示与服务层之间的数据传输对象。
+### 5、VO (Value Object / View Object) 值对象
+通常用于业务层之间的数据传输，和PO一样 也是仅仅包含数据而已，但应是抽象出来的业务对象，可以和表对应，也可以不， 根据业务需要，用new 关键字创建，由GC回收
+### 6、BO (Business Object) 业务对象
+从业务模型的角度看，见UML元件领域对象，封装业务逻辑的java对象，通过调用dao方法，结合PO,VO 进行业务炒作，Business Object 业务对象，主要作用是吧业务逻辑封装成一个对象
+### 7、POJO (Plan Ordinary Java Object) 简单无规则java对象
+POJO是 DO/DTO/BO/VO的统称
+### 7、POJO (Data Access Object )数据访问对象

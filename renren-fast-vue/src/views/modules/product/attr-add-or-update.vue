@@ -1,16 +1,22 @@
 <template>
-<el-dialog :title="!dataForm.id ? '新增' : '修改'" :close-on-click-modal="false" :visible.sync="visible" @closed="dialogClose">
+<el-dialog :title="!dataForm.id ? '新增' : '修改'" :close-on-click-modal="false" :visible.sync="visible" @closed="dialogClose" width="66%">
   <el-form :model="dataForm" :rules="dataRule" ref="dataForm" label-width="120px">
     <!--       @keyup.enter.native="dataFormSubmit()" -->
-    <el-form-item label="属性名" prop="attrName">
-      <el-input v-model="dataForm.attrName" placeholder="属性名"></el-input>
-    </el-form-item>
-    <el-form-item label="属性类型" prop="attrType">
-      <el-select v-model="dataForm.attrType" placeholder="请选择">
-        <el-option label="规格参数" :value="1"></el-option>
-        <el-option label="销售属性" :value="0"></el-option>
-      </el-select>
-    </el-form-item>
+    <el-row>
+      <el-col :span="12">
+        <el-form-item label="属性名" prop="attrName">
+          <el-input v-model="dataForm.attrName" placeholder="属性名"></el-input>
+        </el-form-item>
+      </el-col>
+      <el-col :span="6">
+        <el-form-item label="属性类型" prop="attrType">
+          <el-select v-model="dataForm.attrType" placeholder="请选择">
+            <el-option label="规格参数" :value="1"></el-option>
+            <el-option label="销售属性" :value="0"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+    </el-row>
 
     <el-form-item label="值类型" prop="valueType">
       <el-switch v-model="dataForm.valueType" active-text="允许多个值" inactive-text="只能单个值" active-color="#13ce66" inactive-color="#ff4949" :inactive-value="0" :active-value="1"></el-switch>
@@ -19,17 +25,25 @@
       <!-- <el-input v-model="dataForm.valueSelect"></el-input> -->
       <el-select v-model="dataForm.valueSelect" multiple filterable allow-create placeholder="请输入内容"></el-select>
     </el-form-item>
-    <el-form-item label="属性图标" prop="icon">
-      <el-input v-model="dataForm.icon" placeholder="属性图标"></el-input>
-    </el-form-item>
-    <el-form-item label="所属分类" prop="categoryId" >
-      <category-cascader :categoryPath.sync="categoryPath"></category-cascader>
-    </el-form-item>
-    <el-form-item label="所属分组" prop="attrGroupId" v-if="type == 1">
-      <el-select ref="groupSelect" v-model="dataForm.attrGroupId" placeholder="请选择">
-        <el-option v-for="item in attrGroups" :key="item.attrGroupId" :label="item.attrGroupName" :value="item.attrGroupId"></el-option>
-      </el-select>
-    </el-form-item>
+    <el-row>
+      <el-col :span="6">
+        <el-form-item label="属性图标" prop="icon">
+          <el-input v-model="dataForm.icon" placeholder="属性图标"></el-input>
+        </el-form-item>
+      </el-col>
+      <el-col :span="9">
+        <el-form-item label="所属分类" prop="categoryId">
+          <category-cascader :catelogPath.sync="categoryPath"></category-cascader>
+        </el-form-item>
+      </el-col>
+      <el-col :span="6">
+        <el-form-item label="所属分组" prop="attrGroupId" v-if="type == 1">
+          <el-select ref="groupSelect" v-model="dataForm.attrGroupId" placeholder="请选择">
+            <el-option v-for="item in attrGroups" :key="item.attrGroupId" :label="item.attrGroupName" :value="item.attrGroupId"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
+    </el-row>
     <el-row>
       <el-col :span="5">
         <el-form-item label="可检索" prop="searchType" v-if="type == 1">
@@ -104,14 +118,12 @@ export default {
       this.dataForm.categoryId = path[path.length - 1];
       if (path && path.length == 3) {
         this.$http({
-          url: this.$http.adornUrl(
-            `/product/attrgroup/list/${path[path.length - 1]}`
-          ),
+          url: this.$http.adornUrl(`/product/attrgroup/list/${path[path.length - 1]}`),
           method: "get",
           params: this.$http.adornParams({ page: 1, limit: 10000000 })
         }).then(({ data }) => {
           if (data && data.code === 0) {
-            this.attrGroups = data.page.list;
+            this.attrGroups = data.data.list;
           } else {
             this.$message.error(data.msg);
           }
@@ -134,27 +146,26 @@ export default {
         this.$refs["dataForm"].resetFields();
         if (this.dataForm.attrId) {
           this.$http({
-            url: this.$http.adornUrl(
-              `/product/attr/info/${this.dataForm.attrId}`
-            ),
+            url: this.$http.adornUrl(`/product/attr/info/${this.dataForm.attrId}`),
             method: "get",
             params: this.$http.adornParams()
           }).then(({ data }) => {
             if (data && data.code === 0) {
-              this.dataForm.attrName = data.attr.attrName;
-              this.dataForm.searchType = data.attr.searchType;
-              this.dataForm.valueType = data.attr.valueType;
-              this.dataForm.icon = data.attr.icon;
-              this.dataForm.valueSelect = data.attr.valueSelect.split(";");
-              this.dataForm.attrType = data.attr.attrType;
-              this.dataForm.enable = data.attr.enable;
-              this.dataForm.categoryId = data.attr.categoryId;
-              this.dataForm.showDesc = data.attr.showDesc;
+              data = data.data;
+              this.dataForm.attrName = data.attrName;
+              this.dataForm.searchType = data.searchType;
+              this.dataForm.valueType = data.valueType;
+              this.dataForm.icon = data.icon;
+              this.dataForm.valueSelect = data.valueSelect == '' ? "" : data.valueSelect.split(";");
+              this.dataForm.attrType = data.attrType;
+              this.dataForm.enable = data.enable;
+              this.dataForm.categoryId = data.categoryId;
+              this.dataForm.showDesc = data.showDesc;
               //attrGroupId
               //categoryPath  分类的完整路径
-              this.categoryPath = data.attr.categoryPath;
+              this.categoryPath = data.categoryPath;
               this.$nextTick(() => {
-                this.dataForm.attrGroupId = data.attr.attrGroupId;
+                this.dataForm.attrGroupId = data.attrGroupId;
               });
             }
           });
@@ -165,11 +176,10 @@ export default {
     dataFormSubmit() {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
+          console.log("this.dataForm.attrId",this.dataForm.attrId ? "post" : "put" )
           this.$http({
-            url: this.$http.adornUrl(
-              `/product/attr/${!this.dataForm.attrId ? "save" : "update"}`
-            ),
-            method: "post",
+            url: this.$http.adornUrl(`/product/attr/${!this.dataForm.attrId ? "save" : "update"}`),
+            method: !this.dataForm.attrId ? "post" : "put",
             data: this.$http.adornData({
               attrId: this.dataForm.attrId || undefined,
               attrName: this.dataForm.attrName,

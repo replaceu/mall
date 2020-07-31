@@ -1,11 +1,11 @@
 package com.gulimall.product.controller;
 
-import com.gulimall.common.product.dto.CategoryDto;
 import com.gulimall.common.utils.CommonResult;
 import com.gulimall.common.valid.AddGroup;
 import com.gulimall.product.convert.CategoryConvert;
 import com.gulimall.product.entity.CategoryEntity;
 import com.gulimall.product.service.CategoryService;
+import com.gulimall.product.vo.CategoryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +32,8 @@ public class CategoryController {
     @GetMapping("/list/tree")
     // @RequiresPermissions("product:category:list")
     public CommonResult list() {
-        List<CategoryDto> categoryDto = categoryService.listCategoryWithTree();
-        return CommonResult.ok().data(categoryDto);
+        List<CategoryVo> categoryVo = categoryService.listCategoryWithTree();
+        return CommonResult.ok().data(categoryVo);
     }
 
     /**
@@ -54,9 +54,9 @@ public class CategoryController {
      */
     @PostMapping("/save")
 //    @RequiresPermissions("product:category:save")
-    public CommonResult save(@RequestBody @Validated({AddGroup.class}) CategoryDto category) {
+    public CommonResult save(@RequestBody @Validated({AddGroup.class}) CategoryVo category) {
         // 数据转换
-        CategoryEntity categoryEntity = CategoryConvert.INSTANCE.dto2entity(category);
+        CategoryEntity categoryEntity = CategoryConvert.INSTANCE.vo2entity(category);
         categoryService.save(categoryEntity);
 
         return CommonResult.ok(category.getName() + " 菜单 保存成功");
@@ -67,8 +67,9 @@ public class CategoryController {
      */
     @PutMapping("/update")
 //   @RequiresPermissions("product:category:update")
-    public CommonResult update(@RequestBody CategoryEntity category) {
-        categoryService.updateById(category);
+    public CommonResult update(@RequestBody CategoryVo categoryVo) {
+
+        categoryService.updateCategoryDetail(categoryVo);
         return CommonResult.ok("菜单 修改成功");
     }
 

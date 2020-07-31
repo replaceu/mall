@@ -1,14 +1,13 @@
-package com.gulimall.common.product.dto;
+package com.gulimall.product.vo;
 
-import java.io.Serializable;
+import lombok.Data;
 
 /**
  *
  * @author aqiang9  2020-07-30
  */
-public class AttrDto implements Serializable {
-
-    private static final long serialVersionUID = 6345201188205967249L;
+@Data
+public class AttrVo  {
     /**
      * 属性id
      */
@@ -40,10 +39,20 @@ public class AttrDto implements Serializable {
     /**
      * 所属分类
      */
-    private Long catelogId;
+    private Long categoryId;
     /**
      * 快速展示【是否展示在介绍上；0-否 1-是】，在sku中仍然可以调整
      */
     private Integer showDesc;
+
+    /**
+     * 属性分组 id
+     */
+    private Long attrGroupId ;
+
+    /**
+     * 值类型 0 单选 1 多选
+     */
+    private int valueType ;
 
 }

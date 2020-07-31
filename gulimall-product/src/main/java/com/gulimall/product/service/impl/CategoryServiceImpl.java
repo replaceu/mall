@@ -3,14 +3,17 @@ package com.gulimall.product.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.gulimall.common.product.dto.CategoryDto;
 import com.gulimall.product.convert.CategoryConvert;
 import com.gulimall.product.dao.CategoryDao;
 import com.gulimall.product.entity.CategoryEntity;
+import com.gulimall.product.service.CategoryBrandRelationService;
 import com.gulimall.product.service.CategoryService;
+import com.gulimall.product.vo.CategoryVo;
 import com.gulimall.service.utils.PageUtils;
 import com.gulimall.service.utils.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -18,6 +21,8 @@ import java.util.stream.Collectors;
 
 @Service("categoryService")
 public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService {
+    @Autowired
+    private CategoryBrandRelationService categoryBrandRelationService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -29,11 +34,11 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         return new PageUtils(page);
     }
     @Override
-    public List<CategoryDto> listCategoryWithTree() {
+    public List<CategoryVo> listCategoryWithTree() {
         // 查询所有分类
         List<CategoryEntity> allCategory = this.baseMapper.selectList(null);
         // 组装成父子结构
-        List<CategoryDto> categoryTree = findChildrenCategory(allCategory, 0L);
+        List<CategoryVo> categoryTree = findChildrenCategory(allCategory, 0L);
 
         return categoryTree;
     }
@@ -46,7 +51,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         baseMapper.deleteBatchIds(catIds) ;
     }
 
-    private List<CategoryDto> findChildrenCategory(List<CategoryEntity> allCateGory, Long  parentCategoryId) {
+    private List<CategoryVo> findChildrenCategory(List<CategoryEntity> allCateGory, Long  parentCategoryId) {
         // 找 2 级
         return allCateGory.stream()
                 .filter(category-> category.getParentCid() == parentCategoryId )
@@ -54,25 +59,33 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
                     // TODO 已处理的数据 进行删除 下一次就不会重新处理
 //                    allCateGory.remove(category) ;
                     // 属性对拷
-                    CategoryDto categoryDto = CategoryConvert.INSTANCE.entity2dto(category);
-
-                    categoryDto.setChildren(findChildrenCategory(allCateGory , category.getCatId()  ));  // 找  3 级
-                    return categoryDto ;
+                    CategoryVo categoryVo = CategoryConvert.INSTANCE.entity2vo(category);
+                    categoryVo.setChildren(findChildrenCategory(allCateGory , category.getCatId()  ));  // 找  3 级
+                    return categoryVo;
                 })
-                .sorted(Comparator.comparingInt(CategoryDto::getSort))
+                .sorted(Comparator.comparingInt(CategoryVo::getSort))
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Long> findCategoryPath(Long categoryId) {
         List<Long> categoryPath = new ArrayList<>(4);
-
         findCategoryParentId(categoryId, categoryPath);
-
         Collections.reverse(categoryPath);
         return categoryPath;
     }
 
+    @Override
+    public void updateCategoryDetail(CategoryVo categoryVo) {
+        CategoryEntity categoryEntity = CategoryConvert.INSTANCE.vo2entity(categoryVo);
+        baseMapper.updateById(categoryEntity) ;
+
+        // TODO 更新级联信息
+        if (!StringUtils.isEmpty(categoryEntity.getName() )) {
+            // 三级分类才会进行更新  二级不会 进行关联 ?
+            categoryBrandRelationService.updateCategoryName(categoryEntity.getCatId() , categoryEntity.getName() );
+        }
+    }
     private void findCategoryParentId(Long categoryChildId, List<Long> path) {
         path.add(categoryChildId) ;
         CategoryEntity categoryEntity = baseMapper.selectById(categoryChildId);

@@ -1,8 +1,8 @@
 package com.gulimall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.gulimall.common.product.dto.CategoryDto;
 import com.gulimall.product.entity.CategoryEntity;
+import com.gulimall.product.vo.CategoryVo;
 import com.gulimall.service.utils.PageUtils;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public interface CategoryService extends IService<CategoryEntity> {
      *
      * @return
      */
-    List<CategoryDto> listCategoryWithTree();
+    List<CategoryVo> listCategoryWithTree();
 
     /**
      * 通过菜单id 批量删除 菜单
@@ -39,5 +39,11 @@ public interface CategoryService extends IService<CategoryEntity> {
      * @return List<Long> 完整路径
      */
     List<Long> findCategoryPath(Long categoryId);
+
+    /**
+     * 修改 详细 信息 并 级联 更新
+     * @param categoryVo 更新的信息
+     */
+    void updateCategoryDetail(CategoryVo categoryVo);
 }
 

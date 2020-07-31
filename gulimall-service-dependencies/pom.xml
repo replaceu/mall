@@ -18,7 +18,7 @@
         <!-- 依赖公共模块-->
         <dependency>
             <groupId>com.gulimall</groupId>
-            <artifactId>gulimall-common-dependencies</artifactId>
+            <artifactId>gulimall-common</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

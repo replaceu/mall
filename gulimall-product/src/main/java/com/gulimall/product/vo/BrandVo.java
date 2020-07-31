@@ -1,4 +1,4 @@
-package com.gulimall.common.product.dto;
+package com.gulimall.product.vo;
 
 import com.gulimall.common.valid.AddGroup;
 import com.gulimall.common.valid.ListValue;
@@ -8,15 +8,13 @@ import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.*;
-import java.io.Serializable;
 
 /**
  * 品牌
  * @author aqiang9  2020-07-29
  */
 @Data
-public class BrandDto implements Serializable {
-    private static final long serialVersionUID = 826584587834L;
+public class BrandVo   {
     /**
      * 品牌id
      */
