@@ -348,7 +348,7 @@ export default {
           })
         })
         .then(({ data }) => {
-          this.dataResp.memberLevels = data.page.list;
+          this.dataResp.memberLevels = data.list;
         })
         .catch(e => {
           console.log(e);

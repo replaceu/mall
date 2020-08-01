@@ -18,6 +18,8 @@
           <el-table-column prop="icon" header-align="center" align="center" label="属性图标"></el-table-column>
           <el-table-column prop="valueSelect" header-align="center" align="center" label="可选值列表"></el-table-column>
         </el-table>
+
+        <div class="line-20"></div>
         <el-pagination @size-change="sizeChangeHandle" @current-change="currentChangeHandle" :current-page="pageIndex" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" :total="totalPage" layout="total, sizes, prev, pager, next, jumper"></el-pagination>
       </div>
       <div slot="footer" class="dialog-footer">
@@ -192,8 +194,9 @@ export default {
         })
       }).then(({ data }) => {
         if (data && data.code === 0) {
-          this.dataList = data.page.list;
-          this.totalPage = data.page.totalCount;
+          data = data.data;
+          this.dataList = data.list;
+          this.totalPage = data.totalCount;
         } else {
           this.dataList = [];
           this.totalPage = 0;
