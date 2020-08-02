@@ -15,6 +15,8 @@ spring:
     url: jdbc:mysql://66.88.88.200:3306/gulimall_pms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
     password: root
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   global-config:
@@ -24,7 +26,6 @@ mybatis-plus:
       # 1、 全局逻辑删除 配置  2、配置逻辑删除组件（看官方文档） 3、字段加 逻辑删除 注解
       logic-delete-value: 1 #  1 表示已被删除
       logic-not-delete-value: 0 # 0 为未被删除
-
 
 logging:
   level:

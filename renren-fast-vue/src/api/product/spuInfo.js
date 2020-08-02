@@ -12,3 +12,16 @@ export function SaveInfo(data) {
     data: request.adornData(data, false)
   })
 }
+/**
+ * 
+ * 获取spu列表
+ * @param {JSON} param 
+ */
+export function SpuInfo(param) {
+  return request({
+    url: request.adornUrl(`${BASE_URL}/list`),
+    method: "get",
+    params: request.adornParams(param , true)
+  })
+}
+

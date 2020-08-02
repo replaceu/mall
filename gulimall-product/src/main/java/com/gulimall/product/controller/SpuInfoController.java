@@ -4,13 +4,13 @@ import com.gulimall.common.utils.CommonResult;
 import com.gulimall.common.utils.R;
 import com.gulimall.product.entity.SpuInfoEntity;
 import com.gulimall.product.service.SpuInfoService;
+import com.gulimall.product.vo.SpuPageVo;
 import com.gulimall.product.vo.SpuSaveVo;
 import com.gulimall.service.utils.PageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-import java.util.Map;
 
 
 
@@ -32,10 +32,10 @@ public class SpuInfoController {
      */
     @RequestMapping("/list")
    // @RequiresPermissions("product:spuinfo:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = spuInfoService.queryPage(params);
+    public CommonResult list(SpuPageVo params){
+        PageUtils page = spuInfoService.queryPageOnCondition(params);
 
-        return R.ok().put("page", page);
+        return CommonResult.ok().data(page) ;
     }
 
 

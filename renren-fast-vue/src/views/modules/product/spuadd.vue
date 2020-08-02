@@ -230,7 +230,7 @@ import CategoryCascader from "../common/category-cascader";
 import BrandSelect from "../common/brand-select";
 import MultiUpload from "@/components/upload/multiUpload";
 import PubSub from "pubsub-js";
-import {} from "@/api/product/spu.js";
+import { SaveInfo } from "@/api/product/spuInfo.js";
 import { MemberLevelList } from "@/api/member/memberLevel.js";
 import { SaleList } from "@/api/product/productAttr.js";
 import { CategoryWithAttr } from "@/api/product/productAttrGroup.js";

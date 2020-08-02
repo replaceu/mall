@@ -1,5 +1,6 @@
 package com.gulimall.product.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -18,6 +19,7 @@ import com.gulimall.product.service.*;
 import com.gulimall.product.vo.*;
 import com.gulimall.service.utils.PageUtils;
 import com.gulimall.service.utils.Query;
+import com.gulimall.service.utils.QueryPage;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,15 +58,6 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
     @Autowired
     CouponFeignService couponFeignService;
 
-    @Override
-    public PageUtils queryPage(Map<String, Object> params) {
-        IPage<SpuInfoEntity> page = this.page(
-                new Query<SpuInfoEntity>().getPage(params),
-                new QueryWrapper<SpuInfoEntity>()
-        );
-
-        return new PageUtils(page);
-    }
 
     /**
      * TODO 如果失败  全局事务
@@ -197,6 +190,31 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                 }
             });
         }
+    }
+
+    @Override
+    public PageUtils queryPageOnCondition(SpuPageVo params) {
+        LambdaQueryWrapper<SpuInfoEntity> wrapper = new LambdaQueryWrapper<>();
+
+        if (params.getStatus()!=null) {
+          wrapper.eq(SpuInfoEntity::getPublishStatus , params.getStatus() );
+        }
+        if (!StringUtils.isEmpty(params.getKey())) {
+            wrapper.and(w->{
+                w.eq(SpuInfoEntity::getId, params.getKey() )
+                        .or()
+                        .like(SpuInfoEntity::getSpuName ,params.getKey()) ;
+            }) ;
+        }
+
+        if (params.getBrandId() !=null && params.getBrandId() > 0 ){
+            wrapper.eq(SpuInfoEntity::getBrandId , params.getBrandId() ) ;
+        }
+        if (params.getCategoryId() != null  && params.getCategoryId() > 0 ){
+            wrapper.eq(SpuInfoEntity::getCategoryId , params.getCategoryId() ) ;
+        }
+        IPage<SpuInfoEntity> spuInfoEntityIPage = baseMapper.selectPage(new QueryPage<SpuInfoEntity>().getPage(params), wrapper);
+        return new PageUtils(spuInfoEntityIPage) ;
     }
 
 }

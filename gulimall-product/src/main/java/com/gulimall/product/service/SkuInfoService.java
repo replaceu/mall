@@ -2,9 +2,8 @@ package com.gulimall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.gulimall.product.entity.SkuInfoEntity;
+import com.gulimall.product.vo.SkuPageVo;
 import com.gulimall.service.utils.PageUtils;
-
-import java.util.Map;
 
 /**
  * sku信息
@@ -15,8 +14,9 @@ import java.util.Map;
  */
 public interface SkuInfoService extends IService<SkuInfoEntity> {
 
-    PageUtils queryPage(Map<String, Object> params);
 
     void saveSkuInfo(SkuInfoEntity skuInfoEntity);
+
+    PageUtils queryPageOnCondition(SkuPageVo params);
 }
 
