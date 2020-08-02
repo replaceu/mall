@@ -9,6 +9,7 @@ import com.gulimall.product.service.SkuInfoService;
 import com.gulimall.service.utils.PageUtils;
 import com.gulimall.service.utils.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
@@ -24,6 +25,12 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
         );
 
         return new PageUtils(page);
+    }
+
+    @Transactional
+    @Override
+    public void saveSkuInfo(SkuInfoEntity skuInfoEntity) {
+        baseMapper.insert(skuInfoEntity) ;
     }
 
 }

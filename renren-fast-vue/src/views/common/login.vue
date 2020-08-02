@@ -119,8 +119,9 @@ export default {
     width: 100%;
     height: 100%;
     content: "";
-    background-image: url(~@/assets/img/login_bg.jpg);
-    background-size: cover;
+    background-image: url(~@/assets/img/login_bg.jpg) ;
+    // background-size: contain;
+    background-size: 100% 100%;
   }
 
   .site-content__wrapper {
@@ -167,7 +168,8 @@ export default {
     padding: 150px 60px 180px;
     width: 470px;
     min-height: 100%;
-    background-color: #fff;
+    // background-color: rgba(255,255,255,.4) ;
+    // background-color: rgba(38, 50, 56, 0.6) ;
   }
 
   .login-title {

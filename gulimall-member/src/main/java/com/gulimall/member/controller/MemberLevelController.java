@@ -1,6 +1,8 @@
 package com.gulimall.member.controller;
 
+import com.gulimall.common.utils.CommonResult;
 import com.gulimall.common.utils.R;
+import com.gulimall.common.vo.PageVo;
 import com.gulimall.member.entity.MemberLevelEntity;
 import com.gulimall.member.service.MemberLevelService;
 import com.gulimall.service.utils.PageUtils;
@@ -8,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-import java.util.Map;
 
 
 
@@ -28,41 +29,38 @@ public class MemberLevelController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
+    @GetMapping("/list")
 //    //@RequiresPermissions("member:memberlevel:list")
-    public R list(@RequestParam Map<String, Object> params){
+    public CommonResult list(PageVo params){
         PageUtils page = memberLevelService.queryPage(params);
-
-        return R.ok().put("page", page);
+        return CommonResult.ok().data(page) ;
     }
-
 
     /**
      * 信息
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
 //    //@RequiresPermissions("member:memberlevel:info")
-    public R info(@PathVariable("id") Long id){
+    public CommonResult info(@PathVariable("id") Long id){
 		MemberLevelEntity memberLevel = memberLevelService.getById(id);
 
-        return R.ok().put("memberLevel", memberLevel);
+        return CommonResult.ok().data( memberLevel);
     }
 
     /**
      * 保存
      */
-    @RequestMapping("/save")
+    @PostMapping("/save")
     //@RequiresPermissions("member:memberlevel:save")
     public R save(@RequestBody MemberLevelEntity memberLevel){
 		memberLevelService.save(memberLevel);
-
         return R.ok();
     }
 
     /**
      * 修改
      */
-    @RequestMapping("/update")
+    @PutMapping("/update")
     //@RequiresPermissions("member:memberlevel:update")
     public R update(@RequestBody MemberLevelEntity memberLevel){
 		memberLevelService.updateById(memberLevel);
@@ -73,11 +71,10 @@ public class MemberLevelController {
     /**
      * 删除
      */
-    @RequestMapping("/delete")
+    @DeleteMapping("/delete")
     //@RequiresPermissions("member:memberlevel:delete")
     public R delete(@RequestBody Long[] ids){
 		memberLevelService.removeByIds(Arrays.asList(ids));
-
         return R.ok();
     }
 

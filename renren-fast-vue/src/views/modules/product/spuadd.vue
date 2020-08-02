@@ -19,23 +19,36 @@
           <el-form-item label="商品描述" prop="spuDescription">
             <el-input v-model="spu.spuDescription"></el-input>
           </el-form-item>
-          <el-form-item label="选择分类" prop="catalogId">
-            <category-cascader></category-cascader>
-          </el-form-item>
-          <el-form-item label="选择品牌" prop="brandId">
-            <brand-select></brand-select>
-          </el-form-item>
-          <el-form-item label="商品重量(Kg)" prop="weight">
-            <el-input-number v-model.number="spu.weight" :min="0" :precision="3" :step="0.1"></el-input-number>
-          </el-form-item>
-          <el-form-item label="设置积分" prop="bounds">
-            <label>金币</label>
-            <el-input-number style="width:130px" placeholder="金币" v-model="spu.bounds.buyBounds" :min="0" controls-position="right"></el-input-number>
-            <label style="margin-left:15px">成长值</label>
-            <el-input-number style="width:130px" placeholder="成长值" v-model="spu.bounds.growBounds" :min="0" controls-position="right">
-              <template slot="prepend">成长值</template>
-            </el-input-number>
-          </el-form-item>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="选择分类" prop="categoryId">
+                <category-cascader></category-cascader>
+              </el-form-item>
+            </el-col>
+            <el-col :span="9">
+              <el-form-item label="选择品牌" prop="brandId">
+                <brand-select></brand-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="9">
+              <el-form-item label="商品重量(Kg)" prop="weight">
+                <el-input-number v-model.number="spu.weight" :min="0" :precision="3" :step="0.1"></el-input-number>
+              </el-form-item>
+            </el-col>
+            <el-col :span="15">
+              <el-form-item label="设置积分" prop="bounds">
+                <label>金币</label>
+                <el-input-number style="width:130px" placeholder="金币" v-model="spu.bounds.buyBounds" :min="0" controls-position="right"></el-input-number>
+                <label style="margin-left:15px">成长值</label>
+                <el-input-number style="width:130px" placeholder="成长值" v-model="spu.bounds.growBounds" :min="0" controls-position="right">
+                  <template slot="prepend">成长值</template>
+                </el-input-number>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
           <el-form-item label="商品介绍" prop="decript">
             <multi-upload v-model="spu.decript"></multi-upload>
           </el-form-item>
@@ -163,7 +176,6 @@
                       <label>满</label>
                       <el-input-number style="width:160px" :min="0" controls-position="right" v-model="scope.row.fullCount"></el-input-number>
                       <label>件</label>
-
                       <label style="margin-left:15px;">打</label>
                       <el-input-number style="width:160px" v-model="scope.row.discount" :precision="2" :max="1" :min="0" :step="0.01" controls-position="right"></el-input-number>
                       <label>折</label>
@@ -217,7 +229,13 @@
 import CategoryCascader from "../common/category-cascader";
 import BrandSelect from "../common/brand-select";
 import MultiUpload from "@/components/upload/multiUpload";
-import PubSub from "pubsub-js"
+import PubSub from "pubsub-js";
+import {} from "@/api/product/spu.js";
+import { MemberLevelList } from "@/api/member/memberLevel.js";
+import { SaleList } from "@/api/product/productAttr.js";
+import { CategoryWithAttr } from "@/api/product/productAttrGroup.js";
+import { SuccessMessage, ErrorMessage ,InfoMessage  } from "@/utils/message.js";
+
 export default {
   //import引入的组件需要注入到对象中才能使用
   components: { CategoryCascader, BrandSelect, MultiUpload },
@@ -234,7 +252,7 @@ export default {
         //要提交的数据
         spuName: "",
         spuDescription: "",
-        catalogId: 0,
+        categoryId: 0,
         brandId: "",
         weight: "",
         publishStatus: 0,
@@ -255,7 +273,7 @@ export default {
         spuDescription: [
           { required: true, message: "请编写一个简单描述", trigger: "blur" }
         ],
-        catalogId: [
+        categoryId: [
           { required: true, message: "请选择一个分类", trigger: "blur" }
         ],
         brandId: [
@@ -321,7 +339,7 @@ export default {
       this.spu = {
         spuName: "",
         spuDescription: "",
-        catalogId: 0,
+        categoryId: 0,
         brandId: "",
         weight: "",
         publishStatus: 0,
@@ -339,15 +357,10 @@ export default {
       this.spu.skus[scope.$index].memberPrice[mpidx].price = e;
     },
     getMemberLevels() {
-      this.$http({
-          url: this.$http.adornUrl("/member/memberlevel/list"),
-          method: "get",
-          params: this.$http.adornParams({
-            page: 1,
-            limit: 500
-          })
-        })
-        .then(({ data }) => {
+      MemberLevelList({
+          page: 1,
+          limit: 500
+        }).then(({ data }) => {
           this.dataResp.memberLevels = data.list;
         })
         .catch(e => {
@@ -507,39 +520,25 @@ export default {
     getShowSaleAttr() {
       //获取当前分类可以使用的销售属性
       if (!this.dataResp.steped[1]) {
-        this.$http({
-          url: this.$http.adornUrl(
-            `/product/attr/sale/list/${this.spu.catalogId}`
-          ),
-          method: "get",
-          params: this.$http.adornParams({
-            page: 1,
-            limit: 500
-          })
-        }).then(({ data }) => {
-          this.dataResp.saleAttrs = data.page.list;
-          data.page.list.forEach(item => {
-            this.dataResp.tempSaleAttrs.push({
-              attrId: item.attrId,
-              attrValues: [],
-              attrName: item.attrName
+        SaleList(this.spu.categoryId, { page: 1, limit: 500 })
+          .then(({ data }) => {
+            this.dataResp.saleAttrs = data.page.list;
+            data.page.list.forEach(item => {
+              this.dataResp.tempSaleAttrs.push({
+                attrId: item.attrId,
+                attrValues: [],
+                attrName: item.attrName
+              });
+              this.inputVisible.push({ view: false });
+              this.inputValue.push({ val: "" });
             });
-            this.inputVisible.push({ view: false });
-            this.inputValue.push({ val: "" });
+            this.dataResp.steped[1] = true;
           });
-          this.dataResp.steped[1] = true;
-        });
       }
     },
     showBaseAttrs() {
       if (!this.dataResp.steped[0]) {
-        this.$http({
-          url: this.$http.adornUrl(
-            `/product/attrgroup/${this.spu.catalogId}/withattr`
-          ),
-          method: "get",
-          params: this.$http.adornParams({})
-        }).then(({ data }) => {
+        CategoryWithAttr(this.spu.categoryId).then(({ data }) => {
           //先对表单的baseAttrs进行初始化
           data.data.forEach(item => {
             let attrArray = [];
@@ -566,31 +565,18 @@ export default {
           type: "warning"
         })
         .then(() => {
-          this.$http({
-            url: this.$http.adornUrl("/product/spuinfo/save"),
-            method: "post",
-            data: this.$http.adornData(this.spu, false)
-          }).then(({ data }) => {
+          SaveInfo(this.spu.info).then(({ data }) => {
             if (data.code == 0) {
-              this.$message({
-                type: "success",
-                message: "新增商品成功!"
-              });
+              SuccessMessage("新增商品成功!")
               this.step = 4;
             } else {
-              this.$message({
-                type: "error",
-                message: "保存失败，原因【" + data.msg + "】"
-              });
+              ErrorMessage(`保存失败，原因【${data.msg }】`)
             }
           });
         })
         .catch(e => {
           console.log(e);
-          this.$message({
-            type: "info",
-            message: "已取消"
-          });
+          InfoMessage("已取消")
         });
     },
     //笛卡尔积运算
@@ -651,7 +637,7 @@ export default {
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
     this.catPathSub = PubSub.subscribe("catPath", (msg, val) => {
-      this.spu.catalogId = val[val.length - 1];
+      this.spu.categoryId = val[val.length - 1];
     });
     this.brandIdSub = PubSub.subscribe("brandId", (msg, val) => {
       this.spu.brandId = val;

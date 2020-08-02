@@ -59,7 +59,7 @@
 
 <script>
 import AddOrUpdate from "./memberlevel-add-or-update";
-import  {getMemberLevelList} from "@/api/member/memberLevel.js"
+import  {MemberLevelList  , MemberLeveLDelete} from "@/api/member/memberLevel.js"
 export default {
   data() {
     return {
@@ -86,7 +86,7 @@ export default {
     getDataList() {
       this.dataListLoading = true;
       
-      getMemberLevelList({
+      MemberLevelList({
         page: this.pageIndex,
           limit: this.pageSize,
           key: this.dataForm.key
@@ -139,11 +139,7 @@ export default {
           type: "warning"
         }
       ).then(() => {
-        this.$http({
-          url: this.$http.adornUrl("/member/memberlevel/delete"),
-          method: "delete",
-          data: this.$http.adornData(ids, false)
-        }).then(({ data }) => {
+        MemberLeveLDelete(ids).then(({ data }) => {
           if (data && data.code === 0) {
             this.$message({
               message: "操作成功",

@@ -1,8 +1,10 @@
 package com.gulimall.product.controller;
 
+import com.gulimall.common.utils.CommonResult;
 import com.gulimall.common.utils.R;
 import com.gulimall.product.entity.SpuInfoEntity;
 import com.gulimall.product.service.SpuInfoService;
+import com.gulimall.product.vo.SpuSaveVo;
 import com.gulimall.service.utils.PageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -51,12 +53,11 @@ public class SpuInfoController {
     /**
      * 保存
      */
-    @RequestMapping("/save")
+    @PostMapping("/save")
 //    @RequiresPermissions("product:spuinfo:save")
-    public R save(@RequestBody SpuInfoEntity spuInfo){
-		spuInfoService.save(spuInfo);
-
-        return R.ok();
+    public CommonResult save(@RequestBody SpuSaveVo spuSaveVo){
+		spuInfoService.saveInfo(spuSaveVo);
+        return CommonResult.ok();
     }
 
     /**

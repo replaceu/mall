@@ -1,5 +1,5 @@
 <template>
-  <nav class="site-navbar" :class="'site-navbar--' + navbarLayoutType">
+  <nav class="site-navbar disable-select" :class="'site-navbar--' + navbarLayoutType">
     <div class="site-navbar__header">
       <h1 class="site-navbar__brand" @click="$router.push({ name: 'home' })">
         <a class="site-navbar__brand-lg" href="javascript:;">谷粒-admin</a>
@@ -34,10 +34,20 @@
           </el-badge>
         </el-menu-item>
         <el-submenu index="3">
-          <template slot="title">相关资源</template>
-          <el-menu-item index="2-1"><a href="https://gitee.com/aqiang9/gulimall" target="_blank">gitee</a></el-menu-item>
-          <el-menu-item index="2-2"><a href="https://easydoc.xyz/s/78237135/ZUqEdvA4/4XuREIJe" target="_blank">接口文档</a></el-menu-item>
-          <el-menu-item index="2-3"><a href="http://www.dmanywhere.cn/" target="_blank">数据库表</a></el-menu-item>
+          <template slot="title">文档资源</template>
+          <el-menu-item index="3-1"><a href="https://gitee.com/aqiang9/gulimall" target="_blank">git源码</a></el-menu-item>
+          <el-menu-item index="3-2"><a href="https://easydoc.xyz/s/78237135/ZUqEdvA4/4XuREIJe" target="_blank">接口文档</a></el-menu-item>
+          <el-menu-item index="3-3"><a href="http://www.dmanywhere.cn/" target="_blank">数据库表</a></el-menu-item>
+          <el-menu-item index="3-4"><a href="https://element.eleme.cn/#/zh-CN/component/tag" target="_blank">ElementUi</a></el-menu-item>
+          <el-menu-item index="3-5"><a href="https://doc.xiaominfo.com/" target="_blank">knife4j手册</a></el-menu-item>
+          <el-menu-item index="3-6"><a href="https://mp.baomidou.com/guide/#%E7%89%B9%E6%80%A7" target="_blank">mybatis-plus文档</a></el-menu-item>
+         </el-submenu>
+        <el-submenu index="4">
+          <template slot="title">工具资源</template>
+          <el-menu-item index="4-1"><a href="http://json.cn/" target="_blank">JSON工具</a></el-menu-item>
+          <el-menu-item index="4-2"><a href="https://easydoc.xyz/s/78237135/ZUqEdvA4/4XuREIJe" target="_blank">接口文档</a></el-menu-item>
+          <el-menu-item index="4-3"><a href="http://www.dmanywhere.cn/" target="_blank">数据库表</a></el-menu-item>
+          <el-menu-item index="4-4"><a href="https://element.eleme.cn/#/zh-CN/component/tag" target="_blank">ElementUi</a></el-menu-item>
          </el-submenu>
         <el-menu-item class="site-navbar__avatar" index="3">
           <el-dropdown :show-timeout="0" placement="bottom">
@@ -63,8 +73,27 @@
   export default {
     data () {
       return {
-        updatePassowrdVisible: false
-      }
+        updatePassowrdVisible: false ,
+        submenu:[{
+          title: "文档资源" ,
+          menu:[{
+            url: "https://gitee.com/aqiang9/gulimall",
+            msg: "git源码" ,
+            openType: "_blank"
+          },{
+            url:"https://easydoc.xyz/s/78237135/ZUqEdvA4/4XuREIJe" ,
+            msg: "接口文档" ,
+            openType:"_blank"
+          }]
+        },{
+          title: "" ,
+          menu:[{
+            url:"https://easydoc.xyz/s/78237135/ZUqEdvA4/4XuREIJe" ,
+            msg: "接口文档" ,
+            openType:"_blank"
+          }]
+        }
+      }]
     },
     components: {
       UpdatePassword

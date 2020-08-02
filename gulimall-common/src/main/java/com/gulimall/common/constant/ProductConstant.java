@@ -1,4 +1,4 @@
-package com.gulimall.common;
+package com.gulimall.common.constant;
 
 /**
  * @author aqiang9  2020-07-31
@@ -35,5 +35,11 @@ public class ProductConstant {
      * 基本属性
      */
     public static final int BASE_ATTR_TYPE = 1 ;
+    /**
+     * 销售属性 &基本属性
+     */
+    public static final int All_ATTR_TYPE = 2 ;
+
+
 
 }

@@ -13,7 +13,13 @@ spring:
           uri: https://www.baidu.com
           predicates:
             - Query=url,baidu
-
+        # 用户服务路由
+        - id: gulimall_member_router
+          uri: lb://gulimall-member
+          predicates:
+            - Path=/api/member/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
         # 三方服务路由
         - id: gulimall_thirdparty_router
           uri: lb://gulimall-third-party

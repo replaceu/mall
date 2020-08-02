@@ -12,6 +12,7 @@ package com.gulimall.common.exception;
  * 12: 订单
  * 13: 购物车
  * 14：物流
+ * 15: 优惠服务
  *
  * @author aqiang9  2020-07-28
  */

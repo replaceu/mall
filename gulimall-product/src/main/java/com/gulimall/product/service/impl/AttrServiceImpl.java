@@ -1,10 +1,9 @@
 package com.gulimall.product.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.gulimall.common.ProductConstant;
+import com.gulimall.common.constant.ProductConstant;
 import com.gulimall.common.vo.PageVo;
 import com.gulimall.product.convert.AttrConvert;
 import com.gulimall.product.dao.AttrDao;
@@ -20,7 +19,6 @@ import com.gulimall.product.vo.AttrGroupRelationVo;
 import com.gulimall.product.vo.AttrRespVo;
 import com.gulimall.product.vo.AttrVo;
 import com.gulimall.service.utils.PageUtils;
-import com.gulimall.service.utils.Query;
 import com.gulimall.service.utils.QueryPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -43,17 +40,6 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
 
     @Autowired
     CategoryService categoryService;
-
-
-    @Override
-    public PageUtils queryPage(Map<String, Object> params) {
-        IPage<AttrEntity> page = this.page(
-                new Query<AttrEntity>().getPage(params),
-                new QueryWrapper<AttrEntity>()
-        );
-
-        return new PageUtils(page);
-    }
 
     @Override
     public PageUtils queryList(PageVo pageParams, int attrType, Long categoryId) {
@@ -71,7 +57,6 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
                         .likeRight(AttrEntity::getAttrName, pageParams.getKey());
             });
         }
-
         IPage<AttrEntity> attrEntities = baseMapper.selectPage(new QueryPage<AttrEntity>().getPage(pageParams), wrapper);
         PageUtils pageData = new PageUtils(attrEntities);
 
@@ -97,7 +82,6 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
             }
             return attrVo;
         }).collect(Collectors.toList());
-
         // 替换
         pageData.setList(collect);
         return pageData;
@@ -174,7 +158,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
     @Override
     public List<AttrEntity> getAttrRelationByAttrGroupId(Long attrGroupId) {
         // 通过关联表过去到 此分类
-        AttrAttrgroupRelationEntity byId = attrAttrgroupRelationService.getById(attrGroupId);
+//        AttrAttrgroupRelationEntity byId = attrAttrgroupRelationService.getById(attrGroupId);
         List<AttrAttrgroupRelationEntity> attrgroupRelationEntities = attrAttrgroupRelationService.getByAttrGroupId(attrGroupId);
         if (attrgroupRelationEntities != null) {
             List<Long> attrIds = attrgroupRelationEntities.stream().map(AttrAttrgroupRelationEntity::getAttrId).collect(Collectors.toList());

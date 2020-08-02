@@ -4,9 +4,11 @@ import com.gulimall.common.utils.CommonResult;
 import com.gulimall.common.utils.R;
 import com.gulimall.common.valid.AddGroup;
 import com.gulimall.common.vo.PageVo;
+import com.gulimall.product.convert.BrandConvert;
 import com.gulimall.product.convert.CategoryConvert;
 import com.gulimall.product.entity.CategoryBrandRelationEntity;
 import com.gulimall.product.service.CategoryBrandRelationService;
+import com.gulimall.product.vo.BrandRespVo;
 import com.gulimall.product.vo.CategoryBrandRelationVo;
 import com.gulimall.service.utils.PageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,7 @@ public class CategoryBrandRelationController {
     @Autowired
     private CategoryBrandRelationService categoryBrandRelationService;
 
+
     /**
      * 列表
      */
@@ -49,7 +52,20 @@ public class CategoryBrandRelationController {
         List<CategoryBrandRelationEntity> categoryBrandRelationEntityList = categoryBrandRelationService.categoryBrandList(pageParams, brandId);
         return CommonResult.ok().data(categoryBrandRelationEntityList);
     }
+    /**
+     *  获取分类关联的品牌
+     */
+    @GetMapping("/brands/list")
+    public CommonResult relationBrandsList(@RequestParam("categoryId") Long categoryId){
 
+        List<CategoryBrandRelationEntity> brandList= categoryBrandRelationService.getBrandListByCategoryId(categoryId);
+
+      List<BrandRespVo> brandRespVos =   BrandConvert.INSTANCE.entity2vo(brandList) ;
+
+
+        return CommonResult.ok().data(brandRespVos);
+
+    }
     /**
      * 保存
      */

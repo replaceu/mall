@@ -13,6 +13,7 @@ import com.gulimall.product.entity.CategoryEntity;
 import com.gulimall.product.service.BrandService;
 import com.gulimall.product.service.CategoryBrandRelationService;
 import com.gulimall.product.service.CategoryService;
+import com.gulimall.product.vo.BrandRespVo;
 import com.gulimall.service.utils.PageUtils;
 import com.gulimall.service.utils.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,5 +79,16 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
         LambdaUpdateWrapper<CategoryBrandRelationEntity> wrapper = new LambdaUpdateWrapper<>();
         wrapper.eq(CategoryBrandRelationEntity::getCategoryId, categoryId);
         baseMapper.update(relationEntity, wrapper);
+    }
+
+    @Override
+    public List<CategoryBrandRelationEntity> getBrandListByCategoryId(Long categoryId) {
+
+        return baseMapper.selectList(new LambdaQueryWrapper<CategoryBrandRelationEntity>()
+                .eq(CategoryBrandRelationEntity::getCategoryId, categoryId));
+
+
+
+
     }
 }

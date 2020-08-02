@@ -36,5 +36,11 @@ public interface AttrAttrgroupRelationService extends IService<AttrAttrgroupRela
     void removeBranchRelation(List<AttrAttrgroupRelationEntity> attrgroupRelationEntities);
 
     List<AttrAttrgroupRelationEntity>  getByAttrGroupIds(List<Long> allGroupIds);
+
+    /**
+     * 通过属性分组id 删除关联关系
+     * @param attrGroupIds  通过属性分组id
+     */
+    void removeByAttrGroupIds(List<Long> attrGroupIds);
 }
 

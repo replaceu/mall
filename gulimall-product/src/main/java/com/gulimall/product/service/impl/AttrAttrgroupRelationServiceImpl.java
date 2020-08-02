@@ -67,4 +67,10 @@ public class AttrAttrgroupRelationServiceImpl extends ServiceImpl<AttrAttrgroupR
                 new LambdaQueryWrapper<AttrAttrgroupRelationEntity>()
                         .in(AttrAttrgroupRelationEntity::getAttrGroupId, allGroupIds));
     }
+
+    @Override
+    public void removeByAttrGroupIds(List<Long> attrGroupIds) {
+        baseMapper.delete( new LambdaQueryWrapper<AttrAttrgroupRelationEntity>()
+                .in(AttrAttrgroupRelationEntity::getAttrGroupId, attrGroupIds));
+    }
 }

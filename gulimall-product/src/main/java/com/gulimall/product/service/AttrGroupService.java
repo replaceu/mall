@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.gulimall.common.vo.PageVo;
 import com.gulimall.product.entity.AttrGroupEntity;
 import com.gulimall.product.vo.AttrGroupVo;
+import com.gulimall.product.vo.AttrGroupWithAttrsRespVo;
 import com.gulimall.service.utils.PageUtils;
 
 import java.util.List;
@@ -26,10 +27,18 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
     AttrGroupVo getAttrGroupInfo(Long attrGroupId);
 
     /**
-     *  通过分类id 查询 当前分类 下  所有分组
+     * 通过分类id 查询 当前分类 下  所有分组
+     *
      * @param categoryId 分类id
      * @return List<AttrGroupEntity> 分类的集合
      */
-    List<AttrGroupEntity> getAllGroupByCategoryId(Long categoryId );
+    List<AttrGroupEntity> getAllGroupByCategoryId(Long categoryId);
+
+    /**
+     *删除分组以及对应的关联关系
+     */
+    void removeGroup(List<Long> attrGroupIds);
+
+    List<AttrGroupWithAttrsRespVo> getAttrGroupWithAttrByCategoryId(Long categoryId);
 }
 

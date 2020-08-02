@@ -3,10 +3,7 @@ package com.gulimall.product.convert;
 import com.gulimall.product.entity.AttrAttrgroupRelationEntity;
 import com.gulimall.product.entity.AttrEntity;
 import com.gulimall.product.entity.AttrGroupEntity;
-import com.gulimall.product.vo.AttrGroupRelationVo;
-import com.gulimall.product.vo.AttrGroupVo;
-import com.gulimall.product.vo.AttrRespVo;
-import com.gulimall.product.vo.AttrVo;
+import com.gulimall.product.vo.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -34,4 +31,5 @@ public interface AttrConvert {
     List<AttrAttrgroupRelationEntity> listVo2listEntity(List<AttrGroupRelationVo> vo);
 
 
+    AttrGroupWithAttrsRespVo entity2respVo(AttrGroupEntity attrGroup);
 }

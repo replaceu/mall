@@ -9,7 +9,6 @@ import com.gulimall.product.vo.AttrVo;
 import com.gulimall.service.utils.PageUtils;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 商品属性
@@ -20,7 +19,6 @@ import java.util.Map;
  */
 public interface AttrService extends IService<AttrEntity> {
 
-    PageUtils queryPage(Map<String, Object> params);
 
     /**
      * 获取 规格参数

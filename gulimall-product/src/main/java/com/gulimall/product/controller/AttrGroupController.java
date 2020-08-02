@@ -13,6 +13,7 @@ import com.gulimall.product.service.AttrGroupService;
 import com.gulimall.product.service.AttrService;
 import com.gulimall.product.vo.AttrGroupRelationVo;
 import com.gulimall.product.vo.AttrGroupVo;
+import com.gulimall.product.vo.AttrGroupWithAttrsRespVo;
 import com.gulimall.service.utils.PageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -37,7 +38,21 @@ public class AttrGroupController {
     @Autowired
     private AttrService attrService;
     @Autowired
-    private AttrAttrgroupRelationService attrAttrgroupRelationService ;
+    private AttrAttrgroupRelationService attrAttrgroupRelationService;
+
+
+    /**
+     * 获取分类下所有分组&关联属性
+     * @param categoryId 三级分类id
+     * @return
+     */
+    @GetMapping("{categoryId}/withattr")
+    public CommonResult categoryWithAttr(@PathVariable Long categoryId ){
+        // 当前属性下的所有分组
+        // 查出当前分组  下的 所有属性
+        List<AttrGroupWithAttrsRespVo>  data = attrGroupService.getAttrGroupWithAttrByCategoryId(categoryId)  ;
+      return   CommonResult.ok().data(data);
+    }
 
     /**
      * 列表
@@ -48,9 +63,9 @@ public class AttrGroupController {
         PageUtils page = attrGroupService.queryPage(pageVo, categoryId);
         return CommonResult.ok().data(page);
     }
-
     /**
      * 获取属性分组的关联的所有属性
+     *
      * @param pageParams  分页参数
      * @param attrGroupId 分组id
      */
@@ -60,16 +75,17 @@ public class AttrGroupController {
         List<AttrEntity> attrEntities = attrService.getAttrRelationByAttrGroupId(attrGroupId);
         return CommonResult.ok().data(attrEntities);
     }
+
     /**
      * 获取属性分组没有关联的其他属性
      */
     @GetMapping("/{attrGroupId}/noattr/relation")
-    public CommonResult noAttrRelation(PageVo pageParams, @PathVariable(name = "attrGroupId") Long attrGroupId){
+    public CommonResult noAttrRelation(PageVo pageParams, @PathVariable(name = "attrGroupId") Long attrGroupId) {
         // 本分类 没有关联的属性
-        PageUtils pageData  = attrService.getNoRelationAttr(pageParams , attrGroupId) ;
-
+        PageUtils pageData = attrService.getNoRelationAttr(pageParams, attrGroupId);
         return CommonResult.ok().data(pageData);
     }
+
     /**
      * 信息
      */
@@ -79,17 +95,16 @@ public class AttrGroupController {
         AttrGroupVo attrGroupVo = attrGroupService.getAttrGroupInfo(attrGroupId);
         return CommonResult.ok().data(attrGroupVo);
     }
+
     /**
      * 添加属性与分组关联关系
      */
     @PostMapping("/attr/relation")
-    public CommonResult saveAttrRelation(@RequestBody  List<AttrGroupRelationVo> relationVo){
+    public CommonResult saveAttrRelation(@RequestBody List<AttrGroupRelationVo> relationVo) {
         List<AttrAttrgroupRelationEntity> attrgroupRelationEntities = AttrConvert.INSTANCE.listVo2listEntity(relationVo);
-        attrAttrgroupRelationService.saveBatch(attrgroupRelationEntities) ;
-        return CommonResult.ok() ;
+        attrAttrgroupRelationService.saveBatch(attrgroupRelationEntities);
+        return CommonResult.ok();
     }
-
-
 
     /**
      * 保存
@@ -122,5 +137,12 @@ public class AttrGroupController {
         return CommonResult.ok();
     }
 
-
+    /**
+     * 删除分组以及对应的关联关系
+     */
+    @DeleteMapping("/delete")
+    public CommonResult delete(@RequestBody List<Long> attrGroupIds) {
+        attrGroupService.removeGroup(attrGroupIds);
+        return CommonResult.ok();
+    }
 }

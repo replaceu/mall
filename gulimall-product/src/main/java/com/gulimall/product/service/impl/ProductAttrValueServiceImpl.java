@@ -10,6 +10,7 @@ import com.gulimall.service.utils.PageUtils;
 import com.gulimall.service.utils.Query;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -24,6 +25,11 @@ public class ProductAttrValueServiceImpl extends ServiceImpl<ProductAttrValueDao
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public void saveAttrValueInfo(List<ProductAttrValueEntity> productAttrValueEntities) {
+        this.saveBatch(productAttrValueEntities) ;
     }
 
 }

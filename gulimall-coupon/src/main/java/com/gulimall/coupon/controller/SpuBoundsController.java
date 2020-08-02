@@ -1,6 +1,9 @@
 package com.gulimall.coupon.controller;
 
+import com.gulimall.common.to.SpuBoundTo;
+import com.gulimall.common.utils.CommonResult;
 import com.gulimall.common.utils.R;
+import com.gulimall.coupon.convert.SpuConvert;
 import com.gulimall.coupon.entity.SpuBoundsEntity;
 import com.gulimall.coupon.service.SpuBoundsService;
 import com.gulimall.service.utils.PageUtils;
@@ -23,6 +26,16 @@ import java.util.Map;
 public class SpuBoundsController {
     @Autowired
     private SpuBoundsService spuBoundsService;
+
+
+    @PostMapping("/coupon/spubounds/save")
+    public CommonResult saveSpuBounds(@RequestBody  SpuBoundTo spuBoundTo){
+
+       SpuBoundsEntity spuBoundsEntity =  SpuConvert.INSTANCE.to2entity(spuBoundTo);
+        spuBoundsService.save(spuBoundsEntity) ;
+        return CommonResult.ok() ;
+    }
+
 
     /**
      * 列表

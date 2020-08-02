@@ -1,12 +1,15 @@
 package com.gulimall.product.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.math.BigDecimal;
-import java.io.Serializable;
-import java.util.Date;
 import lombok.Data;
+import org.apache.ibatis.type.JdbcType;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * spu信息
@@ -36,7 +39,7 @@ public class SpuInfoEntity implements Serializable {
 	/**
 	 * 所属分类id
 	 */
-	private Long catalogId;
+	private Long categoryId;
 	/**
 	 * 品牌id
 	 */
@@ -50,12 +53,14 @@ public class SpuInfoEntity implements Serializable {
 	 */
 	private Integer publishStatus;
 	/**
-	 * 
+	 * 创建时间
 	 */
+	@TableField(fill = FieldFill.INSERT ,jdbcType = JdbcType.DATE)
 	private Date createTime;
 	/**
-	 * 
+	 * 更新时间
 	 */
+	@TableField(fill = FieldFill.INSERT_UPDATE ,jdbcType = JdbcType.DATE  )
 	private Date updateTime;
 
 }
