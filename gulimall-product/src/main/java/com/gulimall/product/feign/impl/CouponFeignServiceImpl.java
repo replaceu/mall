@@ -11,8 +11,9 @@ import com.gulimall.product.feign.CouponFeignService;
  */
 public class CouponFeignServiceImpl implements CouponFeignService {
     @Override
-    public CommonResult saveSpuBounds(SpuBoundTo spuBoundTo) {
-        return null;
+    public CommonResult<String> saveSpuBounds(SpuBoundTo spuBoundTo) {
+        return CommonResult.fail("失败")
+                ;
     }
 
     @Override

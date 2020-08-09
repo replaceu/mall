@@ -1,14 +1,15 @@
 package com.gulimall.ware.controller;
 
+import com.gulimall.common.utils.CommonResult;
 import com.gulimall.common.utils.R;
 import com.gulimall.service.utils.PageUtils;
 import com.gulimall.ware.entity.WareSkuEntity;
 import com.gulimall.ware.service.WareSkuService;
+import com.gulimall.ware.vo.WareSkuPageVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-import java.util.Map;
 
 
 
@@ -28,19 +29,16 @@ public class WareSkuController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
+    @GetMapping("/list")
    // @RequiresPermissions("ware:waresku:list")
-    public R list(@RequestParam Map<String, Object> params){
+    public CommonResult list(WareSkuPageVo params){
         PageUtils page = wareSkuService.queryPage(params);
-
-        return R.ok().put("page", page);
+        return CommonResult.ok().data( page);
     }
-
-
     /**
      * 信息
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
 //   @RequiresPermissions("ware:waresku:info")
     public R info(@PathVariable("id") Long id){
 		WareSkuEntity wareSku = wareSkuService.getById(id);

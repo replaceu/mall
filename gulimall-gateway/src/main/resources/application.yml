@@ -9,6 +9,12 @@ spring:
         server-addr: 127.0.0.1:8848
     gateway:
       routes:
+        - id: gulimall_ware_router
+          uri: lb://gulimall-member
+            predicates:
+              - Path=/api/ware/**
+            filters:
+              - RewritePath=/api/(?<segment>.*),/$\{segment}
         - id: baidu
           uri: https://www.baidu.com
           predicates:

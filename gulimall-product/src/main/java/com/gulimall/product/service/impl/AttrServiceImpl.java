@@ -42,7 +42,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
     CategoryService categoryService;
 
     @Override
-    public PageUtils queryList(PageVo pageParams, int attrType, Long categoryId) {
+    public PageUtils<AttrVo> queryList(PageVo pageParams, int attrType, Long categoryId) {
         LambdaQueryWrapper<AttrEntity> wrapper = new LambdaQueryWrapper<>();
         if (categoryId != null && categoryId != 0) {
             wrapper.eq(AttrEntity::getCategoryId, categoryId);

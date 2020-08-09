@@ -1,14 +1,18 @@
 package com.gulimall.ware.controller;
 
+import com.gulimall.common.utils.CommonResult;
 import com.gulimall.common.utils.R;
+import com.gulimall.common.vo.PageVo;
 import com.gulimall.service.utils.PageUtils;
 import com.gulimall.ware.entity.PurchaseEntity;
 import com.gulimall.ware.service.PurchaseService;
+import com.gulimall.ware.vo.PurchaseDoneVo;
+import com.gulimall.ware.vo.PurchaseMergeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-import java.util.Map;
+import java.util.List;
 
 
 
@@ -28,15 +32,48 @@ public class PurchaseController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
-   // @RequiresPermissions("ware:purchase:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = purchaseService.queryPage(params);
+//  @GetMapping("/list")
+//   // @RequiresPermissions("ware:purchase:list")
+//    public R list(@RequestParam Map<String, Object> params){
+//        PageUtils page = purchaseService.queryPage(params);
+//
+//        return R.ok().put("page", page);
+//    }
+//
 
-        return R.ok().put("page", page);
+
+    @GetMapping("/unreceive/list")
+    // @RequiresPermissions("ware:purchase:list")
+    public CommonResult unReceiveList(PageVo params){
+        PageUtils page = purchaseService.queryUnReceivePage(params);
+        return CommonResult.ok().data( page);
     }
 
+    /**
+     * 合并采购单
+     */
+    @PostMapping("/merge")
+    public CommonResult mergePurchase(@RequestBody PurchaseMergeVo mergeVo){
+      purchaseService.mergePurchase(mergeVo) ;
+        return CommonResult.ok();
+    }
 
+    /**
+     * 领取采购单
+     */
+    @PostMapping("/received")
+    public CommonResult receivedPurchase(@RequestBody List<Long> ids){
+      purchaseService.receivedPurchase(ids) ;
+        return CommonResult.ok();
+    }
+    /**
+     * 完成采购单
+     */
+    @PostMapping("/done")
+    public CommonResult finish(@RequestBody PurchaseDoneVo doneVo){
+        purchaseService.donePurchase(doneVo ) ;
+        return CommonResult.ok() ;
+    }
     /**
      * 信息
      */
@@ -44,7 +81,6 @@ public class PurchaseController {
 //   @RequiresPermissions("ware:purchase:info")
     public R info(@PathVariable("id") Long id){
 		PurchaseEntity purchase = purchaseService.getById(id);
-
         return R.ok().put("purchase", purchase);
     }
 
@@ -80,5 +116,4 @@ public class PurchaseController {
 
         return R.ok();
     }
-
 }

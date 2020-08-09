@@ -1,6 +1,8 @@
 package com.gulimall.ware.controller;
 
+import com.gulimall.common.utils.CommonResult;
 import com.gulimall.common.utils.R;
+import com.gulimall.common.vo.PageVo;
 import com.gulimall.service.utils.PageUtils;
 import com.gulimall.ware.entity.WareInfoEntity;
 import com.gulimall.ware.service.WareInfoService;
@@ -30,10 +32,11 @@ public class WareInfoController {
      */
     @RequestMapping("/list")
    // @RequiresPermissions("ware:wareinfo:list")
-    public R list(@RequestParam Map<String, Object> params){
+    public CommonResult list(PageVo params){
         PageUtils page = wareInfoService.queryPage(params);
 
-        return R.ok().put("page", page);
+
+        return CommonResult.ok().data(page) ;
     }
 
 

@@ -32,11 +32,11 @@ public class AttrController {
      * @param pageParams 分页参数
      * @param attrType   属性类型  0 为 基本    1 为销售
      * @param categoryId 分类 id
-     * @return
      */
     @GetMapping("/{attrType}/list/{categoryId}")
     public CommonResult listAttr(PageVo pageParams, @PathVariable("attrType") int attrType, @PathVariable(value = "categoryId", required = false) Long categoryId) {
         PageUtils data = attrService.queryList(pageParams, attrType, categoryId);
+
         return CommonResult.ok().data(data);
     }
 

@@ -1,18 +1,17 @@
 package com.gulimall.product.controller;
 
+import com.gulimall.common.to.SkuInfoTo;
+import com.gulimall.common.utils.CommonResult;
 import com.gulimall.common.utils.R;
+import com.gulimall.product.convert.SkuConvert;
 import com.gulimall.product.entity.SkuInfoEntity;
 import com.gulimall.product.service.SkuInfoService;
 import com.gulimall.product.vo.SkuPageVo;
 import com.gulimall.service.utils.PageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-
 
 
 /**
@@ -31,24 +30,24 @@ public class SkuInfoController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
-   // @RequiresPermissions("product:skuinfo:list")
-    public R list(SkuPageVo params ){
+    @GetMapping("/list")
+    // @RequiresPermissions("product:skuinfo:list")
+    public R list(SkuPageVo params) {
         PageUtils page = skuInfoService.queryPageOnCondition(params);
 
         return R.ok().put("page", page);
     }
 
-
     /**
      * 信息
      */
-    @RequestMapping("/info/{skuId}")
+    @GetMapping("/info/{skuId}")
 //   @RequiresPermissions("product:skuinfo:info")
-    public R info(@PathVariable("skuId") Long skuId){
-		SkuInfoEntity skuInfo = skuInfoService.getById(skuId);
-
-        return R.ok().put("skuInfo", skuInfo);
+    public CommonResult<SkuInfoTo> info(@PathVariable("skuId") Long skuId) {
+        SkuInfoEntity skuInfo = skuInfoService.getById(skuId);
+        // 转换为 to
+        SkuInfoTo skuInfoTo = SkuConvert.INSTANCE.entity2to(skuInfo);
+        return CommonResult.ok(skuInfoTo);
     }
 
     /**
@@ -56,9 +55,8 @@ public class SkuInfoController {
      */
     @RequestMapping("/save")
 //    @RequiresPermissions("product:skuinfo:save")
-    public R save(@RequestBody SkuInfoEntity skuInfo){
-		skuInfoService.save(skuInfo);
-
+    public R save(@RequestBody SkuInfoEntity skuInfo) {
+        skuInfoService.save(skuInfo);
         return R.ok();
     }
 
@@ -67,8 +65,8 @@ public class SkuInfoController {
      */
     @RequestMapping("/update")
 //   @RequiresPermissions("product:skuinfo:update")
-    public R update(@RequestBody SkuInfoEntity skuInfo){
-		skuInfoService.updateById(skuInfo);
+    public R update(@RequestBody SkuInfoEntity skuInfo) {
+        skuInfoService.updateById(skuInfo);
 
         return R.ok();
     }
@@ -78,8 +76,8 @@ public class SkuInfoController {
      */
     @RequestMapping("/delete")
 //    @RequiresPermissions("product:skuinfo:delete")
-    public R delete(@RequestBody Long[] skuIds){
-		skuInfoService.removeByIds(Arrays.asList(skuIds));
+    public R delete(@RequestBody Long[] skuIds) {
+        skuInfoService.removeByIds(Arrays.asList(skuIds));
 
         return R.ok();
     }

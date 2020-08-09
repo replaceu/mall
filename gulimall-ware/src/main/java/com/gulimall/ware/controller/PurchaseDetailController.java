@@ -1,14 +1,15 @@
 package com.gulimall.ware.controller;
 
+import com.gulimall.common.utils.CommonResult;
 import com.gulimall.common.utils.R;
 import com.gulimall.service.utils.PageUtils;
 import com.gulimall.ware.entity.PurchaseDetailEntity;
 import com.gulimall.ware.service.PurchaseDetailService;
+import com.gulimall.ware.vo.PurchaseDetailPageVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-import java.util.Map;
 
 
 /**
@@ -27,12 +28,11 @@ public class PurchaseDetailController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
+    @GetMapping("/list")
    // @RequiresPermissions("ware:purchasedetail:list")
-    public R list(@RequestParam Map<String, Object> params){
+    public CommonResult list(PurchaseDetailPageVo params){
         PageUtils page = purchaseDetailService.queryPage(params);
-
-        return R.ok().put("page", page);
+        return CommonResult.ok().data(page);
     }
 
 

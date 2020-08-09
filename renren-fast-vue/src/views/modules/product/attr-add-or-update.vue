@@ -186,7 +186,7 @@ export default {
               searchType: this.dataForm.searchType,
               valueType: this.dataForm.valueType,
               icon: this.dataForm.icon,
-              valueSelect: this.dataForm.valueSelect.join(";"),
+              valueSelect: this.dataForm.valueSelect ?  this.dataForm.valueSelect.join(";") : "",
               attrType: this.dataForm.attrType,
               enable: this.dataForm.enable,
               categoryId: this.dataForm.categoryId,

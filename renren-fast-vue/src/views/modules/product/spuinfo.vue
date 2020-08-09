@@ -5,7 +5,7 @@
     <el-table-column prop="id" header-align="center" align="center" label="id"></el-table-column>
     <el-table-column prop="spuName" header-align="center" align="center" label="名称"></el-table-column>
     <el-table-column prop="spuDescription" header-align="center" align="center" label="描述"></el-table-column>
-    <el-table-column prop="catalogId" header-align="center" align="center" label="分类"></el-table-column>
+    <el-table-column prop="categoryId" header-align="center" align="center" label="分类"></el-table-column>
     <el-table-column prop="brandId" header-align="center" align="center" label="品牌"></el-table-column>
     <el-table-column prop="weight" header-align="center" align="center" label="重量"></el-table-column>
     <el-table-column prop="publishStatus" header-align="center" align="center" label="上架状态">
@@ -30,6 +30,8 @@
 </template>
 
 <script>
+
+import { SpuInfo } from "@/api/product/spuInfo.js";
 export default {
   data() {
     return {
@@ -78,7 +80,7 @@ export default {
       console.log(row);
       this.$router.push({
         path: "/product-attrupdate",
-        query: { spuId: row.id, catalogId: row.catalogId }
+        query: { spuId: row.id, categoryId: row.categoryId }
       });
     },
     // 获取数据列表
@@ -89,14 +91,11 @@ export default {
         page: this.pageIndex,
         limit: this.pageSize
       });
-      this.$http({
-        url: this.$http.adornUrl("/product/spuinfo/list"),
-        method: "get",
-        params: this.$http.adornParams(param)
-      }).then(({ data }) => {
+      SpuInfo(param).then(({ data }) => {
         if (data && data.code === 0) {
-          this.dataList = data.page.list;
-          this.totalPage = data.page.totalCount;
+          data = data.data ;
+          this.dataList = data.list;
+          this.totalPage = data.totalCount;
         } else {
           this.dataList = [];
           this.totalPage = 0;

@@ -9,7 +9,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class CommonResult {
+public class CommonResult<T> {
     /**
      * 响应消息
      */
@@ -22,35 +22,43 @@ public class CommonResult {
     /**
      * 返回的数据
      */
-    private Object data;
+    private T data;
 
-    private CommonResult(String msg, Integer code) {
+    private CommonResult(String msg, Integer code , T data) {
         this.msg = msg;
         this.code = code;
+        this.data = data ;
     }
-    public static CommonResult ok() {
-        return new CommonResult("success", 0 );
-    }
-    public static CommonResult ok(String msg) {
-        return new CommonResult(msg, 0);
+    public static <T> CommonResult<T> ok() {
+        return new CommonResult<T>("success", 0 , null  );
     }
 
-    public static CommonResult fail() {
-        return new CommonResult("fail", 1);
-    }
-    public static CommonResult fail(String msg) {
-        return new CommonResult(msg, 1);
-    }
-    public static CommonResult fail(int code , String msg) {
-        return new CommonResult(msg, code);
+    public static <T> CommonResult<T> ok(T data) {
+        return new CommonResult<T>("success", 0 , data );
     }
 
-
-    public static CommonResult fail(ErrorCode errorCode) {
-        return new CommonResult(errorCode.getMsg() , errorCode.getCode());
+    public static <T> CommonResult<T> ok(String msg) {
+        return new CommonResult<T>(msg, 0 , null );
+    }
+    public static <T> CommonResult<T> ok(String msg , T data) {
+        return new CommonResult<T>(msg, 0 , data);
     }
 
-    public CommonResult data(Object data) {
+    public static <T> CommonResult<T> fail() {
+        return new CommonResult<T>("fail", 1 , null );
+    }
+    public static <T> CommonResult<T> fail(String msg) {
+        return new CommonResult<T>(msg, 1 , null );
+    }
+    public static <T> CommonResult<T> fail(int code , String msg) {
+        return new CommonResult<T>(msg, code , null );
+    }
+
+    public static <T> CommonResult<T> fail(ErrorCode errorCode) {
+        return new  CommonResult<T>(errorCode.getMsg() , errorCode.getCode() , null );
+    }
+
+    public CommonResult<T> data(T data) {
         this.data = data ;
         return this ;
     }

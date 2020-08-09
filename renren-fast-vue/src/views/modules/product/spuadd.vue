@@ -522,8 +522,11 @@ export default {
       if (!this.dataResp.steped[1]) {
         SaleList(this.spu.categoryId, { page: 1, limit: 500 })
           .then(({ data }) => {
-            this.dataResp.saleAttrs = data.page.list;
-            data.page.list.forEach(item => {
+            data = data.data ;
+            this.dataResp.saleAttrs =data.list;
+            if(data.list){
+              
+           data.list.forEach(item => {
               this.dataResp.tempSaleAttrs.push({
                 attrId: item.attrId,
                 attrValues: [],
@@ -532,6 +535,8 @@ export default {
               this.inputVisible.push({ view: false });
               this.inputValue.push({ val: "" });
             });
+            
+            }
             this.dataResp.steped[1] = true;
           });
       }
@@ -540,8 +545,10 @@ export default {
       if (!this.dataResp.steped[0]) {
         CategoryWithAttr(this.spu.categoryId).then(({ data }) => {
           //先对表单的baseAttrs进行初始化
+          console.log( data ,"--------")
           data.data.forEach(item => {
             let attrArray = [];
+            if (item.attrs){
             item.attrs.forEach(attr => {
               attrArray.push({
                 attrId: attr.attrId,
@@ -550,6 +557,7 @@ export default {
               });
             });
             this.dataResp.baseAttrs.push(attrArray);
+            }
           });
           this.dataResp.steped[0] = 0;
           this.dataResp.attrGroups = data.data;

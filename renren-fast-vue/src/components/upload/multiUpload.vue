@@ -1,6 +1,6 @@
 <template>
 <div>
-  <el-upload action="http://gulimall.oss-cn-shanghai.aliyuncs.com" :data="dataObj" list-type="picture-card" :file-list="fileList" :before-upload="beforeUpload" :on-remove="handleRemove" :on-success="handleUploadSuccess" :on-preview="handlePreview" :limit="maxCount" :on-exceed="handleExceed">
+  <el-upload :action="dataObj.host"  :data="dataObj" list-type="picture-card" :file-list="fileList" :before-upload="beforeUpload" :on-remove="handleRemove" :on-success="handleUploadSuccess" :on-preview="handlePreview" :limit="maxCount" :on-exceed="handleExceed">
     <i class="el-icon-plus"></i>
   </el-upload>
   <el-dialog :visible.sync="dialogVisible">

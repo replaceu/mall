@@ -36,7 +36,7 @@ public class ProductConstant {
      */
     public static final int BASE_ATTR_TYPE = 1 ;
     /**
-     * 销售属性 &基本属性
+     * 销售属性 & 基本属性
      */
     public static final int All_ATTR_TYPE = 2 ;
 

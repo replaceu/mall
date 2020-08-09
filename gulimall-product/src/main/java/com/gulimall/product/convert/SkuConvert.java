@@ -1,5 +1,6 @@
 package com.gulimall.product.convert;
 
+import com.gulimall.common.to.SkuInfoTo;
 import com.gulimall.common.to.SkuReductionTo;
 import com.gulimall.product.entity.SkuImagesEntity;
 import com.gulimall.product.entity.SkuInfoEntity;
@@ -24,4 +25,6 @@ public interface SkuConvert {
     SkuSaleAttrValueEntity vo2entity(SpuSaveAttr item);
 
     SkuReductionTo vo2to(SpuSaveSku sku);
+
+    SkuInfoTo entity2to(SkuInfoEntity skuInfo);
 }

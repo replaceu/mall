@@ -47,7 +47,7 @@ public class ControllerAdviceException {
     /**
      * 处理所有异常
      */
-    @ExceptionHandler(Exception.class)
+//    @ExceptionHandler(Exception.class)
     public CommonResult allExceptionHandler(Exception e) {
         log.error("出现异常,异常信息 :{}", e.getMessage());
 
