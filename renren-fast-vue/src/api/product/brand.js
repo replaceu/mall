@@ -12,6 +12,12 @@ export function BrandListApi(params){
       params : request.adornParams(params , false )
   })
 }
+export function BrandInfoApi(brandId){
+  return request({
+      url:  request.adornUrl( `${BASE_URL}/info/${brandId}`) ,
+      method: "get"
+  })
+}
 /**
  * 修改品牌状态
  * @param {*} data 

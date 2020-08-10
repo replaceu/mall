@@ -71,7 +71,7 @@ export default {
         }],
         sort: [{
           validator: (rule, value, callback) => {
-            if (value == "") {
+            if (value === "") {
               callback(new Error("排序字段必须填写"));
             } else if (!Number.isInteger(value) || value < 0) {
               callback(new Error("排序必须是一个大于等于0的整数"));
@@ -91,21 +91,13 @@ export default {
       this.$nextTick(() => {
         this.$refs["dataForm"].resetFields();
         if (this.dataForm.brandId) {
-          this.$http({
-            url: this.$http.adornUrl(
-              `/product/brand/info/${this.dataForm.brandId}`
-            ),
-            method: "get",
-            params: this.$http.adornParams()
-          }).then(({ data }) => {
-            if (data && data.code === 0) {
+          BrandInfoApi(this.dataForm.brandId).then((data) => {
               this.dataForm.name = data.brand.name;
               this.dataForm.logo = data.brand.logo;
               this.dataForm.descript = data.brand.descript;
               this.dataForm.showStatus = data.brand.showStatus;
               this.dataForm.firstLetter = data.brand.firstLetter;
               this.dataForm.sort = data.brand.sort;
-            }
           });
         }
       });
