@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Arrays;
 import java.util.List;
 
-
-
 /**
  * 采购信息
  *
@@ -24,7 +22,7 @@ import java.util.List;
  * @date 2020-06-09 10:07:54
  */
 @RestController
-@RequestMapping("ware/purchase")
+@RequestMapping("/ware/purchase")
 public class PurchaseController {
     @Autowired
     private PurchaseService purchaseService;
@@ -40,8 +38,6 @@ public class PurchaseController {
 //        return R.ok().put("page", page);
 //    }
 //
-
-
     @GetMapping("/unreceive/list")
     // @RequiresPermissions("ware:purchase:list")
     public CommonResult unReceiveList(PageVo params){
@@ -100,10 +96,9 @@ public class PurchaseController {
      */
     @RequestMapping("/update")
 //   @RequiresPermissions("ware:purchase:update")
-    public R update(@RequestBody PurchaseEntity purchase){
+    public CommonResult<Object> update(@RequestBody PurchaseEntity purchase){
 		purchaseService.updateById(purchase);
-
-        return R.ok();
+        return CommonResult.ok();
     }
 
     /**
@@ -113,7 +108,6 @@ public class PurchaseController {
 //    @RequiresPermissions("ware:purchase:delete")
     public R delete(@RequestBody Long[] ids){
 		purchaseService.removeByIds(Arrays.asList(ids));
-
         return R.ok();
     }
 }

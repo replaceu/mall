@@ -74,6 +74,10 @@
 <script>
 import AddOrUpdate from "./brand-add-or-update";
 import CategoryCascader from "../common/category-cascader";
+
+import { WarningConfirm, SuccessMessage } from "@/utils/message.js";
+import { BrandListApi, BrandUpdateStatusApi, BrandDeleteApi } from '@/api/product/brand.js';
+
 export default {
   data() {
     return {
@@ -105,13 +109,14 @@ export default {
     addCatelogSelect() {
       //{"brandId":1,"catelogId":2}
       this.popCatelogSelectVisible = false;
-  
+
       this.$http({
         url: this.$http.adornUrl("/product/categorybrandrelation/save"),
         method: "post",
         data: this.$http.adornData({
-           brandId: this.brandId, 
-           categoryId: this.categoryPath[this.categoryPath.length - 1] }, false)
+          brandId: this.brandId,
+          categoryId: this.categoryPath[this.categoryPath.length - 1]
+        }, false)
       }).then(({ data }) => {
         this.getCateRelation();
       });
@@ -144,37 +149,21 @@ export default {
     // 获取数据列表
     getDataList() {
       this.dataListLoading = true;
-      this.$http({
-        url: this.$http.adornUrl("/product/brand/list"),
-        method: "get",
-        params: this.$http.adornParams({
-          page: this.pageIndex,
-          limit: this.pageSize,
-          key: this.dataForm.key
-        })
-      }).then(({ data }) => {
-        if (data && data.code === 0) {
-          this.dataList = data.data.list;
-          this.totalPage = data.data.totalCount;
-        } else {
-          this.dataList = [];
-          this.totalPage = 0;
-        }
+      BrandListApi({
+        page: this.pageIndex,
+        limit: this.pageSize,
+        key: this.dataForm.key
+      }).then((data) => {
+        this.dataList = data.data.list || [];
+        this.totalPage = data.data.totalCount || 0;
         this.dataListLoading = false;
       });
     },
     updateBrandStatus(data) {
       let { brandId, showStatus } = data;
       //发送请求修改状态
-      this.$http({
-        url: this.$http.adornUrl("/product/brand/update/status"),
-        method: "put",
-        data: this.$http.adornData({ brandId, showStatus }, false)
-      }).then(({ data }) => {
-        this.$message({
-          type: "success",
-          message: "状态更新成功"
-        });
+      BrandUpdateStatusApi({ brandId, showStatus }).then(({ data }) => {
+        SuccessMessage("状态更新成功")
       });
     },
     // 每页数
@@ -201,42 +190,21 @@ export default {
     },
     // 删除
     deleteHandle(id) {
-      var ids = id ?
-        [id] :
+      var ids = id ? [id] :
         this.dataListSelections.map(item => {
           return item.brandId;
         });
-      this.$confirm(
-        `确定对[id=${ids.join(",")}]进行[${id ? "删除" : "批量删除"}]操作?`,
-        "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }
-      ).then(() => {
-        this.$http({
-          url: this.$http.adornUrl("/product/brand/delete"),
-          method: "delete",
-          data: this.$http.adornData(ids, false)
-        }).then(({ data }) => {
-          if (data && data.code === 0) {
-            this.$message({
-              message: "操作成功",
-              type: "success",
-              duration: 1500,
-              onClose: () => {
-                this.getDataList();
-              }
-            });
-          } else {
-            this.$message.error(data.msg);
-          }
-        });
-      });
+      WarningConfirm(() => {
+          BrandDeleteApi(ids).then(data => {
+            SuccessMessage("品牌删除成功", () => { this.getDataList() });
+          });
+        },
+        `确定对[id=${ids.join(",")}]进行[${id ? "删除" : "批量删除"}]操作?`);
     }
   }
 };
 </script>
+
 <style lang="scss" scoped >
 
 </style>

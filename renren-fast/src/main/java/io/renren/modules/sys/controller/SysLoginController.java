@@ -46,14 +46,12 @@ public class SysLoginController extends AbstractController {
 	/**
 	 * 验证码
 	 */
-	@GetMapping("captcha.jpg")
+	@GetMapping("/captcha.jpg")
 	public void captcha(HttpServletResponse response, String uuid)throws IOException {
 		response.setHeader("Cache-Control", "no-store, no-cache");
 		response.setContentType("image/jpeg");
-
 		//获取图片验证码
 		BufferedImage image = sysCaptchaService.getCaptcha(uuid);
-
 		ServletOutputStream out = response.getOutputStream();
 		ImageIO.write(image, "jpg", out);
 		IOUtils.closeQuietly(out);

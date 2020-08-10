@@ -17,7 +17,7 @@ module.exports = {
         target: 'http://127.0.0.1:88/api',
         changeOrigin: true,
         pathRewrite: {
-          '^/proxyApi': '/'
+          '^/api': '' // 路径从写
         }
       }
     },

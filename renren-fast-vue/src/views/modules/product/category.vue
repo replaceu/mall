@@ -36,6 +36,16 @@
 </template>
 
 <script>
+import { WarningConfirm, SuccessMessage } from "@/utils/message.js";
+import {
+  CategoryInfoApi,
+  CategoryListTreeApi,
+  CategoryDeleteApi,
+  CategoryUpdataSortApi,
+  CategoryUpdataApi,
+  CategorySaveApi
+} from "@/api/product/category.js"
+
 export default {
   components: {},
   props: {},
@@ -74,10 +84,7 @@ export default {
   //方法集合
   methods: {
     getMenus() {
-      this.$http({
-        url: this.$http.adornUrl("/product/category/list/tree"),
-        method: "get"
-      }).then(({ data }) => {
+      CategoryListTreeApi().then((data) => {
         console.log("成功获取到菜单数据...", data.data);
         this.menus = data.data;
       });
@@ -89,37 +96,17 @@ export default {
       for (let i = 0; i < checkedNodes.length; i++) {
         catIds.push(checkedNodes[i].catId);
       }
-      this.$confirm(`是否批量删除【${catIds}】菜单?`, "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        })
-        .then(() => {
-          this.$http({
-            url: this.$http.adornUrl("/product/category/delete"),
-            method: "delete",
-            data: this.$http.adornData(catIds, false)
-          }).then(({ data }) => {
-            this.$message({
-              message: "菜单批量删除成功",
-              type: "success"
-            });
+      WarningConfirm(() => {
+          CategoryDeleteApi(catIds).then(data => {
+            SuccessMessage("菜单批量删除成功");
             this.getMenus();
           });
-        })
-        .catch(() => {});
-
+        },
+        `是否批量删除【${catIds}】菜单?`);
     },
     batchSave() {
-      this.$http({
-        url: this.$http.adornUrl("/product/category/update/sort"),
-        method: "put",
-        data: this.$http.adornData(this.updateNodes, false)
-      }).then(({ data }) => {
-        this.$message({
-          message: "菜单顺序等修改成功",
-          type: "success"
-        });
+      CategoryUpdataSortApi(this.updateNodes).then((data) => {
+        SuccessMessage('菜单顺序等修改成功');
         //刷新出新的菜单
         this.getMenus();
         //设置需要默认展开的菜单
@@ -195,7 +182,7 @@ export default {
 
       //   this.maxLevel
       if (type == "inner") {
-         return deep + dropNode.level <= 3;
+        return deep + dropNode.level <= 3;
       } else {
         return deep + dropNode.parent.level <= 3;
       }
@@ -218,10 +205,7 @@ export default {
       this.dialogVisible = true;
 
       //发送请求获取当前节点最新的数据
-      this.$http({
-        url: this.$http.adornUrl(`/product/category/info/${data.catId}`),
-        method: "get"
-      }).then(({ data }) => {
+      CategoryInfoApi(data.catId).then((data) => {
         //请求成功
         console.log("要回显的数据", data);
         this.category.name = data.data.name;
@@ -266,15 +250,8 @@ export default {
     //修改三级分类数据
     editCategory() {
       var { catId, name, icon, productUnit } = this.category;
-      this.$http({
-        url: this.$http.adornUrl("/product/category/update"),
-        method: "put",
-        data: this.$http.adornData({ catId, name, icon, productUnit }, false)
-      }).then(({ data }) => {
-        this.$message({
-          message: "菜单修改成功",
-          type: "success"
-        });
+      CategoryUpdataApi({ catId, name, icon, productUnit }).then(({ data }) => {
+        SuccessMessage('菜单修改成功');
         //关闭对话框
         this.dialogVisible = false;
         //刷新出新的菜单
@@ -286,15 +263,8 @@ export default {
     //添加三级分类
     addCategory() {
       console.log("提交的三级分类数据", this.category);
-      this.$http({
-        url: this.$http.adornUrl("/product/category/save"),
-        method: "post",
-        data: this.$http.adornData(this.category, false)
-      }).then(({ data }) => {
-        this.$message({
-          message: "菜单保存成功",
-          type: "success"
-        });
+      CategorySaveApi(this.category).then((data) => {
+        SuccessMessage("菜单保存成功");
         //关闭对话框
         this.dialogVisible = false;
         //刷新出新的菜单
@@ -306,28 +276,18 @@ export default {
 
     remove(node, data) {
       var ids = [data.catId];
-      this.$confirm(`是否删除【${data.name}】菜单?`, "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
+
+      WarningConfirm(() => {
+        CategoryDeleteApi(ids).then(data => {
+          SuccessMessage("菜单删除成功");
         })
-        .then(() => {
-          this.$http({
-            url: this.$http.adornUrl("/product/category/delete"),
-            method: "delete",
-            data: this.$http.adornData(ids, false)
-          }).then(({ data }) => {
-            this.$message({
-              message: "菜单删除成功",
-              type: "success"
-            });
-            //刷新出新的菜单
-            this.getMenus();
-            //设置需要默认展开的菜单
-            this.expandedKey = [node.parent.data.catId];
-          });
-        })
-        .catch(() => {});
+
+        //刷新菜单
+        this.getMenus();
+        //设置需要默认展开的菜单
+        this.expandedKey = [node.parent.data.catId];
+      }, `是否删除【${data.name}】菜单?`)
+
     }
   },
   //生命周期 - 创建完成（可以访问当前this实例）

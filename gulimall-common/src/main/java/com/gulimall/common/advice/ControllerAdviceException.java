@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author aqiang9  2020-07-28
@@ -24,7 +25,7 @@ public class ControllerAdviceException {
      * 处理 数据校验 错误
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public CommonResult validFailException(MethodArgumentNotValidException exception) {
+    public CommonResult<Map<String,String>> validFailException(MethodArgumentNotValidException exception) {
         BindingResult bindingResult = exception.getBindingResult();
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
         HashMap<String, String> errorMap = new HashMap<>(fieldErrors.size());
@@ -32,7 +33,7 @@ public class ControllerAdviceException {
             errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
         });
         log.error("数据校验错误 , 错误信息 {}", errorMap);
-        return CommonResult.fail(CommonErrorCode.VALID_FAIL_EXCEPTION).data(errorMap);
+        return CommonResult.fail(CommonErrorCode.VALID_FAIL_EXCEPTION , errorMap );
     }
     /**
      * 处理业务异常

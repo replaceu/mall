@@ -3,7 +3,10 @@ import axios from 'axios'
 import router from '@/router'
 import qs from 'qs'
 import merge from 'lodash/merge'
-import { clearLoginInfo } from '@/utils'
+import { clearLoginInfo } from '@/utils' // index.js
+
+import errorCode from '@/utils/errorCode'
+import { WarningConfirm, ErrorNotification, ErrorMessage } from './message.js'
 
 const http = axios.create({
   timeout: 1000 * 30,
@@ -22,20 +25,57 @@ http.interceptors.request.use(config => {
 }, error => {
   return Promise.reject(error)
 })
-
 /**
  * 响应拦截
  */
 http.interceptors.response.use(response => {
-  if (response.data && response.data.code === 401) { // 401, token失效
-    clearLoginInfo()
-    router.push({ name: 'login' })
+  let data = response.data ;
+  let  code = data.code || 0;
+    if (code != 0) {
+    return requestHasError(data);
+  } else {
+    return response.data;
   }
-  return response
 }, error => {
+  console.error('请求错误' + error)
+  ErrorMessage(error.message);
+
   return Promise.reject(error)
 })
-
+/**
+ * 判断是否有异常  并作出提示 
+ * @param {*} data 响应的数据
+ */
+function requestHasError(data) {
+  const code = data.code;
+  // 获取错误信息
+  const message = data.msg || errorCode[code] || errorCode['default']
+  if (code == 401) {
+    WarningConfirm(() => {
+      // 重新登录的逻辑
+      clearLoginInfo()
+      router.push({ name: 'login' })
+    }, '登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', '重新登录')
+  }
+  else if (code === 500) {
+    ErrorMessage(message)
+    return Promise.reject(new Error(message))
+  } else if (code !== 0) {
+    if (data.msg) {
+      ErrorNotification(message)
+    }
+    if (data.data) {
+      // 参数校验 错误 循环打印所有错误
+      let error = data.data;
+      if (error instanceof Array) {
+        for (const key in error) {
+          ErrorNotification(error[key], key, 0);
+        }
+      }
+    }
+    return Promise.reject('error')
+  }
+}
 /**
  * 请求地址处理
  * @param {*} actionName action方法名称

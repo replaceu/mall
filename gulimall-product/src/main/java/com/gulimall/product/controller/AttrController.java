@@ -7,6 +7,8 @@ import com.gulimall.product.service.AttrService;
 import com.gulimall.product.vo.AttrRespVo;
 import com.gulimall.product.vo.AttrVo;
 import com.gulimall.service.utils.PageUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,11 +23,10 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("product/attr")
+@Api(value = "attrController" , tags = {"商品服务,属性"})
 public class AttrController {
     @Autowired
     private AttrService attrService;
-
-
     /**
      * 获取 列表
      *
@@ -33,10 +34,10 @@ public class AttrController {
      * @param attrType   属性类型  0 为 基本    1 为销售
      * @param categoryId 分类 id
      */
+    @ApiOperation(value = "attr" , tags = {"属性"})
     @GetMapping("/{attrType}/list/{categoryId}")
     public CommonResult listAttr(PageVo pageParams, @PathVariable("attrType") int attrType, @PathVariable(value = "categoryId", required = false) Long categoryId) {
         PageUtils data = attrService.queryList(pageParams, attrType, categoryId);
-
         return CommonResult.ok().data(data);
     }
 

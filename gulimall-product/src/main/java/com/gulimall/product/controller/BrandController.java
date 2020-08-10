@@ -1,7 +1,7 @@
 package com.gulimall.product.controller;
 
+import com.gulimall.common.constant.SwaggerParamType;
 import com.gulimall.common.utils.CommonResult;
-import com.gulimall.common.utils.R;
 import com.gulimall.common.valid.UpdateGroup;
 import com.gulimall.common.valid.UpdateStatusGroup;
 import com.gulimall.common.vo.PageVo;
@@ -10,6 +10,9 @@ import com.gulimall.product.entity.BrandEntity;
 import com.gulimall.product.service.BrandService;
 import com.gulimall.product.vo.BrandVo;
 import com.gulimall.service.utils.PageUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +27,7 @@ import java.util.List;
  * @email 2903780002@qq.com
  * @date 2020-06-10 11:26:28
  */
+@Api(value = "商品品牌" , tags = "商品品牌-brand")
 @RestController
 @RequestMapping("product/brand")
 public class BrandController {
@@ -41,11 +45,14 @@ public class BrandController {
     /**
      * 信息
      */
+    @ApiOperation("获取品牌详情")
+    @ApiImplicitParam(value = "brandId" , paramType = SwaggerParamType.PATH , required = true)
     @GetMapping("/info/{brandId}")
 //   @RequiresPermissions("product:brand:info")
-    public R info(@PathVariable("brandId") Long brandId) {
+    public CommonResult<BrandVo> info(@PathVariable("brandId") Long brandId) {
         BrandEntity brand = brandService.getById(brandId);
-        return R.ok().put("brand", brand);
+        BrandVo brandVo = BrandConvert.INSTANCE.entity2vo(brand);
+        return CommonResult.ok(brandVo) ;
     }
 
     /**

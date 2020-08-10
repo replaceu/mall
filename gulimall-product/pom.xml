@@ -11,8 +11,6 @@
 
     <description>谷粒商城-商品服务</description>
     <artifactId>gulimall-product</artifactId>
-
-
     <dependencies>
         <!-- service 依赖模块-->
         <dependency>
@@ -21,8 +19,13 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+        </dependency>
+<!-- 文档api 依赖-->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-micro-spring-boot-starter</artifactId>
         </dependency>
     </dependencies>
 

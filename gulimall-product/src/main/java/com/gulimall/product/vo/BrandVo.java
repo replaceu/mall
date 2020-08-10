@@ -4,6 +4,8 @@ import com.gulimall.common.valid.AddGroup;
 import com.gulimall.common.valid.ListValue;
 import com.gulimall.common.valid.UpdateGroup;
 import com.gulimall.common.valid.UpdateStatusGroup;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
@@ -13,17 +15,21 @@ import javax.validation.constraints.*;
  * 品牌
  * @author aqiang9  2020-07-29
  */
+@ApiModel
 @Data
 public class BrandVo   {
     /**
      * 品牌id
      */
+    @ApiModelProperty(name = "brandId" , value = "品牌id")
     @Null(message = "不能指定品牌id", groups = {AddGroup.class})
     @NotNull(message = "品牌id不能为空",groups = {UpdateGroup.class, UpdateStatusGroup.class})
     private Long brandId;
     /**
      * 品牌名
      */
+
+    @ApiModelProperty(name = "name" , value = "品牌id")
     @NotEmpty(message = "品牌名不能为空",groups = {AddGroup.class})
     private String name;
     /**

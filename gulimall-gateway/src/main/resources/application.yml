@@ -8,13 +8,17 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
     gateway:
+      discovery:
+        locator:
+          lower-case-service-id: true
+      #          enabled: true
       routes:
         - id: gulimall_ware_router
           uri: lb://gulimall-member
-            predicates:
-              - Path=/api/ware/**
-            filters:
-              - RewritePath=/api/(?<segment>.*),/$\{segment}
+          predicates:
+            - Path=/api/ware/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
         - id: baidu
           uri: https://www.baidu.com
           predicates:
@@ -34,7 +38,7 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
         # 商品服务路由
-        - id: gulimall_product_router
+        - id: gulimall_product_router_api
           uri: lb://gulimall-product
           predicates:
             - Path=/api/product/**
@@ -47,3 +51,17 @@ spring:
             - Path=/api/**
           filters:
             - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
+logging:
+  level:
+   com.gulimall.gateway: debug
+
+# 笔记  如果网关处重写 路径 会影响 文档的生成
+# 目前可以  重新写一份
+# 后面可以搭配nginx  吧api 取消
+#  location /api {        //匹配url中带有api的，并转发到http://localhost:8080/api
+#  rewrite  ^/api/(.*)$ /$1 break;         //利用正则进行匹配#去掉api前缀，$1是正则中的第一串,这样后端的接口也不需要带api了
+#  proxy_pass http://localhost:8080;      //转发的参数设定
+# 也可以 在vue 中去掉前缀
+#  pathRewrite: {
+#    //'^/api/': '' //将访问路径的/api/替换成’‘，后台服务不用加api了,但前端的请求地址还是要加/api/
+#  }

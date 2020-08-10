@@ -38,6 +38,8 @@
 
 <script>
 import { getUUID } from "@/utils";
+import { LoginApi  , CaptchaPathApi} from '@/api/sys/login.js';
+
 export default {
   data() {
     return {
@@ -69,37 +71,30 @@ export default {
     dataFormSubmit() {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          this.$http({
-            url: this.$http.adornUrl("/sys/login"),
-            method: "post",
-            data: this.$http.adornData({
-              username: this.dataForm.userName,
-              password: this.dataForm.password,
-              uuid: this.dataForm.uuid,
-              captcha: this.dataForm.captcha
-            })
-          }).then(({ data }) => {
-            if (data && data.code === 0) {
-              this.$cookie.set("token", data.token);
-              this.$router.replace({ name: "home" });
-            } else {
-              this.getCaptcha();
-              this.$message.error(data.msg);
-            }
-          });
+          LoginApi({
+            username: this.dataForm.userName,
+            password: this.dataForm.password,
+            uuid: this.dataForm.uuid,
+            captcha: this.dataForm.captcha
+          }).then(data=> {
+            this.$cookie.set("token", data.token);
+            this.$router.replace({ name: "home" });
+          }).catch(e => {
+            this.getCaptcha();
+          })
         }
       });
     },
     // 获取验证码
     getCaptcha() {
-      this.dataForm.uuid = getUUID();
-      this.captchaPath = this.$http.adornUrl(
-        `/captcha.jpg?uuid=${this.dataForm.uuid}`
-      );
+      let uuid = getUUID() ;
+      this.dataForm.uuid = uuid ;
+      this.captchaPath = CaptchaPathApi(uuid) ;
     }
   }
 };
 </script>
+
 
 <style lang="scss">
 .site-wrapper.site-page--login {
@@ -119,7 +114,7 @@ export default {
     width: 100%;
     height: 100%;
     content: "";
-    background-image: url(~@/assets/img/login_bg.jpg) ;
+    background-image: url(~@/assets/img/login_bg.jpg);
     // background-size: contain;
     background-size: 100% 100%;
   }
