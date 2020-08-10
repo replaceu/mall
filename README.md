@@ -18,7 +18,7 @@ gulimall    // 父工程 管理所有的依赖
 ----renren-generator                // 逆向工程
 ---- doc                            // 文档资料
 ```
-![工程结构](./doc/基础篇/resource/工程结构.png
+![工程结构](./doc/基础篇/resource/工程结构.jpg)
 # 二、分支结构
 ```markdown
 ----base            // 基础篇   
