@@ -3,7 +3,8 @@ package com.gulimall.product.vo;
 import com.gulimall.common.valid.AddGroup;
 import com.gulimall.common.valid.UpdateGroup;
 import com.gulimall.common.valid.UpdateStatusGroup;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.*;
 import java.util.List;
@@ -12,7 +13,8 @@ import java.util.List;
 /**
  * @author aqiang9  2020-07-30
  */
-@Data
+@Getter
+@Setter
 public class AttrGroupVo  {
 
     /**

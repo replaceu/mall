@@ -1,15 +1,10 @@
-/**
- * Copyright (c) 2016-2019 人人开源 All rights reserved.
- *
- * https://www.renren.io
- *
- * 版权所有，侵权必究！
- */
-
 package com.gulimall.service.utils;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import lombok.Data;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.List;
@@ -20,28 +15,39 @@ import java.util.List;
  * @author Mark sunlightcs@gmail.com
  */
 
-@Data
+@Getter
+@Setter
+@ApiModel("分页请求统一数据")
 public class PageUtils<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	/**
 	 * 总记录数
 	 */
+	@ApiModelProperty("总记录数")
 	private int totalCount;
 	/**
 	 * 每页记录数
 	 */
+
+	@ApiModelProperty("每页记录数")
 	private int pageSize;
 	/**
 	 * 总页数
 	 */
+
+	@ApiModelProperty("总页数")
 	private int totalPage;
 	/**
 	 * 当前页数
 	 */
+
+	@ApiModelProperty("当前页数")
 	private int currPage;
 	/**
 	 * 列表数据
 	 */
+
+	@ApiModelProperty("列表数据")
 	private List<T> list;
 	
 	/**

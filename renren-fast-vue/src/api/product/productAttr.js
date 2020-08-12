@@ -6,7 +6,7 @@ const BASE_URL = "/product/attr"
  * @param {Number} categoryId 三级分类id
  * @param {*} params  分页参数
  */
-export function SaleList(categoryId , params){
+export function AttrSaleListApi(categoryId , params){
   return request({
       url:  request.adornUrl( `${BASE_URL}/sale/list/${categoryId}`) ,
       method: "get" ,

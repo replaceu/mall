@@ -59,7 +59,7 @@
       <el-table-column prop="categoryName" label="分类名"></el-table-column>
       <el-table-column fixed="right" header-align="center" align="center" label="操作">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="deleteCateRelationHandle(scope.row.id,scope.row.brandId)">移除</el-button>
+          <el-button type="text" size="small" @click="deleteCateRelationHandle(scope.row.id, scope.row.brandId)">移除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -76,7 +76,16 @@ import AddOrUpdate from "./brand-add-or-update";
 import CategoryCascader from "../common/category-cascader";
 
 import { WarningConfirm, SuccessMessage } from "@/utils/message.js";
-import { BrandListApi, BrandUpdateStatusApi, BrandDeleteApi } from '@/api/product/brand.js';
+import {
+  BrandListApi,
+  BrandUpdateStatusApi,
+  BrandDeleteApi
+} from "@/api/product/brand.js";
+import {
+  CategoryBrandRelationSaveApi,
+  CategoryBrandRelationDeleteApi,
+  CategoryBrandRelationCategoryListApi
+} from "@/api/product/categoryBrandRelation.js";
 
 export default {
   data() {
@@ -109,24 +118,15 @@ export default {
     addCatelogSelect() {
       //{"brandId":1,"catelogId":2}
       this.popCatelogSelectVisible = false;
-
-      this.$http({
-        url: this.$http.adornUrl("/product/categorybrandrelation/save"),
-        method: "post",
-        data: this.$http.adornData({
-          brandId: this.brandId,
-          categoryId: this.categoryPath[this.categoryPath.length - 1]
-        }, false)
-      }).then(({ data }) => {
+      CategoryBrandRelationSaveApi({
+        brandId: this.brandId,
+        categoryId: this.categoryPath[this.categoryPath.length - 1]
+      }).then((data) => {
         this.getCateRelation();
       });
     },
     deleteCateRelationHandle(id, brandId) {
-      this.$http({
-        url: this.$http.adornUrl("/product/categorybrandrelation/delete"),
-        method: "delete",
-        data: this.$http.adornData([id], false)
-      }).then(({ data }) => {
+      CategoryBrandRelationDeleteApi([id]).then(({ data }) => {
         this.getCateRelation();
       });
     },
@@ -136,13 +136,7 @@ export default {
       this.getCateRelation();
     },
     getCateRelation() {
-      this.$http({
-        url: this.$http.adornUrl("/product/categorybrandrelation/category/list"),
-        method: "get",
-        params: this.$http.adornParams({
-          brandId: this.brandId
-        })
-      }).then(({ data }) => {
+      CategoryBrandRelationCategoryListApi(this.brandId).then((data) => {
         this.cateRelationTableData = data.data;
       });
     },
@@ -153,7 +147,7 @@ export default {
         page: this.pageIndex,
         limit: this.pageSize,
         key: this.dataForm.key
-      }).then((data) => {
+      }).then(data => {
         this.dataList = data.data.list || [];
         this.totalPage = data.data.totalCount || 0;
         this.dataListLoading = false;
@@ -163,7 +157,7 @@ export default {
       let { brandId, showStatus } = data;
       //发送请求修改状态
       BrandUpdateStatusApi({ brandId, showStatus }).then(({ data }) => {
-        SuccessMessage("状态更新成功")
+        SuccessMessage("状态更新成功");
       });
     },
     // 每页数
@@ -195,16 +189,15 @@ export default {
           return item.brandId;
         });
       WarningConfirm(() => {
-          BrandDeleteApi(ids).then(data => {
-            SuccessMessage("品牌删除成功", () => { this.getDataList() });
+        BrandDeleteApi(ids).then(data => {
+          SuccessMessage("品牌删除成功", () => {
+            this.getDataList();
           });
-        },
-        `确定对[id=${ids.join(",")}]进行[${id ? "删除" : "批量删除"}]操作?`);
+        });
+      }, `确定对[id=${ids.join(",")}]进行[${id ? "删除" : "批量删除"}]操作?`);
     }
   }
 };
 </script>
 
-<style lang="scss" scoped >
-
-</style>
+<style lang="scss" scoped></style>

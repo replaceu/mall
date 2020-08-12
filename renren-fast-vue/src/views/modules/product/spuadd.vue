@@ -230,11 +230,13 @@ import CategoryCascader from "../common/category-cascader";
 import BrandSelect from "../common/brand-select";
 import MultiUpload from "@/components/upload/multiUpload";
 import PubSub from "pubsub-js";
-import { SaveInfo } from "@/api/product/spuInfo.js";
-import { MemberLevelList } from "@/api/member/memberLevel.js";
-import { SaleList } from "@/api/product/productAttr.js";
-import { CategoryWithAttr } from "@/api/product/productAttrGroup.js";
-import { SuccessMessage, ErrorMessage ,InfoMessage  } from "@/utils/message.js";
+import { SpuInfoSaveApi } from "@/api/product/spuInfo.js";
+import { MemberLevelListApiApi } from "@/api/member/memberLevel.js";
+import { AttrSaleListApi } from "@/api/product/productAttr.js";
+import { AttrGroupCategoryWithAttrApi } from "@/api/product/productAttrGroup.js";
+// import { SuccessMessage, ErrorMessage ,InfoMessage  } from "@/utils/message.js";
+
+import { WarningConfirm, SuccessMessage } from "@/utils/message.js";
 
 export default {
   //import引入的组件需要注入到对象中才能使用
@@ -357,15 +359,12 @@ export default {
       this.spu.skus[scope.$index].memberPrice[mpidx].price = e;
     },
     getMemberLevels() {
-      MemberLevelList({
+      MemberLevelListApi({
           page: 1,
           limit: 500
-        }).then(({ data }) => {
+        }).then((data) => {
           this.dataResp.memberLevels = data.list;
         })
-        .catch(e => {
-          console.log(e);
-        });
     },
     showInput(idx) {
       console.log("``````", this.view);
@@ -520,22 +519,21 @@ export default {
     getShowSaleAttr() {
       //获取当前分类可以使用的销售属性
       if (!this.dataResp.steped[1]) {
-        SaleList(this.spu.categoryId, { page: 1, limit: 500 })
-          .then(({ data }) => {
-            data = data.data ;
-            this.dataResp.saleAttrs =data.list;
-            if(data.list){
-              
-           data.list.forEach(item => {
-              this.dataResp.tempSaleAttrs.push({
-                attrId: item.attrId,
-                attrValues: [],
-                attrName: item.attrName
+        AttrSaleListApi(this.spu.categoryId, { page: 1, limit: 500 })
+          .then((data) => {
+            data = data.data;
+            this.dataResp.saleAttrs = data.list;
+            if (data.list) {
+              data.list.forEach(item => {
+                this.dataResp.tempSaleAttrs.push({
+                  attrId: item.attrId,
+                  attrValues: [],
+                  attrName: item.attrName
+                });
+                this.inputVisible.push({ view: false });
+                this.inputValue.push({ val: "" });
               });
-              this.inputVisible.push({ view: false });
-              this.inputValue.push({ val: "" });
-            });
-            
+
             }
             this.dataResp.steped[1] = true;
           });
@@ -543,20 +541,20 @@ export default {
     },
     showBaseAttrs() {
       if (!this.dataResp.steped[0]) {
-        CategoryWithAttr(this.spu.categoryId).then(({ data }) => {
+        AttrGroupCategoryWithAttrApi(this.spu.categoryId).then((data) => {
           //先对表单的baseAttrs进行初始化
-          console.log( data ,"--------")
+          console.log(data, "--------")
           data.data.forEach(item => {
             let attrArray = [];
-            if (item.attrs){
-            item.attrs.forEach(attr => {
-              attrArray.push({
-                attrId: attr.attrId,
-                attrValues: "",
-                showDesc: attr.showDesc
+            if (item.attrs) {
+              item.attrs.forEach(attr => {
+                attrArray.push({
+                  attrId: attr.attrId,
+                  attrValues: "",
+                  showDesc: attr.showDesc
+                });
               });
-            });
-            this.dataResp.baseAttrs.push(attrArray);
+              this.dataResp.baseAttrs.push(attrArray);
             }
           });
           this.dataResp.steped[0] = 0;
@@ -567,26 +565,14 @@ export default {
 
     submitSkus() {
       console.log("~~~~~", JSON.stringify(this.spu));
-      this.$confirm("将要提交商品数据，需要一小段时间，是否继续?", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        })
-        .then(() => {
-          SaveInfo(this.spu.info).then(({ data }) => {
-            if (data.code == 0) {
-              SuccessMessage("新增商品成功!")
-              this.step = 4;
-            } else {
-              ErrorMessage(`保存失败，原因【${data.msg }】`)
-            }
-          });
-        })
-        .catch(e => {
-          console.log(e);
-          InfoMessage("已取消")
+      WarningConfirm(() => {
+        SpuInfoSaveApi(this.spu.info).then((data) => {
+          SuccessMessage("新增商品成功!")
+          this.step = 4;
         });
+      }, `将要提交商品数据，需要一小段时间，是否继续?`);
     },
+
     //笛卡尔积运算
     descartes(list) {
       //parent上一级索引;count指针计数

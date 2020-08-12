@@ -44,7 +44,8 @@ import {
   CategoryUpdataSortApi,
   CategoryUpdataApi,
   CategorySaveApi
-} from "@/api/product/category.js"
+} from "@/api/product/category.js" ;
+import { RemoveCommonObjectById } from '@/utils/util.js';
 
 export default {
   components: {},
@@ -105,7 +106,12 @@ export default {
         `是否批量删除【${catIds}】菜单?`);
     },
     batchSave() {
-      CategoryUpdataSortApi(this.updateNodes).then((data) => {
+      // 对updataNodes 进行重复的筛选
+      console.log('this.updateNodes 原始数据:>> ', this.updateNodes);
+      let nodes = RemoveCommonObjectById(this.updateNodes)
+      console.log("最新数据", nodes);
+
+      CategoryUpdataSortApi( nodes ).then((data) => {
         SuccessMessage('菜单顺序等修改成功');
         //刷新出新的菜单
         this.getMenus();

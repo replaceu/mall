@@ -17,7 +17,7 @@ export function SaveInfo(data) {
  * 获取spu列表
  * @param {JSON} param 
  */
-export function SkuInfo(param) {
+export function SkuInfoApi(param) {
   return request({
     url: request.adornUrl(`${BASE_URL}/list`),
     method: "get",

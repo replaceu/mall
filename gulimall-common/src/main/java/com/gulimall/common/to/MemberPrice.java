@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 @Data
 public class MemberPrice {
 
+//    @ApiModelProperty(value = "id" , name = "")
     private Long id;
     private String name;
     private BigDecimal price;

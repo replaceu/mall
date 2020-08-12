@@ -59,7 +59,9 @@
 
 <script>
 import AddOrUpdate from "./memberlevel-add-or-update";
-import  {MemberLevelList  , MemberLeveLDelete} from "@/api/member/memberLevel.js"
+import  {MemberLevelListApi  , MemberLeveLDeleteApi} from "@/api/member/memberLevel.js"
+import { WarningConfirm, SuccessMessage } from "@/utils/message.js";
+
 export default {
   data() {
     return {
@@ -85,20 +87,14 @@ export default {
     // 获取数据列表
     getDataList() {
       this.dataListLoading = true;
-      
-      MemberLevelList({
+      MemberLevelListApi({
         page: this.pageIndex,
           limit: this.pageSize,
           key: this.dataForm.key
-      }).then(({ data }) => {
-        if (data && data.code === 0) {
+      }).then((data) => {
           data = data.data ;
-          this.dataList = data.list;
-          this.totalPage = data.totalCount;
-        } else {
-          this.dataList = [];
-          this.totalPage = 0;
-        }
+          this.dataList = data.list || [];
+          this.totalPage = data.totalCount || 0 ;
         this.dataListLoading = false;
       });
     },
@@ -131,29 +127,12 @@ export default {
         this.dataListSelections.map(item => {
           return item.id;
         });
-      this.$confirm(
-        `确定对[id=${ids.join(",")}]进行[${id ? "删除" : "批量删除"}]操作?`,
-        "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }
-      ).then(() => {
-        MemberLeveLDelete(ids).then(({ data }) => {
-          if (data && data.code === 0) {
-            this.$message({
-              message: "操作成功",
-              type: "success",
-              duration: 1500,
-              onClose: () => {
-                this.getDataList();
-              }
-            });
-          } else {
-            this.$message.error(data.msg);
-          }
+       WarningConfirm(() => {
+         MemberLeveLDeleteApi(ids).then((data) => {
+          SuccessMessage("操作成功!")
+          this.getDataList();
         });
-      });
+      }, `确定对[id=${ids.join(",")}]进行[${id ? "删除" : "批量删除"}]操作?`);
     }
   }
 };

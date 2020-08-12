@@ -13,6 +13,8 @@ spring:
         locator:
           lower-case-service-id: true
       #          enabled: true
+      x-forwarded:
+        prefix-append: false  # 不拼接前缀
       routes:
         - id: gulimall_ware_router
           uri: lb://gulimall-member
@@ -48,3 +50,4 @@ spring:
             - Path=/renren-fast/**
           filters:
             - StripPrefix=1
+

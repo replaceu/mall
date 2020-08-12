@@ -5,7 +5,7 @@ const BASE_URL = "/member/memberlevel"
  * 获取会员列表
  * @param {*} params 分页搜索参数
  */
-export function MemberLevelList(params){
+export function MemberLevelListApi(params){
   return request({
       url:  request.adornUrl( `${BASE_URL}/list` ) ,
       method: "get" ,
