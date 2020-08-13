@@ -52,20 +52,18 @@ public class CategoryBrandRelationController {
         List<CategoryBrandRelationEntity> categoryBrandRelationEntityList = categoryBrandRelationService.categoryBrandList(pageParams, brandId);
         return CommonResult.ok().data(categoryBrandRelationEntityList);
     }
+
     /**
-     *  获取分类关联的品牌
+     * 获取分类关联的品牌
      */
     @GetMapping("/brands/list")
-    public CommonResult relationBrandsList(@RequestParam("categoryId") Long categoryId){
-
-        List<CategoryBrandRelationEntity> brandList= categoryBrandRelationService.getBrandListByCategoryId(categoryId);
-
-      List<BrandRespVo> brandRespVos =   BrandConvert.INSTANCE.entity2vo(brandList) ;
-
-
-        return CommonResult.ok().data(brandRespVos);
+    public CommonResult<List<BrandRespVo>> relationBrandsList(@RequestParam("categoryId") Long categoryId) {
+        List<CategoryBrandRelationEntity> brandList = categoryBrandRelationService.getBrandListByCategoryId(categoryId);
+        List<BrandRespVo> brandRespVos = BrandConvert.INSTANCE.entity2vo(brandList);
+        return CommonResult.ok(brandRespVos);
 
     }
+
     /**
      * 保存
      */
