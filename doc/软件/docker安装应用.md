@@ -64,3 +64,43 @@ appendonly yes   # aof 持久化
 
 客户端： ` docker exec  -it redis redis-cli`
 
+## 3、elasticsearch安装
+
+```sh
+docker pull elasticsearch:7.4.2
+mkdir -p /mydata/elasticsearch/config
+mkdir -p /mydata/elasticsearch/data
+echo "http.host:0.0.0.0" >> /mydata/elasticsearch/config/elasticsearch.yml
+# 循环授权
+chmod 777 -R /mydata/elasticsearch
+docker run --name elasticsearch -p 9200:9200 -p 9300:9300 \
+-e "discovery.type=single-node" \
+-e ES_JAVA_OPTS="-Xms64m -Xmx128m" \
+-v /mydata/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+-v /mydata/elasticsearch/data:/usr/share/elasticsearch/data \
+-v /mydata/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
+-d elasticsearch:7.4.2
+```
+
+## 4、kibana安装
+
+```sh
+docker pull kibana:7.4.2
+docker run --name kibana -e ELASTICSEARCH_HOSTS=http://66.88.88.200:9200 -p 5601:5601 -d kibana:7.4.2
+docker stats
+```
+
+## 5、 nginx 安装
+
+```sh
+docker pull nginx:1.10
+docker run --name nginx -d nginx:1.10
+docker container cp nginx:/etc/nginx .
+# 文件重命名 然后 放到/mydata/nginx/conf 文件夹下
+docker run --name nginx -p 80:80 \
+-v /mydata/nginx/html:/usr/share/nginx/html \
+-v /mydata/nginx/logs:/var/log/nginx \
+-v /mydata/nginx/conf:/etc/nginx \
+-d nginx:1.10
+```
+
