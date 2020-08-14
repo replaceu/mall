@@ -1,292 +1,253 @@
-drop table if exists sms_coupon;
+/*
+ Navicat MySQL Data Transfer
 
-drop table if exists sms_coupon_history;
+ Source Server         : 66.88.88.200_3306
+ Source Server Type    : MySQL
+ Source Server Version : 50730
+ Source Host           : 66.88.88.200:3306
+ Source Schema         : gulimall_sms
 
-drop table if exists sms_coupon_spu_category_relation;
+ Target Server Type    : MySQL
+ Target Server Version : 50730
+ File Encoding         : 65001
 
-drop table if exists sms_coupon_spu_relation;
+ Date: 14/08/2020 11:38:17
+*/
 
-drop table if exists sms_home_adv;
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
 
-drop table if exists sms_home_subject;
+-- ----------------------------
+-- Table structure for sms_coupon
+-- ----------------------------
+DROP TABLE IF EXISTS `sms_coupon`;
+CREATE TABLE `sms_coupon`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `coupon_type` tinyint(1) NULL DEFAULT NULL COMMENT 'ä¼˜æƒ å·ç±»å‹[0->å…¨åœºèµ åˆ¸ï¼›1->ä¼šå‘˜èµ åˆ¸ï¼›2->è´­ç‰©èµ åˆ¸ï¼›3->æ³¨å†Œèµ åˆ¸]',
+  `coupon_img` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ä¼˜æƒ åˆ¸å›¾ç‰‡',
+  `coupon_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ä¼˜æƒ å·åå­—',
+  `num` int(11) NULL DEFAULT NULL COMMENT 'æ•°é‡',
+  `amount` decimal(18, 4) NULL DEFAULT NULL COMMENT 'é‡‘é¢',
+  `per_limit` int(11) NULL DEFAULT NULL COMMENT 'æ¯äººé™é¢†å¼ æ•°',
+  `min_point` decimal(18, 4) NULL DEFAULT NULL COMMENT 'ä½¿ç”¨é—¨æ§›',
+  `start_time` datetime(0) NULL DEFAULT NULL COMMENT 'å¼€å§‹æ—¶é—´',
+  `end_time` datetime(0) NULL DEFAULT NULL COMMENT 'ç»“æŸæ—¶é—´',
+  `use_type` tinyint(1) NULL DEFAULT NULL COMMENT 'ä½¿ç”¨ç±»å‹[0->å…¨åœºé€šç”¨ï¼›1->æŒ‡å®šåˆ†ç±»ï¼›2->æŒ‡å®šå•†å“]',
+  `note` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'å¤‡æ³¨',
+  `publish_count` int(11) NULL DEFAULT NULL COMMENT 'å‘è¡Œæ•°é‡',
+  `use_count` int(11) NULL DEFAULT NULL COMMENT 'å·²ä½¿ç”¨æ•°é‡',
+  `receive_count` int(11) NULL DEFAULT NULL COMMENT 'é¢†å–æ•°é‡',
+  `enable_start_time` datetime(0) NULL DEFAULT NULL COMMENT 'å¯ä»¥é¢†å–çš„å¼€å§‹æ—¥æœŸ',
+  `enable_end_time` datetime(0) NULL DEFAULT NULL COMMENT 'å¯ä»¥é¢†å–çš„ç»“æŸæ—¥æœŸ',
+  `code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ä¼˜æƒ ç ',
+  `member_level` tinyint(1) NULL DEFAULT NULL COMMENT 'å¯ä»¥é¢†å–çš„ä¼šå‘˜ç­‰çº§[0->ä¸é™ç­‰çº§ï¼Œå…¶ä»–-å¯¹åº”ç­‰çº§]',
+  `publish` tinyint(1) NULL DEFAULT NULL COMMENT 'å‘å¸ƒçŠ¶æ€[0-æœªå‘å¸ƒï¼Œ1-å·²å‘å¸ƒ]',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'ä¼˜æƒ åˆ¸ä¿¡æ¯' ROW_FORMAT = Dynamic;
 
-drop table if exists sms_home_subject_spu;
+-- ----------------------------
+-- Table structure for sms_coupon_history
+-- ----------------------------
+DROP TABLE IF EXISTS `sms_coupon_history`;
+CREATE TABLE `sms_coupon_history`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `coupon_id` bigint(20) NULL DEFAULT NULL COMMENT 'ä¼˜æƒ åˆ¸id',
+  `member_id` bigint(20) NULL DEFAULT NULL COMMENT 'ä¼šå‘˜id',
+  `member_nick_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ä¼šå‘˜åå­—',
+  `get_type` tinyint(1) NULL DEFAULT NULL COMMENT 'è·å–æ–¹å¼[0->åå°èµ é€ï¼›1->ä¸»åŠ¨é¢†å–]',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT 'åˆ›å»ºæ—¶é—´',
+  `use_type` tinyint(1) NULL DEFAULT NULL COMMENT 'ä½¿ç”¨çŠ¶æ€[0->æœªä½¿ç”¨ï¼›1->å·²ä½¿ç”¨ï¼›2->å·²è¿‡æœŸ]',
+  `use_time` datetime(0) NULL DEFAULT NULL COMMENT 'ä½¿ç”¨æ—¶é—´',
+  `order_id` bigint(20) NULL DEFAULT NULL COMMENT 'è®¢å•id',
+  `order_sn` bigint(20) NULL DEFAULT NULL COMMENT 'è®¢å•å·',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'ä¼˜æƒ åˆ¸é¢†å–å†å²è®°å½•' ROW_FORMAT = Dynamic;
 
-drop table if exists sms_member_price;
+-- ----------------------------
+-- Table structure for sms_coupon_spu_category_relation
+-- ----------------------------
+DROP TABLE IF EXISTS `sms_coupon_spu_category_relation`;
+CREATE TABLE `sms_coupon_spu_category_relation`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `coupon_id` bigint(20) NULL DEFAULT NULL COMMENT 'ä¼˜æƒ åˆ¸id',
+  `category_id` bigint(20) NULL DEFAULT NULL COMMENT 'äº§å“åˆ†ç±»id',
+  `category_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'äº§å“åˆ†ç±»åç§°',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'ä¼˜æƒ åˆ¸åˆ†ç±»å…³è”' ROW_FORMAT = Dynamic;
 
-drop table if exists sms_seckill_promotion;
+-- ----------------------------
+-- Table structure for sms_coupon_spu_relation
+-- ----------------------------
+DROP TABLE IF EXISTS `sms_coupon_spu_relation`;
+CREATE TABLE `sms_coupon_spu_relation`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `coupon_id` bigint(20) NULL DEFAULT NULL COMMENT 'ä¼˜æƒ åˆ¸id',
+  `spu_id` bigint(20) NULL DEFAULT NULL COMMENT 'spu_id',
+  `spu_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'spu_name',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'ä¼˜æƒ åˆ¸ä¸äº§å“å…³è”' ROW_FORMAT = Dynamic;
 
-drop table if exists sms_seckill_session;
+-- ----------------------------
+-- Table structure for sms_home_adv
+-- ----------------------------
+DROP TABLE IF EXISTS `sms_home_adv`;
+CREATE TABLE `sms_home_adv`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'åå­—',
+  `pic` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'å›¾ç‰‡åœ°å€',
+  `start_time` datetime(0) NULL DEFAULT NULL COMMENT 'å¼€å§‹æ—¶é—´',
+  `end_time` datetime(0) NULL DEFAULT NULL COMMENT 'ç»“æŸæ—¶é—´',
+  `status` tinyint(1) NULL DEFAULT NULL COMMENT 'çŠ¶æ€',
+  `click_count` int(11) NULL DEFAULT NULL COMMENT 'ç‚¹å‡»æ•°',
+  `url` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'å¹¿å‘Šè¯¦æƒ…è¿æ¥åœ°å€',
+  `note` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'å¤‡æ³¨',
+  `sort` int(11) NULL DEFAULT NULL COMMENT 'æ’åº',
+  `publisher_id` bigint(20) NULL DEFAULT NULL COMMENT 'å‘å¸ƒè€…',
+  `auth_id` bigint(20) NULL DEFAULT NULL COMMENT 'å®¡æ ¸è€…',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'é¦–é¡µè½®æ’­å¹¿å‘Š' ROW_FORMAT = Dynamic;
 
-drop table if exists sms_seckill_sku_notice;
+-- ----------------------------
+-- Table structure for sms_home_subject
+-- ----------------------------
+DROP TABLE IF EXISTS `sms_home_subject`;
+CREATE TABLE `sms_home_subject`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ä¸“é¢˜åå­—',
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ä¸“é¢˜æ ‡é¢˜',
+  `sub_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ä¸“é¢˜å‰¯æ ‡é¢˜',
+  `status` tinyint(1) NULL DEFAULT NULL COMMENT 'æ˜¾ç¤ºçŠ¶æ€',
+  `url` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'è¯¦æƒ…è¿æ¥',
+  `sort` int(11) NULL DEFAULT NULL COMMENT 'æ’åº',
+  `img` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ä¸“é¢˜å›¾ç‰‡åœ°å€',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'é¦–é¡µä¸“é¢˜è¡¨ã€jdé¦–é¡µä¸‹é¢å¾ˆå¤šä¸“é¢˜ï¼Œæ¯ä¸ªä¸“é¢˜é“¾æ¥æ–°çš„é¡µé¢ï¼Œå±•ç¤ºä¸“é¢˜å•†å“ä¿¡æ¯ã€‘' ROW_FORMAT = Dynamic;
 
-drop table if exists sms_seckill_sku_relation;
+-- ----------------------------
+-- Table structure for sms_home_subject_spu
+-- ----------------------------
+DROP TABLE IF EXISTS `sms_home_subject_spu`;
+CREATE TABLE `sms_home_subject_spu`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ä¸“é¢˜åå­—',
+  `subject_id` bigint(20) NULL DEFAULT NULL COMMENT 'ä¸“é¢˜id',
+  `spu_id` bigint(20) NULL DEFAULT NULL COMMENT 'spu_id',
+  `sort` int(11) NULL DEFAULT NULL COMMENT 'æ’åº',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'ä¸“é¢˜å•†å“' ROW_FORMAT = Dynamic;
 
-drop table if exists sms_sku_full_reduction;
+-- ----------------------------
+-- Table structure for sms_member_price
+-- ----------------------------
+DROP TABLE IF EXISTS `sms_member_price`;
+CREATE TABLE `sms_member_price`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `sku_id` bigint(20) NULL DEFAULT NULL COMMENT 'sku_id',
+  `member_level_id` bigint(20) NULL DEFAULT NULL COMMENT 'ä¼šå‘˜ç­‰çº§id',
+  `member_level_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ä¼šå‘˜ç­‰çº§å',
+  `member_price` decimal(18, 4) NULL DEFAULT NULL COMMENT 'ä¼šå‘˜å¯¹åº”ä»·æ ¼',
+  `add_other` tinyint(1) NULL DEFAULT NULL COMMENT 'å¯å¦å åŠ å…¶ä»–ä¼˜æƒ [0-ä¸å¯å åŠ ä¼˜æƒ ï¼Œ1-å¯å åŠ ]',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1293838909598613508 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'å•†å“ä¼šå‘˜ä»·æ ¼' ROW_FORMAT = Dynamic;
 
-drop table if exists sms_sku_ladder;
+-- ----------------------------
+-- Table structure for sms_seckill_promotion
+-- ----------------------------
+DROP TABLE IF EXISTS `sms_seckill_promotion`;
+CREATE TABLE `sms_seckill_promotion`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'æ´»åŠ¨æ ‡é¢˜',
+  `start_time` datetime(0) NULL DEFAULT NULL COMMENT 'å¼€å§‹æ—¥æœŸ',
+  `end_time` datetime(0) NULL DEFAULT NULL COMMENT 'ç»“æŸæ—¥æœŸ',
+  `status` tinyint(4) NULL DEFAULT NULL COMMENT 'ä¸Šä¸‹çº¿çŠ¶æ€',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT 'åˆ›å»ºæ—¶é—´',
+  `user_id` bigint(20) NULL DEFAULT NULL COMMENT 'åˆ›å»ºäºº',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'ç§’æ€æ´»åŠ¨' ROW_FORMAT = Dynamic;
 
-drop table if exists sms_spu_bounds;
+-- ----------------------------
+-- Table structure for sms_seckill_session
+-- ----------------------------
+DROP TABLE IF EXISTS `sms_seckill_session`;
+CREATE TABLE `sms_seckill_session`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'åœºæ¬¡åç§°',
+  `start_time` datetime(0) NULL DEFAULT NULL COMMENT 'æ¯æ—¥å¼€å§‹æ—¶é—´',
+  `end_time` datetime(0) NULL DEFAULT NULL COMMENT 'æ¯æ—¥ç»“æŸæ—¶é—´',
+  `status` tinyint(1) NULL DEFAULT NULL COMMENT 'å¯ç”¨çŠ¶æ€',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT 'åˆ›å»ºæ—¶é—´',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'ç§’æ€æ´»åŠ¨åœºæ¬¡' ROW_FORMAT = Dynamic;
 
-/*==============================================================*/
-/* Table: sms_coupon                                            */
-/*==============================================================*/
-create table sms_coupon
-(
-   id                   bigint not null auto_increment comment 'id',
-   coupon_type          tinyint(1) comment 'ÓÅ»İ¾íÀàĞÍ[0->È«³¡ÔùÈ¯£»1->»áÔ±ÔùÈ¯£»2->¹ºÎïÔùÈ¯£»3->×¢²áÔùÈ¯]',
-   coupon_img           varchar(2000) comment 'ÓÅ»İÈ¯Í¼Æ¬',
-   coupon_name          varchar(100) comment 'ÓÅ»İ¾íÃû×Ö',
-   num                  int comment 'ÊıÁ¿',
-   amount               decimal(18,4) comment '½ğ¶î',
-   per_limit            int comment 'Ã¿ÈËÏŞÁìÕÅÊı',
-   min_point            decimal(18,4) comment 'Ê¹ÓÃÃÅ¼÷',
-   start_time           datetime comment '¿ªÊ¼Ê±¼ä',
-   end_time             datetime comment '½áÊøÊ±¼ä',
-   use_type             tinyint(1) comment 'Ê¹ÓÃÀàĞÍ[0->È«³¡Í¨ÓÃ£»1->Ö¸¶¨·ÖÀà£»2->Ö¸¶¨ÉÌÆ·]',
-   note                 varchar(200) comment '±¸×¢',
-   publish_count        int(11) comment '·¢ĞĞÊıÁ¿',
-   use_count            int(11) comment 'ÒÑÊ¹ÓÃÊıÁ¿',
-   receive_count        int(11) comment 'ÁìÈ¡ÊıÁ¿',
-   enable_start_time    datetime comment '¿ÉÒÔÁìÈ¡µÄ¿ªÊ¼ÈÕÆÚ',
-   enable_end_time      datetime comment '¿ÉÒÔÁìÈ¡µÄ½áÊøÈÕÆÚ',
-   code                 varchar(64) comment 'ÓÅ»İÂë',
-   member_level         tinyint(1) comment '¿ÉÒÔÁìÈ¡µÄ»áÔ±µÈ¼¶[0->²»ÏŞµÈ¼¶£¬ÆäËû-¶ÔÓ¦µÈ¼¶]',
-   publish              tinyint(1) comment '·¢²¼×´Ì¬[0-Î´·¢²¼£¬1-ÒÑ·¢²¼]',
-   primary key (id)
-);
+-- ----------------------------
+-- Table structure for sms_seckill_sku_notice
+-- ----------------------------
+DROP TABLE IF EXISTS `sms_seckill_sku_notice`;
+CREATE TABLE `sms_seckill_sku_notice`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `member_id` bigint(20) NULL DEFAULT NULL COMMENT 'member_id',
+  `sku_id` bigint(20) NULL DEFAULT NULL COMMENT 'sku_id',
+  `session_id` bigint(20) NULL DEFAULT NULL COMMENT 'æ´»åŠ¨åœºæ¬¡id',
+  `subcribe_time` datetime(0) NULL DEFAULT NULL COMMENT 'è®¢é˜…æ—¶é—´',
+  `send_time` datetime(0) NULL DEFAULT NULL COMMENT 'å‘é€æ—¶é—´',
+  `notice_type` tinyint(1) NULL DEFAULT NULL COMMENT 'é€šçŸ¥æ–¹å¼[0-çŸ­ä¿¡ï¼Œ1-é‚®ä»¶]',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'ç§’æ€å•†å“é€šçŸ¥è®¢é˜…' ROW_FORMAT = Dynamic;
 
-alter table sms_coupon comment 'ÓÅ»İÈ¯ĞÅÏ¢';
+-- ----------------------------
+-- Table structure for sms_seckill_sku_relation
+-- ----------------------------
+DROP TABLE IF EXISTS `sms_seckill_sku_relation`;
+CREATE TABLE `sms_seckill_sku_relation`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `promotion_id` bigint(20) NULL DEFAULT NULL COMMENT 'æ´»åŠ¨id',
+  `promotion_session_id` bigint(20) NULL DEFAULT NULL COMMENT 'æ´»åŠ¨åœºæ¬¡id',
+  `sku_id` bigint(20) NULL DEFAULT NULL COMMENT 'å•†å“id',
+  `seckill_price` decimal(10, 0) NULL DEFAULT NULL COMMENT 'ç§’æ€ä»·æ ¼',
+  `seckill_count` decimal(10, 0) NULL DEFAULT NULL COMMENT 'ç§’æ€æ€»é‡',
+  `seckill_limit` decimal(10, 0) NULL DEFAULT NULL COMMENT 'æ¯äººé™è´­æ•°é‡',
+  `seckill_sort` int(11) NULL DEFAULT NULL COMMENT 'æ’åº',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'ç§’æ€æ´»åŠ¨å•†å“å…³è”' ROW_FORMAT = Dynamic;
 
-/*==============================================================*/
-/* Table: sms_coupon_history                                    */
-/*==============================================================*/
-create table sms_coupon_history
-(
-   id                   bigint not null auto_increment comment 'id',
-   coupon_id            bigint comment 'ÓÅ»İÈ¯id',
-   member_id            bigint comment '»áÔ±id',
-   member_nick_name     varchar(64) comment '»áÔ±Ãû×Ö',
-   get_type             tinyint(1) comment '»ñÈ¡·½Ê½[0->ºóÌ¨ÔùËÍ£»1->Ö÷¶¯ÁìÈ¡]',
-   create_time          datetime comment '´´½¨Ê±¼ä',
-   use_type             tinyint(1) comment 'Ê¹ÓÃ×´Ì¬[0->Î´Ê¹ÓÃ£»1->ÒÑÊ¹ÓÃ£»2->ÒÑ¹ıÆÚ]',
-   use_time             datetime comment 'Ê¹ÓÃÊ±¼ä',
-   order_id             bigint comment '¶©µ¥id',
-   order_sn             bigint comment '¶©µ¥ºÅ',
-   primary key (id)
-);
+-- ----------------------------
+-- Table structure for sms_sku_full_reduction
+-- ----------------------------
+DROP TABLE IF EXISTS `sms_sku_full_reduction`;
+CREATE TABLE `sms_sku_full_reduction`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `sku_id` bigint(20) NULL DEFAULT NULL COMMENT 'spu_id',
+  `full_price` decimal(18, 4) NULL DEFAULT NULL COMMENT 'æ»¡å¤šå°‘',
+  `reduce_price` decimal(18, 4) NULL DEFAULT NULL COMMENT 'å‡å¤šå°‘',
+  `add_other` tinyint(1) NULL DEFAULT NULL COMMENT 'æ˜¯å¦å‚ä¸å…¶ä»–ä¼˜æƒ ',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1293838909590224898 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'å•†å“æ»¡å‡ä¿¡æ¯' ROW_FORMAT = Dynamic;
 
-alter table sms_coupon_history comment 'ÓÅ»İÈ¯ÁìÈ¡ÀúÊ·¼ÇÂ¼';
+-- ----------------------------
+-- Table structure for sms_sku_ladder
+-- ----------------------------
+DROP TABLE IF EXISTS `sms_sku_ladder`;
+CREATE TABLE `sms_sku_ladder`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `sku_id` bigint(20) NULL DEFAULT NULL COMMENT 'spu_id',
+  `full_count` int(11) NULL DEFAULT NULL COMMENT 'æ»¡å‡ ä»¶',
+  `discount` decimal(4, 2) NULL DEFAULT NULL COMMENT 'æ‰“å‡ æŠ˜',
+  `price` decimal(18, 4) NULL DEFAULT NULL COMMENT 'æŠ˜åä»·',
+  `add_other` tinyint(1) NULL DEFAULT NULL COMMENT 'æ˜¯å¦å åŠ å…¶ä»–ä¼˜æƒ [0-ä¸å¯å åŠ ï¼Œ1-å¯å åŠ ]',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1293838909573447683 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'å•†å“é˜¶æ¢¯ä»·æ ¼' ROW_FORMAT = Dynamic;
 
-/*==============================================================*/
-/* Table: sms_coupon_spu_category_relation                      */
-/*==============================================================*/
-create table sms_coupon_spu_category_relation
-(
-   id                   bigint not null auto_increment comment 'id',
-   coupon_id            bigint comment 'ÓÅ»İÈ¯id',
-   category_id          bigint comment '²úÆ··ÖÀàid',
-   category_name        varchar(64) comment '²úÆ··ÖÀàÃû³Æ',
-   primary key (id)
-);
+-- ----------------------------
+-- Table structure for sms_spu_bounds
+-- ----------------------------
+DROP TABLE IF EXISTS `sms_spu_bounds`;
+CREATE TABLE `sms_spu_bounds`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `spu_id` bigint(20) NULL DEFAULT NULL,
+  `grow_bounds` decimal(18, 4) NULL DEFAULT NULL COMMENT 'æˆé•¿ç§¯åˆ†',
+  `buy_bounds` decimal(18, 4) NULL DEFAULT NULL COMMENT 'è´­ç‰©ç§¯åˆ†',
+  `work` tinyint(1) NULL DEFAULT NULL COMMENT 'ä¼˜æƒ ç”Ÿæ•ˆæƒ…å†µ[1111ï¼ˆå››ä¸ªçŠ¶æ€ä½ï¼Œä»å³åˆ°å·¦ï¼‰;0 - æ— ä¼˜æƒ ï¼Œæˆé•¿ç§¯åˆ†æ˜¯å¦èµ é€;1 - æ— ä¼˜æƒ ï¼Œè´­ç‰©ç§¯åˆ†æ˜¯å¦èµ é€;2 - æœ‰ä¼˜æƒ ï¼Œæˆé•¿ç§¯åˆ†æ˜¯å¦èµ é€;3 - æœ‰ä¼˜æƒ ï¼Œè´­ç‰©ç§¯åˆ†æ˜¯å¦èµ é€ã€çŠ¶æ€ä½0ï¼šä¸èµ é€ï¼Œ1ï¼šèµ é€ã€‘]',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1293838894088077315 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'å•†å“spuç§¯åˆ†è®¾ç½®' ROW_FORMAT = Dynamic;
 
-alter table sms_coupon_spu_category_relation comment 'ÓÅ»İÈ¯·ÖÀà¹ØÁª';
-
-/*==============================================================*/
-/* Table: sms_coupon_spu_relation                               */
-/*==============================================================*/
-create table sms_coupon_spu_relation
-(
-   id                   bigint not null auto_increment comment 'id',
-   coupon_id            bigint comment 'ÓÅ»İÈ¯id',
-   spu_id               bigint comment 'spu_id',
-   spu_name             varchar(255) comment 'spu_name',
-   primary key (id)
-);
-
-alter table sms_coupon_spu_relation comment 'ÓÅ»İÈ¯Óë²úÆ·¹ØÁª';
-
-/*==============================================================*/
-/* Table: sms_home_adv                                          */
-/*==============================================================*/
-create table sms_home_adv
-(
-   id                   bigint not null auto_increment comment 'id',
-   name                 varchar(100) comment 'Ãû×Ö',
-   pic                  varchar(500) comment 'Í¼Æ¬µØÖ·',
-   start_time           datetime comment '¿ªÊ¼Ê±¼ä',
-   end_time             datetime comment '½áÊøÊ±¼ä',
-   status               tinyint(1) comment '×´Ì¬',
-   click_count          int comment 'µã»÷Êı',
-   url                  varchar(500) comment '¹ã¸æÏêÇéÁ¬½ÓµØÖ·',
-   note                 varchar(500) comment '±¸×¢',
-   sort                 int comment 'ÅÅĞò',
-   publisher_id         bigint comment '·¢²¼Õß',
-   auth_id              bigint comment 'ÉóºËÕß',
-   primary key (id)
-);
-
-alter table sms_home_adv comment 'Ê×Ò³ÂÖ²¥¹ã¸æ';
-
-/*==============================================================*/
-/* Table: sms_home_subject                                      */
-/*==============================================================*/
-create table sms_home_subject
-(
-   id                   bigint not null auto_increment comment 'id',
-   name                 varchar(200) comment '×¨ÌâÃû×Ö',
-   title                varchar(255) comment '×¨Ìâ±êÌâ',
-   sub_title            varchar(255) comment '×¨Ìâ¸±±êÌâ',
-   status               tinyint(1) comment 'ÏÔÊ¾×´Ì¬',
-   url                  varchar(500) comment 'ÏêÇéÁ¬½Ó',
-   sort                 int comment 'ÅÅĞò',
-   img                  varchar(500) comment '×¨ÌâÍ¼Æ¬µØÖ·',
-   primary key (id)
-);
-
-alter table sms_home_subject comment 'Ê×Ò³×¨Ìâ±í¡¾jdÊ×Ò³ÏÂÃæºÜ¶à×¨Ìâ£¬Ã¿¸ö×¨ÌâÁ´½ÓĞÂµÄÒ³Ãæ£¬Õ¹Ê¾×¨ÌâÉÌÆ·ĞÅÏ¢¡¿';
-
-/*==============================================================*/
-/* Table: sms_home_subject_spu                                  */
-/*==============================================================*/
-create table sms_home_subject_spu
-(
-   id                   bigint not null auto_increment comment 'id',
-   name                 varchar(200) comment '×¨ÌâÃû×Ö',
-   subject_id           bigint comment '×¨Ìâid',
-   spu_id               bigint comment 'spu_id',
-   sort                 int comment 'ÅÅĞò',
-   primary key (id)
-);
-
-alter table sms_home_subject_spu comment '×¨ÌâÉÌÆ·';
-
-/*==============================================================*/
-/* Table: sms_member_price                                      */
-/*==============================================================*/
-create table sms_member_price
-(
-   id                   bigint not null auto_increment comment 'id',
-   sku_id               bigint comment 'sku_id',
-   member_level_id      bigint comment '»áÔ±µÈ¼¶id',
-   member_level_name    varchar(100) comment '»áÔ±µÈ¼¶Ãû',
-   member_price         decimal(18,4) comment '»áÔ±¶ÔÓ¦¼Û¸ñ',
-   add_other            tinyint(1) comment '¿É·ñµş¼ÓÆäËûÓÅ»İ[0-²»¿Éµş¼ÓÓÅ»İ£¬1-¿Éµş¼Ó]',
-   primary key (id)
-);
-
-alter table sms_member_price comment 'ÉÌÆ·»áÔ±¼Û¸ñ';
-
-/*==============================================================*/
-/* Table: sms_seckill_promotion                                 */
-/*==============================================================*/
-create table sms_seckill_promotion
-(
-   id                   bigint not null auto_increment comment 'id',
-   title                varchar(255) comment '»î¶¯±êÌâ',
-   start_time           datetime comment '¿ªÊ¼ÈÕÆÚ',
-   end_time             datetime comment '½áÊøÈÕÆÚ',
-   status               tinyint comment 'ÉÏÏÂÏß×´Ì¬',
-   create_time          datetime comment '´´½¨Ê±¼ä',
-   user_id              bigint comment '´´½¨ÈË',
-   primary key (id)
-);
-
-alter table sms_seckill_promotion comment 'ÃëÉ±»î¶¯';
-
-/*==============================================================*/
-/* Table: sms_seckill_session                                   */
-/*==============================================================*/
-create table sms_seckill_session
-(
-   id                   bigint not null auto_increment comment 'id',
-   name                 varchar(200) comment '³¡´ÎÃû³Æ',
-   start_time           datetime comment 'Ã¿ÈÕ¿ªÊ¼Ê±¼ä',
-   end_time             datetime comment 'Ã¿ÈÕ½áÊøÊ±¼ä',
-   status               tinyint(1) comment 'ÆôÓÃ×´Ì¬',
-   create_time          datetime comment '´´½¨Ê±¼ä',
-   primary key (id)
-);
-
-alter table sms_seckill_session comment 'ÃëÉ±»î¶¯³¡´Î';
-
-/*==============================================================*/
-/* Table: sms_seckill_sku_notice                                */
-/*==============================================================*/
-create table sms_seckill_sku_notice
-(
-   id                   bigint not null auto_increment comment 'id',
-   member_id            bigint comment 'member_id',
-   sku_id               bigint comment 'sku_id',
-   session_id           bigint comment '»î¶¯³¡´Îid',
-   subcribe_time        datetime comment '¶©ÔÄÊ±¼ä',
-   send_time            datetime comment '·¢ËÍÊ±¼ä',
-   notice_type          tinyint(1) comment 'Í¨Öª·½Ê½[0-¶ÌĞÅ£¬1-ÓÊ¼ş]',
-   primary key (id)
-);
-
-alter table sms_seckill_sku_notice comment 'ÃëÉ±ÉÌÆ·Í¨Öª¶©ÔÄ';
-
-/*==============================================================*/
-/* Table: sms_seckill_sku_relation                              */
-/*==============================================================*/
-create table sms_seckill_sku_relation
-(
-   id                   bigint not null auto_increment comment 'id',
-   promotion_id         bigint comment '»î¶¯id',
-   promotion_session_id bigint comment '»î¶¯³¡´Îid',
-   sku_id               bigint comment 'ÉÌÆ·id',
-   seckill_price        decimal comment 'ÃëÉ±¼Û¸ñ',
-   seckill_count        decimal comment 'ÃëÉ±×ÜÁ¿',
-   seckill_limit        decimal comment 'Ã¿ÈËÏŞ¹ºÊıÁ¿',
-   seckill_sort         int comment 'ÅÅĞò',
-   primary key (id)
-);
-
-alter table sms_seckill_sku_relation comment 'ÃëÉ±»î¶¯ÉÌÆ·¹ØÁª';
-
-/*==============================================================*/
-/* Table: sms_sku_full_reduction                                */
-/*==============================================================*/
-create table sms_sku_full_reduction
-(
-   id                   bigint not null auto_increment comment 'id',
-   sku_id               bigint comment 'spu_id',
-   full_price           decimal(18,4) comment 'Âú¶àÉÙ',
-   reduce_price         decimal(18,4) comment '¼õ¶àÉÙ',
-   add_other            tinyint(1) comment 'ÊÇ·ñ²ÎÓëÆäËûÓÅ»İ',
-   primary key (id)
-);
-
-alter table sms_sku_full_reduction comment 'ÉÌÆ·Âú¼õĞÅÏ¢';
-
-/*==============================================================*/
-/* Table: sms_sku_ladder                                        */
-/*==============================================================*/
-create table sms_sku_ladder
-(
-   id                   bigint not null auto_increment comment 'id',
-   sku_id               bigint comment 'spu_id',
-   full_count           int comment 'Âú¼¸¼ş',
-   discount             decimal(4,2) comment '´ò¼¸ÕÛ',
-   price                decimal(18,4) comment 'ÕÛºó¼Û',
-   add_other            tinyint(1) comment 'ÊÇ·ñµş¼ÓÆäËûÓÅ»İ[0-²»¿Éµş¼Ó£¬1-¿Éµş¼Ó]',
-   primary key (id)
-);
-
-alter table sms_sku_ladder comment 'ÉÌÆ·½×Ìİ¼Û¸ñ';
-
-/*==============================================================*/
-/* Table: sms_spu_bounds                                        */
-/*==============================================================*/
-create table sms_spu_bounds
-(
-   id                   bigint not null auto_increment comment 'id',
-   spu_id               bigint,
-   grow_bounds          decimal(18,4) comment '³É³¤»ı·Ö',
-   buy_bounds           decimal(18,4) comment '¹ºÎï»ı·Ö',
-   work                 tinyint(1) comment 'ÓÅ»İÉúĞ§Çé¿ö[1111£¨ËÄ¸ö×´Ì¬Î»£¬´ÓÓÒµ½×ó£©;0 - ÎŞÓÅ»İ£¬³É³¤»ı·ÖÊÇ·ñÔùËÍ;1 - ÎŞÓÅ»İ£¬¹ºÎï»ı·ÖÊÇ·ñÔùËÍ;2 - ÓĞÓÅ»İ£¬³É³¤»ı·ÖÊÇ·ñÔùËÍ;3 - ÓĞÓÅ»İ£¬¹ºÎï»ı·ÖÊÇ·ñÔùËÍ¡¾×´Ì¬Î»0£º²»ÔùËÍ£¬1£ºÔùËÍ¡¿]',
-   primary key (id)
-);
-
-alter table sms_spu_bounds comment 'ÉÌÆ·spu»ı·ÖÉèÖÃ';
+SET FOREIGN_KEY_CHECKS = 1;

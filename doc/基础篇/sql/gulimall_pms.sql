@@ -1,284 +1,246 @@
-drop table if exists pms_attr;
+/*
+ Navicat MySQL Data Transfer
 
-drop table if exists pms_attr_attrgroup_relation;
+ Source Server         : 66.88.88.200_3306
+ Source Server Type    : MySQL
+ Source Server Version : 50730
+ Source Host           : 66.88.88.200:3306
+ Source Schema         : gulimall_pms
 
-drop table if exists pms_attr_group;
+ Target Server Type    : MySQL
+ Target Server Version : 50730
+ File Encoding         : 65001
 
-drop table if exists pms_brand;
+ Date: 14/08/2020 11:38:07
+*/
 
-drop table if exists pms_category;
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
 
-drop table if exists pms_category_brand_relation;
+-- ----------------------------
+-- Table structure for pms_attr
+-- ----------------------------
+DROP TABLE IF EXISTS `pms_attr`;
+CREATE TABLE `pms_attr`  (
+  `attr_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'å±æ€§id',
+  `attr_name` char(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'å±æ€§å',
+  `search_type` tinyint(4) NULL DEFAULT NULL COMMENT 'æ˜¯å¦éœ€è¦æ£€ç´¢[0-ä¸éœ€è¦ï¼Œ1-éœ€è¦]',
+  `icon` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'å±æ€§å›¾æ ‡',
+  `value_select` char(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'å¯é€‰å€¼åˆ—è¡¨[ç”¨é€—å·åˆ†éš”]',
+  `attr_type` tinyint(4) NULL DEFAULT NULL COMMENT 'å±æ€§ç±»å‹[0-é”€å”®å±æ€§ï¼Œ1-åŸºæœ¬å±æ€§ï¼Œ2-æ—¢æ˜¯é”€å”®å±æ€§åˆæ˜¯åŸºæœ¬å±æ€§]',
+  `enable` bigint(20) NULL DEFAULT NULL COMMENT 'å¯ç”¨çŠ¶æ€[0 - ç¦ç”¨ï¼Œ1 - å¯ç”¨]',
+  `category_id` bigint(20) NULL DEFAULT NULL COMMENT 'æ‰€å±åˆ†ç±»',
+  `show_desc` tinyint(4) NULL DEFAULT NULL COMMENT 'å¿«é€Ÿå±•ç¤ºã€æ˜¯å¦å±•ç¤ºåœ¨ä»‹ç»ä¸Šï¼›0-å¦ 1-æ˜¯ã€‘ï¼Œåœ¨skuä¸­ä»ç„¶å¯ä»¥è°ƒæ•´',
+  `value_type` tinyint(4) NULL DEFAULT 0 COMMENT 'å¯é€‰å€¼ç±»å‹  [0 - å•é€‰ï¼Œ1 - å¤šé€‰]',
+  PRIMARY KEY (`attr_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'å•†å“å±æ€§' ROW_FORMAT = Dynamic;
 
-drop table if exists pms_comment_replay;
+-- ----------------------------
+-- Table structure for pms_attr_attrgroup_relation
+-- ----------------------------
+DROP TABLE IF EXISTS `pms_attr_attrgroup_relation`;
+CREATE TABLE `pms_attr_attrgroup_relation`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `attr_id` bigint(20) NULL DEFAULT NULL COMMENT 'å±æ€§id',
+  `attr_group_id` bigint(20) NULL DEFAULT NULL COMMENT 'å±æ€§åˆ†ç»„id',
+  `attr_sort` int(11) NULL DEFAULT 0 COMMENT 'å±æ€§ç»„å†…æ’åº',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'å±æ€§&å±æ€§åˆ†ç»„å…³è”' ROW_FORMAT = Dynamic;
 
-drop table if exists pms_product_attr_value;
+-- ----------------------------
+-- Table structure for pms_attr_group
+-- ----------------------------
+DROP TABLE IF EXISTS `pms_attr_group`;
+CREATE TABLE `pms_attr_group`  (
+  `attr_group_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'åˆ†ç»„id',
+  `attr_group_name` char(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ç»„å',
+  `sort` int(11) NULL DEFAULT NULL COMMENT 'æ’åº',
+  `descript` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'æè¿°',
+  `icon` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ç»„å›¾æ ‡',
+  `category_id` bigint(20) NULL DEFAULT NULL COMMENT 'æ‰€å±åˆ†ç±»id',
+  PRIMARY KEY (`attr_group_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'å±æ€§åˆ†ç»„' ROW_FORMAT = Dynamic;
 
-drop table if exists pms_sku_images;
+-- ----------------------------
+-- Table structure for pms_brand
+-- ----------------------------
+DROP TABLE IF EXISTS `pms_brand`;
+CREATE TABLE `pms_brand`  (
+  `brand_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'å“ç‰Œid',
+  `name` char(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'å“ç‰Œå',
+  `logo` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'å“ç‰Œlogoåœ°å€',
+  `descript` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'ä»‹ç»',
+  `show_status` tinyint(4) NULL DEFAULT NULL COMMENT 'æ˜¾ç¤ºçŠ¶æ€[0-ä¸æ˜¾ç¤ºï¼›1-æ˜¾ç¤º]',
+  `first_letter` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'æ£€ç´¢é¦–å­—æ¯',
+  `sort` int(11) NULL DEFAULT NULL COMMENT 'æ’åº',
+  PRIMARY KEY (`brand_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'å“ç‰Œ' ROW_FORMAT = Dynamic;
 
-drop table if exists pms_sku_info;
+-- ----------------------------
+-- Table structure for pms_category
+-- ----------------------------
+DROP TABLE IF EXISTS `pms_category`;
+CREATE TABLE `pms_category`  (
+  `cat_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'åˆ†ç±»id',
+  `name` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'åˆ†ç±»åç§°',
+  `parent_cid` bigint(20) NULL DEFAULT NULL COMMENT 'çˆ¶åˆ†ç±»id',
+  `cat_level` int(11) NULL DEFAULT NULL COMMENT 'å±‚çº§',
+  `show_status` tinyint(4) NULL DEFAULT NULL COMMENT 'æ˜¯å¦æ˜¾ç¤º[0-ä¸æ˜¾ç¤ºï¼Œ1æ˜¾ç¤º]',
+  `sort` int(11) NULL DEFAULT NULL COMMENT 'æ’åº',
+  `icon` char(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'å›¾æ ‡åœ°å€',
+  `product_unit` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'è®¡é‡å•ä½',
+  `product_count` int(11) NULL DEFAULT NULL COMMENT 'å•†å“æ•°é‡',
+  PRIMARY KEY (`cat_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1442 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'å•†å“ä¸‰çº§åˆ†ç±»' ROW_FORMAT = Dynamic;
 
-drop table if exists pms_sku_sale_attr_value;
+-- ----------------------------
+-- Table structure for pms_category_brand_relation
+-- ----------------------------
+DROP TABLE IF EXISTS `pms_category_brand_relation`;
+CREATE TABLE `pms_category_brand_relation`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `brand_id` bigint(20) NULL DEFAULT NULL COMMENT 'å“ç‰Œid',
+  `category_id` bigint(20) NULL DEFAULT NULL COMMENT 'åˆ†ç±»id',
+  `brand_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `category_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'å“ç‰Œåˆ†ç±»å…³è”' ROW_FORMAT = Dynamic;
 
-drop table if exists pms_spu_comment;
+-- ----------------------------
+-- Table structure for pms_comment_replay
+-- ----------------------------
+DROP TABLE IF EXISTS `pms_comment_replay`;
+CREATE TABLE `pms_comment_replay`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `comment_id` bigint(20) NULL DEFAULT NULL COMMENT 'è¯„è®ºid',
+  `reply_id` bigint(20) NULL DEFAULT NULL COMMENT 'å›å¤id',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'å•†å“è¯„ä»·å›å¤å…³ç³»' ROW_FORMAT = Dynamic;
 
-drop table if exists pms_spu_images;
+-- ----------------------------
+-- Table structure for pms_product_attr_value
+-- ----------------------------
+DROP TABLE IF EXISTS `pms_product_attr_value`;
+CREATE TABLE `pms_product_attr_value`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `spu_id` bigint(20) NULL DEFAULT NULL COMMENT 'å•†å“id',
+  `attr_id` bigint(20) NULL DEFAULT NULL COMMENT 'å±æ€§id',
+  `attr_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'å±æ€§å',
+  `attr_value` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'å±æ€§å€¼',
+  `attr_sort` int(11) NULL DEFAULT NULL COMMENT 'é¡ºåº',
+  `quick_show` tinyint(4) NULL DEFAULT NULL COMMENT 'å¿«é€Ÿå±•ç¤ºã€æ˜¯å¦å±•ç¤ºåœ¨ä»‹ç»ä¸Šï¼›0-å¦ 1-æ˜¯ã€‘',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'spuå±æ€§å€¼' ROW_FORMAT = Dynamic;
 
-drop table if exists pms_spu_info;
+-- ----------------------------
+-- Table structure for pms_sku_images
+-- ----------------------------
+DROP TABLE IF EXISTS `pms_sku_images`;
+CREATE TABLE `pms_sku_images`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `sku_id` bigint(20) NULL DEFAULT NULL COMMENT 'sku_id',
+  `img_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'å›¾ç‰‡åœ°å€',
+  `img_sort` int(11) NULL DEFAULT NULL COMMENT 'æ’åº',
+  `default_img` int(11) NULL DEFAULT NULL COMMENT 'é»˜è®¤å›¾[0 - ä¸æ˜¯é»˜è®¤å›¾ï¼Œ1 - æ˜¯é»˜è®¤å›¾]',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'skuå›¾ç‰‡' ROW_FORMAT = Dynamic;
 
-drop table if exists pms_spu_info_desc;
+-- ----------------------------
+-- Table structure for pms_sku_info
+-- ----------------------------
+DROP TABLE IF EXISTS `pms_sku_info`;
+CREATE TABLE `pms_sku_info`  (
+  `sku_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'skuId',
+  `spu_id` bigint(20) NULL DEFAULT NULL COMMENT 'spuId',
+  `sku_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'skuåç§°',
+  `sku_desc` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'skuä»‹ç»æè¿°',
+  `category_id` bigint(20) NULL DEFAULT NULL COMMENT 'æ‰€å±åˆ†ç±»id',
+  `brand_id` bigint(20) NULL DEFAULT NULL COMMENT 'å“ç‰Œid',
+  `sku_default_img` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'é»˜è®¤å›¾ç‰‡',
+  `sku_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'æ ‡é¢˜',
+  `sku_subtitle` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'å‰¯æ ‡é¢˜',
+  `price` decimal(18, 4) NULL DEFAULT NULL COMMENT 'ä»·æ ¼',
+  `sale_count` bigint(20) NULL DEFAULT NULL COMMENT 'é”€é‡',
+  PRIMARY KEY (`sku_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'skuä¿¡æ¯' ROW_FORMAT = Dynamic;
 
-/*==============================================================*/
-/* Table: pms_attr                                              */
-/*==============================================================*/
-create table pms_attr
-(
-   attr_id              bigint not null auto_increment comment 'ÊôĞÔid',
-   attr_name            char(30) comment 'ÊôĞÔÃû',
-   search_type          tinyint comment 'ÊÇ·ñĞèÒª¼ìË÷[0-²»ĞèÒª£¬1-ĞèÒª]',
-   icon                 varchar(255) comment 'ÊôĞÔÍ¼±ê',
-   value_select         char(255) comment '¿ÉÑ¡ÖµÁĞ±í[ÓÃ¶ººÅ·Ö¸ô]',
-   attr_type            tinyint comment 'ÊôĞÔÀàĞÍ[0-ÏúÊÛÊôĞÔ£¬1-»ù±¾ÊôĞÔ£¬2-¼ÈÊÇÏúÊÛÊôĞÔÓÖÊÇ»ù±¾ÊôĞÔ]',
-   enable               bigint comment 'ÆôÓÃ×´Ì¬[0 - ½ûÓÃ£¬1 - ÆôÓÃ]',
-   catelog_id           bigint comment 'ËùÊô·ÖÀà',
-   show_desc            tinyint comment '¿ìËÙÕ¹Ê¾¡¾ÊÇ·ñÕ¹Ê¾ÔÚ½éÉÜÉÏ£»0-·ñ 1-ÊÇ¡¿£¬ÔÚskuÖĞÈÔÈ»¿ÉÒÔµ÷Õû',
-   primary key (attr_id)
-);
+-- ----------------------------
+-- Table structure for pms_sku_sale_attr_value
+-- ----------------------------
+DROP TABLE IF EXISTS `pms_sku_sale_attr_value`;
+CREATE TABLE `pms_sku_sale_attr_value`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `sku_id` bigint(20) NULL DEFAULT NULL COMMENT 'sku_id',
+  `attr_id` bigint(20) NULL DEFAULT NULL COMMENT 'attr_id',
+  `attr_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'é”€å”®å±æ€§å',
+  `attr_value` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'é”€å”®å±æ€§å€¼',
+  `attr_sort` int(11) NULL DEFAULT NULL COMMENT 'é¡ºåº',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'skué”€å”®å±æ€§&å€¼' ROW_FORMAT = Dynamic;
 
-alter table pms_attr comment 'ÉÌÆ·ÊôĞÔ';
+-- ----------------------------
+-- Table structure for pms_spu_comment
+-- ----------------------------
+DROP TABLE IF EXISTS `pms_spu_comment`;
+CREATE TABLE `pms_spu_comment`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `sku_id` bigint(20) NULL DEFAULT NULL COMMENT 'sku_id',
+  `spu_id` bigint(20) NULL DEFAULT NULL COMMENT 'spu_id',
+  `spu_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'å•†å“åå­—',
+  `member_nick_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ä¼šå‘˜æ˜µç§°',
+  `star` tinyint(1) NULL DEFAULT NULL COMMENT 'æ˜Ÿçº§',
+  `member_ip` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ä¼šå‘˜ip',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT 'åˆ›å»ºæ—¶é—´',
+  `show_status` tinyint(1) NULL DEFAULT NULL COMMENT 'æ˜¾ç¤ºçŠ¶æ€[0-ä¸æ˜¾ç¤ºï¼Œ1-æ˜¾ç¤º]',
+  `spu_attributes` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'è´­ä¹°æ—¶å±æ€§ç»„åˆ',
+  `likes_count` int(11) NULL DEFAULT NULL COMMENT 'ç‚¹èµæ•°',
+  `reply_count` int(11) NULL DEFAULT NULL COMMENT 'å›å¤æ•°',
+  `resources` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'è¯„è®ºå›¾ç‰‡/è§†é¢‘[jsonæ•°æ®ï¼›[{type:æ–‡ä»¶ç±»å‹,url:èµ„æºè·¯å¾„}]]',
+  `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'å†…å®¹',
+  `member_icon` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ç”¨æˆ·å¤´åƒ',
+  `comment_type` tinyint(4) NULL DEFAULT NULL COMMENT 'è¯„è®ºç±»å‹[0 - å¯¹å•†å“çš„ç›´æ¥è¯„è®ºï¼Œ1 - å¯¹è¯„è®ºçš„å›å¤]',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'å•†å“è¯„ä»·' ROW_FORMAT = Dynamic;
 
-/*==============================================================*/
-/* Table: pms_attr_attrgroup_relation                           */
-/*==============================================================*/
-create table pms_attr_attrgroup_relation
-(
-   id                   bigint not null auto_increment comment 'id',
-   attr_id              bigint comment 'ÊôĞÔid',
-   attr_group_id        bigint comment 'ÊôĞÔ·Ö×éid',
-   attr_sort            int comment 'ÊôĞÔ×éÄÚÅÅĞò',
-   primary key (id)
-);
+-- ----------------------------
+-- Table structure for pms_spu_images
+-- ----------------------------
+DROP TABLE IF EXISTS `pms_spu_images`;
+CREATE TABLE `pms_spu_images`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `spu_id` bigint(20) NULL DEFAULT NULL COMMENT 'spu_id',
+  `img_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'å›¾ç‰‡å',
+  `img_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'å›¾ç‰‡åœ°å€',
+  `img_sort` int(11) NULL DEFAULT NULL COMMENT 'é¡ºåº',
+  `default_img` tinyint(4) NULL DEFAULT NULL COMMENT 'æ˜¯å¦é»˜è®¤å›¾',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'spuå›¾ç‰‡' ROW_FORMAT = Dynamic;
 
-alter table pms_attr_attrgroup_relation comment 'ÊôĞÔ&ÊôĞÔ·Ö×é¹ØÁª';
+-- ----------------------------
+-- Table structure for pms_spu_info
+-- ----------------------------
+DROP TABLE IF EXISTS `pms_spu_info`;
+CREATE TABLE `pms_spu_info`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'å•†å“id',
+  `spu_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'å•†å“åç§°',
+  `spu_description` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'å•†å“æè¿°',
+  `category_id` bigint(20) NULL DEFAULT NULL COMMENT 'æ‰€å±åˆ†ç±»id',
+  `brand_id` bigint(20) NULL DEFAULT NULL COMMENT 'å“ç‰Œid',
+  `weight` decimal(18, 4) NULL DEFAULT NULL,
+  `publish_status` tinyint(4) NULL DEFAULT NULL COMMENT 'ä¸Šæ¶çŠ¶æ€[0 - ä¸‹æ¶ï¼Œ1 - ä¸Šæ¶]',
+  `create_time` datetime(0) NULL DEFAULT NULL,
+  `update_time` datetime(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'spuä¿¡æ¯' ROW_FORMAT = Dynamic;
 
-/*==============================================================*/
-/* Table: pms_attr_group                                        */
-/*==============================================================*/
-create table pms_attr_group
-(
-   attr_group_id        bigint not null auto_increment comment '·Ö×éid',
-   attr_group_name      char(20) comment '×éÃû',
-   sort                 int comment 'ÅÅĞò',
-   descript             varchar(255) comment 'ÃèÊö',
-   icon                 varchar(255) comment '×éÍ¼±ê',
-   catelog_id           bigint comment 'ËùÊô·ÖÀàid',
-   primary key (attr_group_id)
-);
+-- ----------------------------
+-- Table structure for pms_spu_info_desc
+-- ----------------------------
+DROP TABLE IF EXISTS `pms_spu_info_desc`;
+CREATE TABLE `pms_spu_info_desc`  (
+  `spu_id` bigint(20) NOT NULL COMMENT 'å•†å“id',
+  `decript` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'å•†å“ä»‹ç»',
+  PRIMARY KEY (`spu_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'spuä¿¡æ¯ä»‹ç»' ROW_FORMAT = Dynamic;
 
-alter table pms_attr_group comment 'ÊôĞÔ·Ö×é';
-
-/*==============================================================*/
-/* Table: pms_brand                                             */
-/*==============================================================*/
-create table pms_brand
-(
-   brand_id             bigint not null auto_increment comment 'Æ·ÅÆid',
-   name                 char(50) comment 'Æ·ÅÆÃû',
-   logo                 varchar(2000) comment 'Æ·ÅÆlogoµØÖ·',
-   descript             longtext comment '½éÉÜ',
-   show_status          tinyint comment 'ÏÔÊ¾×´Ì¬[0-²»ÏÔÊ¾£»1-ÏÔÊ¾]',
-   first_letter         char(1) comment '¼ìË÷Ê××ÖÄ¸',
-   sort                 int comment 'ÅÅĞò',
-   primary key (brand_id)
-);
-
-alter table pms_brand comment 'Æ·ÅÆ';
-
-/*==============================================================*/
-/* Table: pms_category                                          */
-/*==============================================================*/
-create table pms_category
-(
-   cat_id               bigint not null auto_increment comment '·ÖÀàid',
-   name                 char(50) comment '·ÖÀàÃû³Æ',
-   parent_cid           bigint comment '¸¸·ÖÀàid',
-   cat_level            int comment '²ã¼¶',
-   show_status          tinyint comment 'ÊÇ·ñÏÔÊ¾[0-²»ÏÔÊ¾£¬1ÏÔÊ¾]',
-   sort                 int comment 'ÅÅĞò',
-   icon                 char(255) comment 'Í¼±êµØÖ·',
-   product_unit         char(50) comment '¼ÆÁ¿µ¥Î»',
-   product_count        int comment 'ÉÌÆ·ÊıÁ¿',
-   primary key (cat_id)
-);
-
-alter table pms_category comment 'ÉÌÆ·Èı¼¶·ÖÀà';
-
-/*==============================================================*/
-/* Table: pms_category_brand_relation                           */
-/*==============================================================*/
-create table pms_category_brand_relation
-(
-   id                   bigint not null auto_increment,
-   brand_id             bigint comment 'Æ·ÅÆid',
-   catelog_id           bigint comment '·ÖÀàid',
-   brand_name           varchar(255),
-   catelog_name         varchar(255),
-   primary key (id)
-);
-
-alter table pms_category_brand_relation comment 'Æ·ÅÆ·ÖÀà¹ØÁª';
-
-/*==============================================================*/
-/* Table: pms_comment_replay                                    */
-/*==============================================================*/
-create table pms_comment_replay
-(
-   id                   bigint not null auto_increment comment 'id',
-   comment_id           bigint comment 'ÆÀÂÛid',
-   reply_id             bigint comment '»Ø¸´id',
-   primary key (id)
-);
-
-alter table pms_comment_replay comment 'ÉÌÆ·ÆÀ¼Û»Ø¸´¹ØÏµ';
-
-/*==============================================================*/
-/* Table: pms_product_attr_value                                */
-/*==============================================================*/
-create table pms_product_attr_value
-(
-   id                   bigint not null auto_increment comment 'id',
-   spu_id               bigint comment 'ÉÌÆ·id',
-   attr_id              bigint comment 'ÊôĞÔid',
-   attr_name            varchar(200) comment 'ÊôĞÔÃû',
-   attr_value           varchar(200) comment 'ÊôĞÔÖµ',
-   attr_sort            int comment 'Ë³Ğò',
-   quick_show           tinyint comment '¿ìËÙÕ¹Ê¾¡¾ÊÇ·ñÕ¹Ê¾ÔÚ½éÉÜÉÏ£»0-·ñ 1-ÊÇ¡¿',
-   primary key (id)
-);
-
-alter table pms_product_attr_value comment 'spuÊôĞÔÖµ';
-
-/*==============================================================*/
-/* Table: pms_sku_images                                        */
-/*==============================================================*/
-create table pms_sku_images
-(
-   id                   bigint not null auto_increment comment 'id',
-   sku_id               bigint comment 'sku_id',
-   img_url              varchar(255) comment 'Í¼Æ¬µØÖ·',
-   img_sort             int comment 'ÅÅĞò',
-   default_img          int comment 'Ä¬ÈÏÍ¼[0 - ²»ÊÇÄ¬ÈÏÍ¼£¬1 - ÊÇÄ¬ÈÏÍ¼]',
-   primary key (id)
-);
-
-alter table pms_sku_images comment 'skuÍ¼Æ¬';
-
-/*==============================================================*/
-/* Table: pms_sku_info                                          */
-/*==============================================================*/
-create table pms_sku_info
-(
-   sku_id               bigint not null auto_increment comment 'skuId',
-   spu_id               bigint comment 'spuId',
-   sku_name             varchar(255) comment 'skuÃû³Æ',
-   sku_desc             varchar(2000) comment 'sku½éÉÜÃèÊö',
-   catalog_id           bigint comment 'ËùÊô·ÖÀàid',
-   brand_id             bigint comment 'Æ·ÅÆid',
-   sku_default_img      varchar(255) comment 'Ä¬ÈÏÍ¼Æ¬',
-   sku_title            varchar(255) comment '±êÌâ',
-   sku_subtitle         varchar(2000) comment '¸±±êÌâ',
-   price                decimal(18,4) comment '¼Û¸ñ',
-   sale_count           bigint comment 'ÏúÁ¿',
-   primary key (sku_id)
-);
-
-alter table pms_sku_info comment 'skuĞÅÏ¢';
-
-/*==============================================================*/
-/* Table: pms_sku_sale_attr_value                               */
-/*==============================================================*/
-create table pms_sku_sale_attr_value
-(
-   id                   bigint not null auto_increment comment 'id',
-   sku_id               bigint comment 'sku_id',
-   attr_id              bigint comment 'attr_id',
-   attr_name            varchar(200) comment 'ÏúÊÛÊôĞÔÃû',
-   attr_value           varchar(200) comment 'ÏúÊÛÊôĞÔÖµ',
-   attr_sort            int comment 'Ë³Ğò',
-   primary key (id)
-);
-
-alter table pms_sku_sale_attr_value comment 'skuÏúÊÛÊôĞÔ&Öµ';
-
-/*==============================================================*/
-/* Table: pms_spu_comment                                       */
-/*==============================================================*/
-create table pms_spu_comment
-(
-   id                   bigint not null auto_increment comment 'id',
-   sku_id               bigint comment 'sku_id',
-   spu_id               bigint comment 'spu_id',
-   spu_name             varchar(255) comment 'ÉÌÆ·Ãû×Ö',
-   member_nick_name     varchar(255) comment '»áÔ±êÇ³Æ',
-   star                 tinyint(1) comment 'ĞÇ¼¶',
-   member_ip            varchar(64) comment '»áÔ±ip',
-   create_time          datetime comment '´´½¨Ê±¼ä',
-   show_status          tinyint(1) comment 'ÏÔÊ¾×´Ì¬[0-²»ÏÔÊ¾£¬1-ÏÔÊ¾]',
-   spu_attributes       varchar(255) comment '¹ºÂòÊ±ÊôĞÔ×éºÏ',
-   likes_count          int comment 'µãÔŞÊı',
-   reply_count          int comment '»Ø¸´Êı',
-   resources            varchar(1000) comment 'ÆÀÂÛÍ¼Æ¬/ÊÓÆµ[jsonÊı¾İ£»[{type:ÎÄ¼şÀàĞÍ,url:×ÊÔ´Â·¾¶}]]',
-   content              text comment 'ÄÚÈİ',
-   member_icon          varchar(255) comment 'ÓÃ»§Í·Ïñ',
-   comment_type         tinyint comment 'ÆÀÂÛÀàĞÍ[0 - ¶ÔÉÌÆ·µÄÖ±½ÓÆÀÂÛ£¬1 - ¶ÔÆÀÂÛµÄ»Ø¸´]',
-   primary key (id)
-);
-
-alter table pms_spu_comment comment 'ÉÌÆ·ÆÀ¼Û';
-
-/*==============================================================*/
-/* Table: pms_spu_images                                        */
-/*==============================================================*/
-create table pms_spu_images
-(
-   id                   bigint not null auto_increment comment 'id',
-   spu_id               bigint comment 'spu_id',
-   img_name             varchar(200) comment 'Í¼Æ¬Ãû',
-   img_url              varchar(255) comment 'Í¼Æ¬µØÖ·',
-   img_sort             int comment 'Ë³Ğò',
-   default_img          tinyint comment 'ÊÇ·ñÄ¬ÈÏÍ¼',
-   primary key (id)
-);
-
-alter table pms_spu_images comment 'spuÍ¼Æ¬';
-
-/*==============================================================*/
-/* Table: pms_spu_info                                          */
-/*==============================================================*/
-create table pms_spu_info
-(
-   id                   bigint not null auto_increment comment 'ÉÌÆ·id',
-   spu_name             varchar(200) comment 'ÉÌÆ·Ãû³Æ',
-   spu_description      varchar(1000) comment 'ÉÌÆ·ÃèÊö',
-   catalog_id           bigint comment 'ËùÊô·ÖÀàid',
-   brand_id             bigint comment 'Æ·ÅÆid',
-   weight               decimal(18,4),
-   publish_status       tinyint comment 'ÉÏ¼Ü×´Ì¬[0 - ÏÂ¼Ü£¬1 - ÉÏ¼Ü]',
-   create_time          datetime,
-   update_time          datetime,
-   primary key (id)
-);
-
-alter table pms_spu_info comment 'spuĞÅÏ¢';
-
-/*==============================================================*/
-/* Table: pms_spu_info_desc                                     */
-/*==============================================================*/
-create table pms_spu_info_desc
-(
-   spu_id               bigint not null comment 'ÉÌÆ·id',
-   decript              longtext comment 'ÉÌÆ·½éÉÜ',
-   primary key (spu_id)
-);
-
-alter table pms_spu_info_desc comment 'spuĞÅÏ¢½éÉÜ';
+SET FOREIGN_KEY_CHECKS = 1;

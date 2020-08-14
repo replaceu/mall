@@ -1,115 +1,114 @@
-drop table if exists wms_purchase;
+/*
+ Navicat MySQL Data Transfer
 
-drop table if exists wms_purchase_detail;
+ Source Server         : 66.88.88.200_3306
+ Source Server Type    : MySQL
+ Source Server Version : 50730
+ Source Host           : 66.88.88.200:3306
+ Source Schema         : gulimall_wms
 
-drop table if exists wms_ware_info;
+ Target Server Type    : MySQL
+ Target Server Version : 50730
+ File Encoding         : 65001
 
-drop table if exists wms_ware_order_task;
+ Date: 14/08/2020 11:38:54
+*/
 
-drop table if exists wms_ware_order_task_detail;
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
 
-drop table if exists wms_ware_sku;
+-- ----------------------------
+-- Table structure for wms_purchase
+-- ----------------------------
+DROP TABLE IF EXISTS `wms_purchase`;
+CREATE TABLE `wms_purchase`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'é‡‡è´­å•id',
+  `assignee_id` bigint(20) NULL DEFAULT NULL COMMENT 'é‡‡è´­äººid',
+  `assignee_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'é‡‡è´­äººå',
+  `phone` char(13) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'è”ç³»æ–¹å¼',
+  `priority` int(4) NULL DEFAULT NULL COMMENT 'ä¼˜å…ˆçº§',
+  `status` int(4) NULL DEFAULT NULL COMMENT 'çŠ¶æ€',
+  `ware_id` bigint(20) NULL DEFAULT NULL COMMENT 'ä»“åº“id',
+  `amount` decimal(18, 4) NULL DEFAULT NULL COMMENT 'æ€»é‡‘é¢',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT 'åˆ›å»ºæ—¥æœŸ',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT 'æ›´æ–°æ—¥æœŸ',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1294091510089007107 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'é‡‡è´­ä¿¡æ¯' ROW_FORMAT = Dynamic;
 
-/*==============================================================*/
-/* Table: wms_purchase                                          */
-/*==============================================================*/
-create table wms_purchase
-(
-   id                   bigint not null auto_increment comment '²É¹ºµ¥id',
-   assignee_id          bigint comment '²É¹ºÈËid',
-   assignee_name        varchar(255) comment '²É¹ºÈËÃû',
-   phone                char(13) comment 'ÁªÏµ·½Ê½',
-   priority             int(4) comment 'ÓÅÏÈ¼¶',
-   status               int(4) comment '×´Ì¬',
-   ware_id              bigint comment '²Ö¿âid',
-   amount               decimal(18,4) comment '×Ü½ğ¶î',
-   create_time          datetime comment '´´½¨ÈÕÆÚ',
-   update_time          datetime comment '¸üĞÂÈÕÆÚ',
-   primary key (id)
-);
+-- ----------------------------
+-- Table structure for wms_purchase_detail
+-- ----------------------------
+DROP TABLE IF EXISTS `wms_purchase_detail`;
+CREATE TABLE `wms_purchase_detail`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `purchase_id` bigint(20) NULL DEFAULT NULL COMMENT 'é‡‡è´­å•id',
+  `sku_id` bigint(20) NULL DEFAULT NULL COMMENT 'é‡‡è´­å•†å“id',
+  `sku_num` int(11) NULL DEFAULT NULL COMMENT 'é‡‡è´­æ•°é‡',
+  `sku_price` decimal(18, 4) NULL DEFAULT NULL COMMENT 'é‡‡è´­é‡‘é¢',
+  `ware_id` bigint(20) NULL DEFAULT NULL COMMENT 'ä»“åº“id',
+  `status` int(11) NULL DEFAULT NULL COMMENT 'çŠ¶æ€[0æ–°å»ºï¼Œ1å·²åˆ†é…ï¼Œ2æ­£åœ¨é‡‡è´­ï¼Œ3å·²å®Œæˆï¼Œ4é‡‡è´­å¤±è´¥]',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1294088023942942722 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
-alter table wms_purchase comment '²É¹ºĞÅÏ¢';
+-- ----------------------------
+-- Table structure for wms_ware_info
+-- ----------------------------
+DROP TABLE IF EXISTS `wms_ware_info`;
+CREATE TABLE `wms_ware_info`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ä»“åº“å',
+  `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ä»“åº“åœ°å€',
+  `areacode` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'åŒºåŸŸç¼–ç ',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1293849035797712898 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'ä»“åº“ä¿¡æ¯' ROW_FORMAT = Dynamic;
 
-/*==============================================================*/
-/* Table: wms_purchase_detail                                   */
-/*==============================================================*/
-create table wms_purchase_detail
-(
-   id                   bigint not null auto_increment,
-   purchase_id          bigint comment '²É¹ºµ¥id',
-   sku_id               bigint comment '²É¹ºÉÌÆ·id',
-   sku_num              int comment '²É¹ºÊıÁ¿',
-   sku_price            decimal(18,4) comment '²É¹º½ğ¶î',
-   ware_id              bigint comment '²Ö¿âid',
-   status               int comment '×´Ì¬[0ĞÂ½¨£¬1ÒÑ·ÖÅä£¬2ÕıÔÚ²É¹º£¬3ÒÑÍê³É£¬4²É¹ºÊ§°Ü]',
-   primary key (id)
-);
+-- ----------------------------
+-- Table structure for wms_ware_order_task
+-- ----------------------------
+DROP TABLE IF EXISTS `wms_ware_order_task`;
+CREATE TABLE `wms_ware_order_task`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `order_id` bigint(20) NULL DEFAULT NULL COMMENT 'order_id',
+  `order_sn` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'order_sn',
+  `consignee` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'æ”¶è´§äºº',
+  `consignee_tel` char(15) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'æ”¶è´§äººç”µè¯',
+  `delivery_address` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'é…é€åœ°å€',
+  `order_comment` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'è®¢å•å¤‡æ³¨',
+  `payment_way` tinyint(1) NULL DEFAULT NULL COMMENT 'ä»˜æ¬¾æ–¹å¼ã€ 1:åœ¨çº¿ä»˜æ¬¾ 2:è´§åˆ°ä»˜æ¬¾ã€‘',
+  `task_status` tinyint(2) NULL DEFAULT NULL COMMENT 'ä»»åŠ¡çŠ¶æ€',
+  `order_body` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'è®¢å•æè¿°',
+  `tracking_no` char(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'ç‰©æµå•å·',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT 'create_time',
+  `ware_id` bigint(20) NULL DEFAULT NULL COMMENT 'ä»“åº“id',
+  `task_comment` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'å·¥ä½œå•å¤‡æ³¨',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'åº“å­˜å·¥ä½œå•' ROW_FORMAT = Dynamic;
 
-/*==============================================================*/
-/* Table: wms_ware_info                                         */
-/*==============================================================*/
-create table wms_ware_info
-(
-   id                   bigint not null auto_increment comment 'id',
-   name                 varchar(255) comment '²Ö¿âÃû',
-   address              varchar(255) comment '²Ö¿âµØÖ·',
-   areacode             varchar(20) comment 'ÇøÓò±àÂë',
-   primary key (id)
-);
+-- ----------------------------
+-- Table structure for wms_ware_order_task_detail
+-- ----------------------------
+DROP TABLE IF EXISTS `wms_ware_order_task_detail`;
+CREATE TABLE `wms_ware_order_task_detail`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `sku_id` bigint(20) NULL DEFAULT NULL COMMENT 'sku_id',
+  `sku_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'sku_name',
+  `sku_num` int(11) NULL DEFAULT NULL COMMENT 'è´­ä¹°ä¸ªæ•°',
+  `task_id` bigint(20) NULL DEFAULT NULL COMMENT 'å·¥ä½œå•id',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'åº“å­˜å·¥ä½œå•' ROW_FORMAT = Dynamic;
 
-alter table wms_ware_info comment '²Ö¿âĞÅÏ¢';
+-- ----------------------------
+-- Table structure for wms_ware_sku
+-- ----------------------------
+DROP TABLE IF EXISTS `wms_ware_sku`;
+CREATE TABLE `wms_ware_sku`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `sku_id` bigint(20) NULL DEFAULT NULL COMMENT 'sku_id',
+  `ware_id` bigint(20) NULL DEFAULT NULL COMMENT 'ä»“åº“id',
+  `stock` int(11) NULL DEFAULT NULL COMMENT 'åº“å­˜æ•°',
+  `sku_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'sku_name',
+  `stock_locked` int(11) NULL DEFAULT NULL COMMENT 'é”å®šåº“å­˜',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'å•†å“åº“å­˜' ROW_FORMAT = Dynamic;
 
-/*==============================================================*/
-/* Table: wms_ware_order_task                                   */
-/*==============================================================*/
-create table wms_ware_order_task
-(
-   id                   bigint not null auto_increment comment 'id',
-   order_id             bigint comment 'order_id',
-   order_sn             varchar(255) comment 'order_sn',
-   consignee            varchar(100) comment 'ÊÕ»õÈË',
-   consignee_tel        char(15) comment 'ÊÕ»õÈËµç»°',
-   delivery_address     varchar(500) comment 'ÅäËÍµØÖ·',
-   order_comment        varchar(200) comment '¶©µ¥±¸×¢',
-   payment_way          tinyint(1) comment '¸¶¿î·½Ê½¡¾ 1:ÔÚÏß¸¶¿î 2:»õµ½¸¶¿î¡¿',
-   task_status          tinyint(2) comment 'ÈÎÎñ×´Ì¬',
-   order_body           varchar(255) comment '¶©µ¥ÃèÊö',
-   tracking_no          char(30) comment 'ÎïÁ÷µ¥ºÅ',
-   create_time          datetime comment 'create_time',
-   ware_id              bigint comment '²Ö¿âid',
-   task_comment         varchar(500) comment '¹¤×÷µ¥±¸×¢',
-   primary key (id)
-);
-
-alter table wms_ware_order_task comment '¿â´æ¹¤×÷µ¥';
-
-/*==============================================================*/
-/* Table: wms_ware_order_task_detail                            */
-/*==============================================================*/
-create table wms_ware_order_task_detail
-(
-   id                   bigint not null auto_increment comment 'id',
-   sku_id               bigint comment 'sku_id',
-   sku_name             varchar(255) comment 'sku_name',
-   sku_num              int comment '¹ºÂò¸öÊı',
-   task_id              bigint comment '¹¤×÷µ¥id',
-   primary key (id)
-);
-
-alter table wms_ware_order_task_detail comment '¿â´æ¹¤×÷µ¥';
-
-/*==============================================================*/
-/* Table: wms_ware_sku                                          */
-/*==============================================================*/
-create table wms_ware_sku
-(
-   id                   bigint not null auto_increment comment 'id',
-   sku_id               bigint comment 'sku_id',
-   ware_id              bigint comment '²Ö¿âid',
-   stock                int comment '¿â´æÊı',
-   sku_name             varchar(200) comment 'sku_name',
-   stock_locked         int comment 'Ëø¶¨¿â´æ',
-   primary key (id)
-);
-
-alter table wms_ware_sku comment 'ÉÌÆ·¿â´æ';
+SET FOREIGN_KEY_CHECKS = 1;
