@@ -1,17 +1,5 @@
 import request from "@/utils/httpRequest"
-
 const BASE_URL = "/ware/purchase"
-/**
- * 保存 spu info
- * @param {*} data spu 信息
- */
-export function SaveInfo(data) {
-  return request({
-    url: request.adornUrl(`${BASE_URL}/save`),
-    method: "post",
-    data: request.adornData(data, false)
-  })
-}
 
 export function PurchaseUpdateApi(data) {
   return request({
@@ -25,11 +13,30 @@ export function PurchaseUpdateApi(data) {
  * 获取spu列表
  * @param {JSON} param 
  */
-export function SkuInfo(param) {
+export function PurchaseListApi(param) {
   return request({
     url: request.adornUrl(`${BASE_URL}/list`),
     method: "get",
     params: request.adornParams(param , true)
   })
+}
+
+/**
+ * 
+ * @param {Array} ids  
+ */
+export function PurchaseDeleteApi(ids) {
+  return request({
+    url: request.adornUrl(`${BASE_URL}/delete`),
+    method: "delete",
+    data: ids 
+  })
+}
+export function PurchaseMerageApi(data) {
+  return request.modelRequest(`${BASE_URL}/merge`, "post", data);
+}
+
+export function PurchaseUnreceiveListApi() {
+  return request.modelRequest(`${BASE_URL}/unreceive/list`);
 }
 

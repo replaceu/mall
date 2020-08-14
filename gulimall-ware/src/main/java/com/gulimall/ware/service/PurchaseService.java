@@ -6,6 +6,7 @@ import com.gulimall.service.utils.PageUtils;
 import com.gulimall.ware.entity.PurchaseEntity;
 import com.gulimall.ware.vo.PurchaseDoneVo;
 import com.gulimall.ware.vo.PurchaseMergeVo;
+import com.gulimall.ware.vo.PurchasePageVo;
 
 import java.util.List;
 
@@ -17,6 +18,8 @@ import java.util.List;
  * @date 2020-06-09 10:07:54
  */
 public interface PurchaseService extends IService<PurchaseEntity> {
+    PageUtils queryPage(PurchasePageVo params);
+
     PageUtils queryUnReceivePage(PageVo params);
 
     void mergePurchase(PurchaseMergeVo mergeVo);

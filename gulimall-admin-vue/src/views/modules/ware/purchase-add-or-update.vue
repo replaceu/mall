@@ -74,7 +74,7 @@
               url: this.$http.adornUrl(`/ware/purchase/info/${this.dataForm.id}`),
               method: 'get',
               params: this.$http.adornParams()
-            }).then(({data}) => {
+            }).then((data) => {
               if (data && data.code === 0) {
                 this.dataForm.assigneeId = data.purchase.assigneeId
                 this.dataForm.assigneeName = data.purchase.assigneeName
@@ -109,7 +109,7 @@
                 'createTime': this.dataForm.createTime,
                 'updateTime': this.dataForm.updateTime
               })
-            }).then(({data}) => {
+            }).then((data) => {
               if (data && data.code === 0) {
                 this.$message({
                   message: '操作成功',

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gulimall.common.constant.ProductConstant;
 import com.gulimall.common.convert.ProductConvert;
 import com.gulimall.common.exception.BusinessException;
 import com.gulimall.common.exception.CouponErrorCode;
@@ -183,7 +184,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                 if (skuReductionTo.getFullCount() > 0 || skuReductionTo.getFullPrice().compareTo(new BigDecimal("0")) == 1) {
                     CommonResult skuReductionResult = couponFeignService.saveSkuReduction(skuReductionTo);
 
-                    if (skuReductionResult.getCode() != 1) {
+                    if (skuReductionResult.getCode() != 0) {
                         log.error("保存sku优惠信息失败");
                         throw new BusinessException(CouponErrorCode.SAVE_KEU_RELATION_FAIL);
                     }
@@ -217,4 +218,11 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         return new PageUtils(spuInfoEntityIPage) ;
     }
 
+    @Override
+    public void up(Long spuId) {
+        SpuInfoEntity spuInfoEntity = new SpuInfoEntity();
+        spuInfoEntity.setId(spuId);
+        spuInfoEntity.setPublishStatus(ProductConstant.SPU_STATUS_UP );
+        baseMapper.updateById(spuInfoEntity) ;
+    }
 }

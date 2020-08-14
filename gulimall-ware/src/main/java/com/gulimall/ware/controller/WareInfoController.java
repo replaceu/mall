@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-import java.util.Map;
 
 
 
@@ -22,7 +21,7 @@ import java.util.Map;
  * @date 2020-06-09 10:07:54
  */
 @RestController
-@RequestMapping("ware/wareinfo")
+@RequestMapping("/ware/wareinfo")
 public class WareInfoController {
     @Autowired
     private WareInfoService wareInfoService;
@@ -32,40 +31,36 @@ public class WareInfoController {
      */
     @RequestMapping("/list")
    // @RequiresPermissions("ware:wareinfo:list")
-    public CommonResult list(PageVo params){
+    public CommonResult<PageUtils> list(PageVo params){
         PageUtils page = wareInfoService.queryPage(params);
-
-
-        return CommonResult.ok().data(page) ;
+        return CommonResult.ok(page);
     }
 
 
     /**
      * 信息
      */
-    @RequestMapping("/info/{id}")
+    @GetMapping("/info/{id}")
 //   @RequiresPermissions("ware:wareinfo:info")
-    public R info(@PathVariable("id") Long id){
+    public CommonResult<WareInfoEntity> info(@PathVariable("id") Long id){
 		WareInfoEntity wareInfo = wareInfoService.getById(id);
-
-        return R.ok().put("wareInfo", wareInfo);
+        return CommonResult.ok(wareInfo);
     }
 
     /**
      * 保存
      */
-    @RequestMapping("/save")
+    @PostMapping("/save")
 //    @RequiresPermissions("ware:wareinfo:save")
-    public R save(@RequestBody WareInfoEntity wareInfo){
+    public CommonResult save(@RequestBody WareInfoEntity wareInfo){
 		wareInfoService.save(wareInfo);
-
-        return R.ok();
+        return CommonResult.ok();
     }
 
     /**
      * 修改
      */
-    @RequestMapping("/update")
+    @PutMapping("/update")
 //   @RequiresPermissions("ware:wareinfo:update")
     public R update(@RequestBody WareInfoEntity wareInfo){
 		wareInfoService.updateById(wareInfo);
@@ -76,7 +71,7 @@ public class WareInfoController {
     /**
      * 删除
      */
-    @RequestMapping("/delete")
+    @DeleteMapping("/delete")
 //    @RequiresPermissions("ware:wareinfo:delete")
     public R delete(@RequestBody Long[] ids){
 		wareInfoService.removeByIds(Arrays.asList(ids));

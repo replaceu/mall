@@ -1,42 +1,36 @@
 <template>
-  <el-dialog
-    :title="!dataForm.id ? '新增' : '修改'"
-    :close-on-click-modal="false"
-    :visible.sync="visible"
-  >
-    <el-form
-      :model="dataForm"
-      :rules="dataRule"
-      ref="dataForm"
-      @keyup.enter.native="dataFormSubmit()"
-      label-width="120px"
-    >
-      <el-form-item label="sku_id" prop="skuId">
-        <el-input v-model="dataForm.skuId" placeholder="sku_id"></el-input>
-      </el-form-item>
-      <el-form-item label="仓库" prop="wareId">
-        <el-select v-model="dataForm.wareId" placeholder="请选择仓库" clearable>
-          <el-option :label="w.name" :value="w.id" v-for="w in wareList" :key="w.id"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="库存数" prop="stock">
-        <el-input v-model="dataForm.stock" placeholder="库存数"></el-input>
-      </el-form-item>
-      <el-form-item label="sku_name" prop="skuName">
-        <el-input v-model="dataForm.skuName" placeholder="sku_name"></el-input>
-      </el-form-item>
-      <el-form-item label="锁定库存" prop="stockLocked">
-        <el-input v-model="dataForm.stockLocked" placeholder="锁定库存"></el-input>
-      </el-form-item>
-    </el-form>
-    <span slot="footer" class="dialog-footer">
-      <el-button @click="visible = false">取消</el-button>
-      <el-button type="primary" @click="dataFormSubmit()">确定</el-button>
-    </span>
-  </el-dialog>
+<el-dialog :title="!dataForm.id ? '新增' : '修改'" :close-on-click-modal="false" :visible.sync="visible">
+  <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" label-width="120px">
+    <el-form-item label="sku_id" prop="skuId">
+      <el-input v-model="dataForm.skuId" placeholder="sku_id"></el-input>
+    </el-form-item>
+    <el-form-item label="仓库" prop="wareId">
+      <el-select v-model="dataForm.wareId" placeholder="请选择仓库" clearable>
+        <el-option :label="w.name" :value="w.id" v-for="w in wareList" :key="w.id"></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="库存数" prop="stock">
+      <el-input v-model="dataForm.stock" placeholder="库存数"></el-input>
+    </el-form-item>
+    <el-form-item label="sku_name" prop="skuName">
+      <el-input v-model="dataForm.skuName" placeholder="sku_name"></el-input>
+    </el-form-item>
+    <el-form-item label="锁定库存" prop="stockLocked">
+      <el-input v-model="dataForm.stockLocked" placeholder="锁定库存"></el-input>
+    </el-form-item>
+  </el-form>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="visible = false">取消</el-button>
+    <el-button type="primary" @click="dataFormSubmit()">确定</el-button>
+  </span>
+</el-dialog>
 </template>
 
 <script>
+import { WareInfoListApi } from "@/api/ware/wareinfo.js"
+import { WareSkuInfoApi, WareSkuSaveApi, WareSkuUpdateApi } from "@/api/ware/waresku.js"
+import { SuccessMessage } from "@/utils/message.js";
+
 export default {
   data() {
     return {
@@ -62,20 +56,13 @@ export default {
       }
     };
   },
-  created(){
+  created() {
     this.getWares();
   },
   methods: {
     getWares() {
-      this.$http({
-        url: this.$http.adornUrl("/ware/wareinfo/list"),
-        method: "get",
-        params: this.$http.adornParams({
-          page: 1,
-          limit: 500
-        })
-      }).then(({ data }) => {
-        this.wareList = data.page.list;
+      WareInfoListApi({ page: 1, limit: 500 }).then(data => {
+        this.wareList = data.data.list;
       });
     },
     init(id) {
@@ -84,18 +71,12 @@ export default {
       this.$nextTick(() => {
         this.$refs["dataForm"].resetFields();
         if (this.dataForm.id) {
-          this.$http({
-            url: this.$http.adornUrl(`/ware/waresku/info/${this.dataForm.id}`),
-            method: "get",
-            params: this.$http.adornParams()
-          }).then(({ data }) => {
-            if (data && data.code === 0) {
-              this.dataForm.skuId = data.wareSku.skuId;
-              this.dataForm.wareId = data.wareSku.wareId;
-              this.dataForm.stock = data.wareSku.stock;
-              this.dataForm.skuName = data.wareSku.skuName;
-              this.dataForm.stockLocked = data.wareSku.stockLocked;
-            }
+          WareSkuInfoApi(this.dataForm.id).then(data => {
+            this.dataForm.skuId = data.data.skuId;
+            this.dataForm.wareId = data.data.wareId;
+            this.dataForm.stock = data.data.stock;
+            this.dataForm.skuName = data.data.skuName;
+            this.dataForm.stockLocked = data.data.stockLocked;
           });
         }
       });
@@ -104,34 +85,28 @@ export default {
     dataFormSubmit() {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
-          this.$http({
-            url: this.$http.adornUrl(
-              `/ware/waresku/${!this.dataForm.id ? "save" : "update"}`
-            ),
-            method: "post",
-            data: this.$http.adornData({
-              id: this.dataForm.id || undefined,
-              skuId: this.dataForm.skuId,
-              wareId: this.dataForm.wareId,
-              stock: this.dataForm.stock,
-              skuName: this.dataForm.skuName,
-              stockLocked: this.dataForm.stockLocked
+          let data = {
+            id: this.dataForm.id || undefined,
+            skuId: this.dataForm.skuId,
+            wareId: this.dataForm.wareId,
+            stock: this.dataForm.stock,
+            skuName: this.dataForm.skuName,
+            stockLocked: this.dataForm.stockLocked
+          }
+
+          if (data.id) {
+            WareSkuUpdateApi(data).then(() => {
+              SuccessMessage("修改成功");
+              this.visible = false
+              this.$emit('refreshDataList')
             })
-          }).then(({ data }) => {
-            if (data && data.code === 0) {
-              this.$message({
-                message: "操作成功",
-                type: "success",
-                duration: 1500,
-                onClose: () => {
-                  this.visible = false;
-                  this.$emit("refreshDataList");
-                }
-              });
-            } else {
-              this.$message.error(data.msg);
-            }
-          });
+          } else {
+            WareSkuSaveApi(data).then(() => {
+              SuccessMessage("添加成功");
+              this.visible = false
+              this.$emit('refreshDataList')
+            })
+          }
         }
       });
     }

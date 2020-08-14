@@ -7,9 +7,11 @@ import com.gulimall.product.service.SpuInfoService;
 import com.gulimall.product.vo.SpuPageVo;
 import com.gulimall.product.vo.SpuSaveVo;
 import com.gulimall.service.utils.PageUtils;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
 
@@ -22,7 +24,7 @@ import java.util.Arrays;
  * @date 2020-06-10 11:26:28
  */
 @RestController
-@RequestMapping("product/spuinfo")
+@RequestMapping("/product/spuinfo")
 public class SpuInfoController {
     @Autowired
     private SpuInfoService spuInfoService;
@@ -38,6 +40,16 @@ public class SpuInfoController {
         return CommonResult.ok().data(page) ;
     }
 
+    /**
+     * 商品上架
+     * @param spuId 需要上架的id
+     * @return
+     */
+    @PutMapping("/{spuId}/up")
+    public CommonResult up(@PathVariable Long spuId){
+        spuInfoService.up(spuId) ;
+        return CommonResult.ok() ;
+    }
 
     /**
      * 信息
@@ -55,7 +67,7 @@ public class SpuInfoController {
      */
     @PostMapping("/save")
 //    @RequiresPermissions("product:spuinfo:save")
-    public CommonResult save(@RequestBody SpuSaveVo spuSaveVo){
+    public CommonResult save(@RequestBody SpuSaveVo spuSaveVo , HttpServletRequest request){
 		spuInfoService.saveInfo(spuSaveVo);
         return CommonResult.ok();
     }

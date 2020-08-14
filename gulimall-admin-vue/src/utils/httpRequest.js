@@ -16,6 +16,9 @@ const http = axios.create({
   }
 })
 
+
+
+
 /**
  * 请求拦截
  */
@@ -29,9 +32,9 @@ http.interceptors.request.use(config => {
  * 响应拦截
  */
 http.interceptors.response.use(response => {
-  let data = response.data ;
-  let  code = data.code || 0;
-    if (code != 0) {
+  let data = response.data;
+  let code = data.code || 0;
+  if (code != 0) {
     return requestHasError(data);
   } else {
     return response.data;
@@ -112,5 +115,22 @@ http.adornData = (data = {}, openDefultdata = true, contentType = 'json') => {
   data = openDefultdata ? merge(defaults, data) : data
   return contentType === 'json' ? JSON.stringify(data) : qs.stringify(data)
 }
+
+/**
+ * 请求方法
+ * @param {*} api  api 地址
+ * @param {*} method  请求方式
+ * @param {*} data  data数据 ,
+ * @param {*} params  params 参数
+ */
+http.modelRequest = function (api, method = 'get', data, params) {
+  return http({
+    url: http.adornUrl(api),
+    method,
+    data: http.adornData(data, false),
+    params: http.adornParams(params)
+  });
+}
+
 
 export default http

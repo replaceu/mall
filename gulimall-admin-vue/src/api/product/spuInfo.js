@@ -27,7 +27,7 @@ export function SpuInfoApi(param) {
 export function SpuInfoUpApi(spuId) {
   return request({
     url: request.adornUrl(`${BASE_URL}/${spuId}/up`),
-    method: "post"
+    method: "put"
   })
 }
 

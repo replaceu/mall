@@ -1,6 +1,6 @@
 package com.gulimall.ware.controller;
 
-import com.gulimall.common.utils.R;
+import com.gulimall.common.utils.CommonResult;
 import com.gulimall.service.utils.PageUtils;
 import com.gulimall.ware.entity.WareOrderTaskEntity;
 import com.gulimall.ware.service.WareOrderTaskService;
@@ -28,12 +28,12 @@ public class WareOrderTaskController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
+    @GetMapping("/list")
    // @RequiresPermissions("ware:wareordertask:list")
-    public R list(@RequestParam Map<String, Object> params){
+    public CommonResult list(@RequestParam Map<String, Object> params){
         PageUtils page = wareOrderTaskService.queryPage(params);
 
-        return R.ok().put("page", page);
+        return CommonResult.ok( page);
     }
 
 
@@ -42,43 +42,39 @@ public class WareOrderTaskController {
      */
     @RequestMapping("/info/{id}")
 //   @RequiresPermissions("ware:wareordertask:info")
-    public R info(@PathVariable("id") Long id){
+    public CommonResult<WareOrderTaskEntity> info(@PathVariable("id") Long id){
 		WareOrderTaskEntity wareOrderTask = wareOrderTaskService.getById(id);
-
-        return R.ok().put("wareOrderTask", wareOrderTask);
+        return CommonResult.ok(wareOrderTask);
     }
 
     /**
      * 保存
      */
-    @RequestMapping("/save")
+    @PostMapping("/save")
 //    @RequiresPermissions("ware:wareordertask:save")
-    public R save(@RequestBody WareOrderTaskEntity wareOrderTask){
+    public CommonResult save(@RequestBody WareOrderTaskEntity wareOrderTask){
 		wareOrderTaskService.save(wareOrderTask);
 
-        return R.ok();
+        return CommonResult.ok();
     }
 
     /**
      * 修改
      */
-    @RequestMapping("/update")
+    @PutMapping("/update")
 //   @RequiresPermissions("ware:wareordertask:update")
-    public R update(@RequestBody WareOrderTaskEntity wareOrderTask){
+    public CommonResult update(@RequestBody WareOrderTaskEntity wareOrderTask){
 		wareOrderTaskService.updateById(wareOrderTask);
-
-        return R.ok();
+        return CommonResult.ok();
     }
 
     /**
      * 删除
      */
-    @RequestMapping("/delete")
+    @DeleteMapping("/delete")
 //    @RequiresPermissions("ware:wareordertask:delete")
-    public R delete(@RequestBody Long[] ids){
+    public CommonResult delete(@RequestBody Long[] ids){
 		wareOrderTaskService.removeByIds(Arrays.asList(ids));
-
-        return R.ok();
+        return CommonResult.ok();
     }
-
 }

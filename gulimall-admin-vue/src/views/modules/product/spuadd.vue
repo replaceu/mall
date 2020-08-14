@@ -567,7 +567,7 @@ export default {
     submitSkus() {
       console.log("~~~~~", JSON.stringify(this.spu));
       WarningConfirm(() => {
-        SpuInfoSaveApi(this.spu.info).then((data) => {
+        SpuInfoSaveApi(this.spu).then((data) => {
           SuccessMessage("新增商品成功!")
           this.step = 4;
         });
