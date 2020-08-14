@@ -37,7 +37,7 @@ public class SkuInfoEntity implements Serializable {
 	 */
 	private String skuDesc;
 	/**
-	 * 所属分类id TODO 修改表字段
+	 * 所属分类id
 	 */
 	private Long categoryId;
 	/**

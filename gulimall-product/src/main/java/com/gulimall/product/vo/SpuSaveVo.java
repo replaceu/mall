@@ -1,11 +1,15 @@
 package com.gulimall.product.vo;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@ToString
 public class SpuSaveVo {
     private String spuName;
     private String spuDescription;

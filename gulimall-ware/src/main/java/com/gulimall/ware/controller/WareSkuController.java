@@ -1,7 +1,7 @@
 package com.gulimall.ware.controller;
 
 import com.gulimall.common.utils.CommonResult;
-import com.gulimall.common.utils.R;
+import com.gulimall.common.utils.CommonResult;
 import com.gulimall.service.utils.PageUtils;
 import com.gulimall.ware.entity.WareSkuEntity;
 import com.gulimall.ware.service.WareSkuService;
@@ -33,50 +33,49 @@ public class WareSkuController {
    // @RequiresPermissions("ware:waresku:list")
     public CommonResult list(WareSkuPageVo params){
         PageUtils page = wareSkuService.queryPage(params);
-        return CommonResult.ok().data( page);
+        return CommonResult.ok(page);
     }
     /**
      * 信息
      */
     @GetMapping("/info/{id}")
 //   @RequiresPermissions("ware:waresku:info")
-    public R info(@PathVariable("id") Long id){
+    public CommonResult<WareSkuEntity> info(@PathVariable("id") Long id){
 		WareSkuEntity wareSku = wareSkuService.getById(id);
 
-        return R.ok().put("wareSku", wareSku);
+        return CommonResult.ok( wareSku);
     }
 
     /**
      * 保存
      */
-    @RequestMapping("/save")
+    @PostMapping("/save")
 //    @RequiresPermissions("ware:waresku:save")
-    public R save(@RequestBody WareSkuEntity wareSku){
+    public CommonResult save(@RequestBody WareSkuEntity wareSku){
 		wareSkuService.save(wareSku);
 
-        return R.ok();
+        return CommonResult.ok();
     }
 
     /**
      * 修改
      */
-    @RequestMapping("/update")
+    @PutMapping("/update")
 //   @RequiresPermissions("ware:waresku:update")
-    public R update(@RequestBody WareSkuEntity wareSku){
+    public CommonResult update(@RequestBody WareSkuEntity wareSku){
 		wareSkuService.updateById(wareSku);
 
-        return R.ok();
+        return CommonResult.ok();
     }
 
     /**
      * 删除
      */
-    @RequestMapping("/delete")
+    @DeleteMapping("/delete")
 //    @RequiresPermissions("ware:waresku:delete")
-    public R delete(@RequestBody Long[] ids){
+    public CommonResult delete(@RequestBody Long[] ids){
 		wareSkuService.removeByIds(Arrays.asList(ids));
-
-        return R.ok();
+        return CommonResult.ok();
     }
 
 }

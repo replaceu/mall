@@ -16,8 +16,11 @@ import com.gulimall.ware.service.WareSkuService;
 import com.gulimall.ware.vo.PurchaseDoneVo;
 import com.gulimall.ware.vo.PurchaseItemDoneVo;
 import com.gulimall.ware.vo.PurchaseMergeVo;
+import com.gulimall.ware.vo.PurchasePageVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +35,28 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity
     @Autowired
     WareSkuService wareSkuService ;
 
+
+    @Override
+    public PageUtils queryPage(PurchasePageVo params) {
+
+        LambdaQueryWrapper<PurchaseEntity> wrapper = new LambdaQueryWrapper<>();
+
+        if (params.getStatus()!=null) {
+            wrapper.eq(PurchaseEntity::getStatus , params.getStatus() ) ;
+        }
+        if (!StringUtils.isEmpty(params.getKey())){
+            wrapper.and(w->{
+                w.eq(PurchaseEntity::getId , params.getKey() )
+                        .or()
+                        .like(PurchaseEntity::getAssigneeName , params.getKey() ) ;
+            }) ;
+        }
+        IPage<PurchaseEntity> page = this.page(
+                new QueryPage<PurchaseEntity>().getPage(params),
+                wrapper
+        );
+        return new PageUtils(page);
+    }
 
     @Override
     public PageUtils queryUnReceivePage(PageVo params) {
@@ -73,6 +98,7 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity
     /**
      * @param ids 采购单的id
      */
+    @Transactional
     @Override
     public void receivedPurchase(List<Long> ids) {
         // 1、是新建 或 已分配状态
@@ -102,7 +128,7 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity
         List<PurchaseItemDoneVo> items = doneVo.getItems();
 
         List<PurchaseDetailEntity> updatePurchase = new ArrayList<>(items.size() ) ;
-        new ArrayList<>() ;
+
 
         for (PurchaseItemDoneVo item : items) {
             PurchaseDetailEntity purchaseDetailEntity = new PurchaseDetailEntity();
@@ -115,15 +141,16 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity
                 purchaseDetailEntity.setStatus(WareConstant.PURCHASE_STATUS_FINISH);
                 // 入库
                 PurchaseDetailEntity entity = purchaseDetailService.getById(item.getItemId());
-                //  频繁修改数据库  应改为批量
+                //  TODO 频繁修改数据库  应改为批量
                 wareSkuService.addStock(entity.getSkuId(), entity.getWareId(), entity.getSkuNum());
             }
+            purchaseDetailEntity.setId( item.getItemId() );
             updatePurchase.add(purchaseDetailEntity) ;
         }
-
-
-
-
-
+        purchaseDetailService.updateBatchById(updatePurchase) ;
+        PurchaseEntity purchaseEntity = new PurchaseEntity();
+        purchaseEntity.setId(doneVo.getId());
+        purchaseEntity.setStatus(flag ? WareConstant.PURCHASE_STATUS_FINISH : WareConstant.PURCHASE_STATUS_ERROR );
+        baseMapper.updateById(purchaseEntity) ;
     }
 }

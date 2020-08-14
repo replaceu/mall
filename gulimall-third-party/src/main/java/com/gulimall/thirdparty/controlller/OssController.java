@@ -36,7 +36,7 @@ public class OssController {
      * 获取 云存储 签名
      */
     @GetMapping("/oss/policy")
-    public CommonResult policy() {
+    public CommonResult<Map<String,String>> policy() {
         String host = String.format("https://%s.%s", bucket, endpoint);
 
         String dir = LocalDate.now()
@@ -67,7 +67,7 @@ public class OssController {
             // Assert.fail(e.getMessage());
             System.out.println(e.getMessage());
         }
-        return CommonResult.ok().data(respMap) ;
+        return CommonResult.ok(respMap) ;
     }
 
 

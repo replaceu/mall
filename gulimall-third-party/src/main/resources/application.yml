@@ -1,6 +1,7 @@
 server:
   port: 30000
-
+  servlet:
+    context-path: /thirdparty
 spring:
   application:
     name: gulimall-third-party

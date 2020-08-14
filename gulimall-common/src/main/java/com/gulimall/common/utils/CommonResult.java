@@ -27,7 +27,10 @@ public class CommonResult<T> {
     @ApiModelProperty("返回的数据")
     private T data;
 
-    private CommonResult(String msg, Integer code, T data) {
+    public CommonResult() {
+    }
+
+    public CommonResult(String msg, Integer code, T data) {
         this.msg = msg;
         this.code = code;
         this.data = data;

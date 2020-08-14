@@ -3,7 +3,7 @@ package com.gulimall.common.constant;
 /**
  * @author aqiang9  2020-07-31
  */
-public class ProductConstant {
+public interface ProductConstant {
 
 //    public enum AttrEnum{
 //        SALE_ATTR_TYPE(0,"销售属性"),
@@ -30,16 +30,27 @@ public class ProductConstant {
     /**
      * 销售属性
      */
-    public static final int SALE_ATTR_TYPE = 0 ;
+   int SALE_ATTR_TYPE = 0 ;
     /**
      * 基本属性
      */
-    public static final int BASE_ATTR_TYPE = 1 ;
+    int BASE_ATTR_TYPE = 1 ;
     /**
      * 销售属性 & 基本属性
      */
-    public static final int All_ATTR_TYPE = 2 ;
+    int All_ATTR_TYPE = 2 ;
 
-
+    /**
+     * 商品状态 - 新建
+     */
+    int SPU_STATUS_NEW = 0 ;
+    /**
+     * 商品状态 - 上架
+     */
+    int SPU_STATUS_UP = 1 ;
+    /**
+     * 商品状态 - 下架
+     */
+    int SPU_STATUS_DOWN = 2 ;
 
 }

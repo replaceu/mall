@@ -1,13 +1,15 @@
 package com.gulimall.product.controller;
 
+import com.gulimall.common.constant.SwaggerParamType;
 import com.gulimall.common.utils.CommonResult;
-import com.gulimall.common.utils.R;
 import com.gulimall.common.vo.PageVo;
 import com.gulimall.product.service.AttrService;
 import com.gulimall.product.vo.AttrRespVo;
 import com.gulimall.product.vo.AttrVo;
 import com.gulimall.service.utils.PageUtils;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +25,11 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("product/attr")
-@Api(value = "attrController" , tags = {"商品服务,属性"})
+@Api(value = "attrController", tags = {"商品属性"})
 public class AttrController {
     @Autowired
     private AttrService attrService;
+
     /**
      * 获取 列表
      *
@@ -34,11 +37,14 @@ public class AttrController {
      * @param attrType   属性类型  0 为 基本    1 为销售
      * @param categoryId 分类 id
      */
-    @ApiOperation(value = "attr" , tags = {"属性"})
+    @ApiOperation("获取属性列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "attrType", value = "属性类型", allowableValues = "0,1", paramType = SwaggerParamType.PATH, dataType = "int", required = true),
+            @ApiImplicitParam(name = "categoryId", value = "分类id", paramType = SwaggerParamType.PATH, dataType = "long", required = true)})
     @GetMapping("/{attrType}/list/{categoryId}")
-    public CommonResult listAttr(PageVo pageParams, @PathVariable("attrType") int attrType, @PathVariable(value = "categoryId", required = false) Long categoryId) {
+    public CommonResult<PageUtils> listAttr(PageVo pageParams, @PathVariable("attrType") int attrType, @PathVariable(value = "categoryId", required = false) Long categoryId) {
         PageUtils data = attrService.queryList(pageParams, attrType, categoryId);
-        return CommonResult.ok().data(data);
+        return CommonResult.ok(data);
     }
 
     /**
@@ -46,19 +52,19 @@ public class AttrController {
      */
     @GetMapping("/info/{attrId}")
 //   @RequiresPermissions("product:attr:info")
-    public CommonResult info(@PathVariable("attrId") Long attrId) {
+    public CommonResult<AttrRespVo> info(@PathVariable("attrId") Long attrId) {
         AttrRespVo attrRespVo = attrService.getAttrInfo(attrId);
-        return CommonResult.ok().data(attrRespVo);
+        return CommonResult.ok(attrRespVo);
     }
 
     /**
-     * 保存
+     * 保存 属性
      */
     @PostMapping("/save")
 //    @RequiresPermissions("product:attr:save")
-    public R save(@RequestBody AttrVo attrVo) {
+    public CommonResult<Object> save(@RequestBody AttrVo attrVo) {
         attrService.saveAttrInfo(attrVo);
-        return R.ok();
+        return CommonResult.ok();
     }
 
     /**
@@ -66,7 +72,7 @@ public class AttrController {
      */
     @PutMapping("/update")
 //   @RequiresPermissions("product:attr:update")
-    public CommonResult update(@RequestBody AttrVo attrVo) {
+    public CommonResult<Object>  update(@RequestBody AttrVo attrVo) {
         attrService.updateAttrInfo(attrVo);
         return CommonResult.ok();
     }
@@ -76,7 +82,7 @@ public class AttrController {
      */
     @DeleteMapping("/delete/{attrType}")
 //    @RequiresPermissions("product:attr:delete")
-    public CommonResult delete(@RequestBody List<Long> attrIds, @PathVariable Long attrType) {
+    public CommonResult<Object> delete(@RequestBody List<Long> attrIds, @PathVariable Long attrType) {
         if (attrIds != null || attrIds.size() > 0) {
             attrService.removeAttrInfo(attrIds, attrType);
         }

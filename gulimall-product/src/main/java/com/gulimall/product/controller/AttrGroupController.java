@@ -15,12 +15,13 @@ import com.gulimall.product.vo.AttrGroupRelationVo;
 import com.gulimall.product.vo.AttrGroupVo;
 import com.gulimall.product.vo.AttrGroupWithAttrsRespVo;
 import com.gulimall.service.utils.PageUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 
 /**
  * 属性分组
@@ -31,6 +32,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("product/attrgroup")
+@Api(value = "" , tags = {"属性分组"})
 public class AttrGroupController {
     @Autowired
     private AttrGroupService attrGroupService;
@@ -46,6 +48,7 @@ public class AttrGroupController {
      * @param categoryId 三级分类id
      * @return
      */
+    @ApiOperation("获取分类下所有分组&关联属性")
     @GetMapping("{categoryId}/withattr")
     public CommonResult categoryWithAttr(@PathVariable Long categoryId ){
         // 当前属性下的所有分组
@@ -57,6 +60,7 @@ public class AttrGroupController {
     /**
      * 列表
      */
+    @ApiOperation("获取分类下所有分组")
     @GetMapping("/list/{categoryId}")
     // @RequiresPermissions("product:attrgroup:list")
     public CommonResult list(PageVo pageVo, @PathVariable Long categoryId) {
