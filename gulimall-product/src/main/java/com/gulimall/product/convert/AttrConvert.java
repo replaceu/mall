@@ -1,8 +1,10 @@
 package com.gulimall.product.convert;
 
+import com.gulimall.common.to.es.Attrs;
 import com.gulimall.product.entity.AttrAttrgroupRelationEntity;
 import com.gulimall.product.entity.AttrEntity;
 import com.gulimall.product.entity.AttrGroupEntity;
+import com.gulimall.product.entity.ProductAttrValueEntity;
 import com.gulimall.product.vo.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -32,4 +34,6 @@ public interface AttrConvert {
 
 
     AttrGroupWithAttrsRespVo entity2respVo(AttrGroupEntity attrGroup);
+
+    Attrs entity2model(ProductAttrValueEntity e);
 }

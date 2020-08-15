@@ -1,5 +1,6 @@
 package com.gulimall.product.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -29,7 +30,19 @@ public class ProductAttrValueServiceImpl extends ServiceImpl<ProductAttrValueDao
 
     @Override
     public void saveAttrValueInfo(List<ProductAttrValueEntity> productAttrValueEntities) {
-        this.saveBatch(productAttrValueEntities) ;
+        this.saveBatch(productAttrValueEntities);
+    }
+
+    @Override
+    public List<ProductAttrValueEntity> baseAttrListForSpuId(Long spuId) {
+        return
+                baseMapper.selectList(
+                        new LambdaQueryWrapper<ProductAttrValueEntity>().eq(ProductAttrValueEntity::getSpuId, spuId));
+    }
+
+    @Override
+    public List<Long> baseAttrIdsForSpuId(Long spuId) {
+      return   baseMapper.selectIdsBySpuId(spuId) ;
     }
 
 }

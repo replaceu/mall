@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 
 @Service("skuInfoService")
@@ -52,6 +53,11 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
         IPage<SkuInfoEntity> spuInfoEntityIPage = baseMapper.selectPage(new QueryPage<SkuInfoEntity>().getPage(params), wrapper);
         return new PageUtils(spuInfoEntityIPage) ;
 
+    }
+
+    @Override
+    public List<SkuInfoEntity> getSkusBySpuId(Long spuId) {
+       return baseMapper.selectList(new LambdaQueryWrapper<SkuInfoEntity>().eq(SkuInfoEntity::getSpuId , spuId)) ;
     }
 
     @Transactional

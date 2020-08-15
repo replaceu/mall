@@ -5,6 +5,8 @@ import com.gulimall.product.entity.SkuInfoEntity;
 import com.gulimall.product.vo.SkuPageVo;
 import com.gulimall.service.utils.PageUtils;
 
+import java.util.List;
+
 /**
  * sku信息
  *
@@ -18,5 +20,7 @@ public interface SkuInfoService extends IService<SkuInfoEntity> {
     void saveSkuInfo(SkuInfoEntity skuInfoEntity);
 
     PageUtils queryPageOnCondition(SkuPageVo params);
+
+    List<SkuInfoEntity> getSkusBySpuId(Long spuId);
 }
 

@@ -94,7 +94,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         baseMapper.insert(attrEntity);
 
         // 保存关联关系
-        if (attrVo.getAttrType() == ProductConstant.BASE_ATTR_TYPE && attrVo.getAttrGroupId() !=null ) {
+        if (attrVo.getAttrType() == ProductConstant.BASE_ATTR_TYPE && attrVo.getAttrGroupId() != null) {
             AttrAttrgroupRelationEntity attrAttrgroupRelationEntity = new AttrAttrgroupRelationEntity();
             attrAttrgroupRelationEntity.setAttrId(attrEntity.getAttrId());
             attrAttrgroupRelationEntity.setAttrGroupId(attrVo.getAttrGroupId());
@@ -197,22 +197,28 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
 //        2。3 从当前分类的所有属性中移除这些属性
         LambdaQueryWrapper<AttrEntity> wrapper = new LambdaQueryWrapper<AttrEntity>()
                 .eq(AttrEntity::getCategoryId, categoryId)
-                .eq(AttrEntity::getAttrType , ProductConstant.BASE_ATTR_TYPE );
-        if (attrIds.size() > 0 ) {
-             wrapper.notIn(AttrEntity::getAttrId, attrIds);
+                .eq(AttrEntity::getAttrType, ProductConstant.BASE_ATTR_TYPE);
+        if (attrIds.size() > 0) {
+            wrapper.notIn(AttrEntity::getAttrId, attrIds);
         }
         // 拼装检索信息
         if (!StringUtils.isEmpty(pageParams.getKey())) {
-            wrapper.and(w->{
-                w.eq(AttrEntity::getAttrId , pageParams.getKey() )
+            wrapper.and(w -> {
+                w.eq(AttrEntity::getAttrId, pageParams.getKey())
                         .or()
-                        .likeRight(AttrEntity::getAttrName, pageParams.getKey() ) ;
-            }) ;
+                        .likeRight(AttrEntity::getAttrName, pageParams.getKey());
+            });
         }
         IPage<AttrEntity> attrEntityIPage = baseMapper.selectPage(new QueryPage<AttrEntity>().getPage(pageParams),
                 wrapper);
         return new PageUtils(attrEntityIPage);
 
+
+    }
+
+    @Override
+    public List<Long> getSearchAttrIds(List<Long> attrValueIds) {
+        return baseMapper.selectSearchAttrs(attrValueIds);
 
     }
 

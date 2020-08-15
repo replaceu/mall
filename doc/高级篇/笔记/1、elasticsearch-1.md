@@ -373,27 +373,3 @@ vi  /mydata/elasticsearch/plugins/ik/config/IKAnalyzer.cfg.xml
         <!-- <entry key="remote_ext_stopwords">words_location</entry> -->
 </properties>
 ```
-
-# 三 、java操作elasticsearch
-
-官网地址：https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/java-rest-high.html
-
-## 1、导入依赖
-
-```java
- <elasticsearch.version>7.4.2</elasticsearch.version> 
- 
- <!--elasticsearch依赖-->
- <dependency>
-      <groupId>org.elasticsearch.client</groupId>
-      <artifactId>elasticsearch-rest-high-level-client</artifactId>
-      <version>${elasticsearch.version}</version>
- </dependency>
-```
-
-## 
-
-## 
-
- 
-

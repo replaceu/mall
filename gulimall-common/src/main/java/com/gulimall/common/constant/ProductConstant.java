@@ -44,6 +44,7 @@ public interface ProductConstant {
      * 商品状态 - 新建
      */
     int SPU_STATUS_NEW = 0 ;
+
     /**
      * 商品状态 - 上架
      */

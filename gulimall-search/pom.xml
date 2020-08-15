@@ -11,11 +11,14 @@
 
     <artifactId>gulimall-search</artifactId>
     <description>搜索模块-elasticsearch</description>
+    <properties>
+        <elasticsearch.version>7.4.2</elasticsearch.version>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.gulimall</groupId>
-            <artifactId>gulimall-common-dependencies</artifactId>
+            <artifactId>gulimall-common</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

@@ -1,6 +1,6 @@
 package com.gulimall.ware.controller;
 
-import com.gulimall.common.utils.CommonResult;
+import com.gulimall.common.to.SkuHasStockTo;
 import com.gulimall.common.utils.CommonResult;
 import com.gulimall.service.utils.PageUtils;
 import com.gulimall.ware.entity.WareSkuEntity;
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
-
+import java.util.List;
 
 
 /**
@@ -21,29 +21,40 @@ import java.util.Arrays;
  * @date 2020-06-09 10:07:53
  */
 @RestController
-@RequestMapping("ware/waresku")
+@RequestMapping("/ware/waresku")
 public class WareSkuController {
     @Autowired
     private WareSkuService wareSkuService;
 
     /**
+     * 查询商品是否有库存
+     */
+    @PostMapping("/has/stock")
+    public CommonResult<List<SkuHasStockTo>> hasStock(@RequestBody List<Long> skuIds) {
+        List<SkuHasStockTo> stockTos = wareSkuService.getSkuHasStock(skuIds);
+        return CommonResult.ok(stockTos);
+    }
+
+
+    /**
      * 列表
      */
     @GetMapping("/list")
-   // @RequiresPermissions("ware:waresku:list")
-    public CommonResult list(WareSkuPageVo params){
+    // @RequiresPermissions("ware:waresku:list")
+    public CommonResult list(WareSkuPageVo params) {
         PageUtils page = wareSkuService.queryPage(params);
         return CommonResult.ok(page);
     }
+
     /**
      * 信息
      */
     @GetMapping("/info/{id}")
 //   @RequiresPermissions("ware:waresku:info")
-    public CommonResult<WareSkuEntity> info(@PathVariable("id") Long id){
-		WareSkuEntity wareSku = wareSkuService.getById(id);
+    public CommonResult<WareSkuEntity> info(@PathVariable("id") Long id) {
+        WareSkuEntity wareSku = wareSkuService.getById(id);
 
-        return CommonResult.ok( wareSku);
+        return CommonResult.ok(wareSku);
     }
 
     /**
@@ -51,8 +62,8 @@ public class WareSkuController {
      */
     @PostMapping("/save")
 //    @RequiresPermissions("ware:waresku:save")
-    public CommonResult save(@RequestBody WareSkuEntity wareSku){
-		wareSkuService.save(wareSku);
+    public CommonResult save(@RequestBody WareSkuEntity wareSku) {
+        wareSkuService.save(wareSku);
 
         return CommonResult.ok();
     }
@@ -62,8 +73,8 @@ public class WareSkuController {
      */
     @PutMapping("/update")
 //   @RequiresPermissions("ware:waresku:update")
-    public CommonResult update(@RequestBody WareSkuEntity wareSku){
-		wareSkuService.updateById(wareSku);
+    public CommonResult update(@RequestBody WareSkuEntity wareSku) {
+        wareSkuService.updateById(wareSku);
 
         return CommonResult.ok();
     }
@@ -73,8 +84,8 @@ public class WareSkuController {
      */
     @DeleteMapping("/delete")
 //    @RequiresPermissions("ware:waresku:delete")
-    public CommonResult delete(@RequestBody Long[] ids){
-		wareSkuService.removeByIds(Arrays.asList(ids));
+    public CommonResult delete(@RequestBody Long[] ids) {
+        wareSkuService.removeByIds(Arrays.asList(ids));
         return CommonResult.ok();
     }
 
