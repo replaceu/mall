@@ -3,6 +3,7 @@ package com.gulimall.search.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.gulimall.common.to.es.SkuEsModel;
 import com.gulimall.search.config.MyElasticsearchConfig;
+import com.gulimall.search.constant.ProductConstant;
 import com.gulimall.search.service.ProductSaveService;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.bulk.BulkItemResponse;
@@ -36,8 +37,9 @@ public class ProductSaveServiceImpl implements ProductSaveService {
 
 
         for (SkuEsModel skuEsModel : skuEsModels) {
-            IndexRequest indexRequest = new IndexRequest();
-            indexRequest.id(skuEsModel.getSkuId().toString()) ;
+            IndexRequest indexRequest = new IndexRequest(ProductConstant.PRODUCT_INDEX);
+//            indexRequest.id() ;
+            indexRequest.id(skuEsModel.getSkuId().toString());
 
             indexRequest.source(JSON.toJSONString(skuEsModel) , XContentType.JSON) ;
 

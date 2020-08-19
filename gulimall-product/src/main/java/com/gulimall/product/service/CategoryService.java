@@ -2,6 +2,7 @@ package com.gulimall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.gulimall.product.entity.CategoryEntity;
+import com.gulimall.product.vo.Category2Vo;
 import com.gulimall.product.vo.CategoryVo;
 import com.gulimall.service.utils.PageUtils;
 
@@ -45,5 +46,20 @@ public interface CategoryService extends IService<CategoryEntity> {
      * @param categoryVo 更新的信息
      */
     void updateCategoryDetail(CategoryVo categoryVo);
+
+    /**
+     * 获取一级分类
+     * @return  List<CategoryEntity>
+     */
+    List<CategoryEntity> getCategoryLevel1();
+
+
+    /**
+     * 获取所有  三级 分类 并 封装成一个 map
+     * @return   Map<String, Object>
+     */
+    Map<String,List<Category2Vo>> getCategoryJson();
+
+
 }
 

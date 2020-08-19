@@ -30,7 +30,7 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
         # 商品服务路由
-        - id: gulimall_product_router
+        - id: gulimall_product_api_router
           uri: lb://gulimall-product
           predicates:
             - Path=/api/product/**
@@ -43,9 +43,20 @@ spring:
             - Path=/api/**
           filters:
             - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
-logging:
-  level:
-   com.gulimall.gateway: debug
+      # 商品服务路由
+        - id: gulimall_search_router
+          uri: lb://gulimall-search
+          predicates:
+            - Host=search.gulimall.com
+        - id: gulimall_search_router
+          uri: lb://gulimall-search
+          predicates:
+            - Host=item.gulimall.com
+        # 商品服务路由
+        - id: gulimall_product_router
+          uri: lb://gulimall-product
+          predicates:
+            - Host=*.gulimall.com , gulimall.com
 
 # 笔记  如果网关处重写 路径 会影响 文档的生成
 # 目前可以  重新写一份

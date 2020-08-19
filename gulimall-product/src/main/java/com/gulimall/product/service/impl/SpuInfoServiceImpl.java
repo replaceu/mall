@@ -257,14 +257,11 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         Map<Long, Boolean> hasStock = null;
         try {
             List<Long> skuIds = skuInfoEntities.stream().map(SkuInfoEntity::getSkuId).collect(Collectors.toList());
-
             List<SkuHasStockTo> stockTos = wareFeignService.hasStock(skuIds).getData();
             hasStock = stockTos.stream().collect(Collectors.toMap(SkuHasStockTo::getSkuId, SkuHasStockTo::getHasStock));
         } catch (Exception e) {
             log.error("远程库存服务异常:  {}", e);
         }
-
-
         // 参数对拷
         Map<Long, Boolean> finalHasStock = hasStock;
         List<SkuEsModel> skuEsModelList = skuInfoEntities.stream().map(skuInfoEntity -> {
@@ -304,8 +301,6 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             spuInfoEntity.setId(spuId);
             spuInfoEntity.setPublishStatus(ProductConstant.SPU_STATUS_UP);
             baseMapper.updateById(spuInfoEntity);
-
-
         }else{
             log.error("商品es保存失败");
         }
