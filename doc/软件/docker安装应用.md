@@ -104,3 +104,52 @@ docker run --name nginx -p 80:80 \
 -d nginx:1.10
 ```
 
+## 6、Tomcat 安装
+
+1、拉取镜像 并拷贝其中默认类容
+
+```sh
+docker pull tomcat:8.5
+docker run --name tomcat -p 8080:8080 -d tomcat:8.5
+
+# 创建文件夹
+mkdir -p /dockerData/tomcat
+cd /dockerData/tomcat 
+
+# 拷贝默认配置
+
+docker container cp tomcat:/usr/local/tomcat/conf .
+docker container cp tomcat:/usr/local/tomcat/webapps .
+docker container cp tomcat:/usr/local/tomcat/logs .
+
+# 停止、删除容器
+docker stop tomcat
+docker rm -f tomcat
+```
+
+2、启动容器
+
+```sh
+docker run --name tomcat \
+-v /dockerData/tomcat/webapps:/usr/local/tomcat/webapps \
+-v /dockerData/tomcat/logs:/usr/local/tomcat/logs \
+-v /dockerData/tomcat/conf:/usr/local/tomcat/conf \
+-p 8080:8080 -d tomcat:8.5
+```
+
+3、测试
+
+```sh
+cd /dockerData/tomcat/webapps
+mkdir abc
+echo "<h2>hello tomcat</h2>" >> index.html
+
+#访问   ip:8080/abc
+```
+
+
+
+
+
+
+

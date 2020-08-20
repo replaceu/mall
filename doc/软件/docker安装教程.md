@@ -40,35 +40,44 @@ yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/d
 yum makecache fast
 ```
 
-7、启动docker
+7、安装DOCKER CE
+
+```sh
+yum -y install docker-ce
+```
+
+8、启动docker
 
 ```sh
 systemctl start docker  # 启动
 systemctl status docker # 查看docker 状态
 ```
 
-8、配置镜像加速
+9、配置镜像加速
 
+```sh
+mkdir -p /etc/docker
+tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["https://eqhg7vv5.mirror.aliyuncs.com"]
+}
+EOF
+systemctl daemon-reload
+systemctl restart docker
+```
 
+10、docker 开机自启
 
-
-
-
-
-
-
-
-
-
-
-
-
-docker 开机自启
-
-```cmd
+```sh
 sudo systemctl enable docker.service
 ```
 
+11、卸载
 
+```sh
+systemctl stop docker 
+yum -y remove docker-ce
+rm -rf /var/lib/docker
+```
 
 systemctl list-unit-files
