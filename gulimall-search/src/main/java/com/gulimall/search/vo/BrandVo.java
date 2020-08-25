@@ -11,8 +11,16 @@ import lombok.ToString;
 @Setter
 @ToString
 public class BrandVo {
-
     private Long brandId ;
     private String brandName ;
     private String brandImg ;
+
+    public BrandVo() {
+    }
+
+    public BrandVo(Long brandId, String brandName, String brandImg) {
+        this.brandId = brandId;
+        this.brandName = brandName;
+        this.brandImg = brandImg;
+    }
 }

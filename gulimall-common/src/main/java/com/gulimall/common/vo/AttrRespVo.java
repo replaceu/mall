@@ -1,4 +1,4 @@
-package com.gulimall.product.vo;
+package com.gulimall.common.vo;
 
 import lombok.Data;
 
@@ -9,10 +9,9 @@ import java.util.List;
  */
 
 @Data
-public class AttrRespVo extends AttrVo{
+public class AttrRespVo extends AttrVo {
     private String attrGroupName ;
     private String categoryName ;
-
     /**
      * 分类路径
      */

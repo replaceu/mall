@@ -10,6 +10,6 @@ import lombok.Setter;
 @Setter
 public  class Attrs {
     private Long attrId;
-    private String attName;
+    private String attrName;
     private String attrValue;
 }

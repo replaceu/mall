@@ -2,16 +2,17 @@ package com.gulimall.search.vo;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
+
+import java.util.List;
 
 /**
- * @author aqiang9  2020-08-20
+ * @author aqiang9  2020-08-22
  */
 @Getter
 @Setter
-@ToString
 public class AttrVo {
     private Long  attrId ;
-    private String attrName ;
-    private String attrValue;
+    private String attrName;
+    private List<String> attrValue;
+
 }

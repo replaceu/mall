@@ -4,8 +4,8 @@ import com.gulimall.common.constant.SwaggerParamType;
 import com.gulimall.common.utils.CommonResult;
 import com.gulimall.common.vo.PageVo;
 import com.gulimall.product.service.AttrService;
-import com.gulimall.product.vo.AttrRespVo;
-import com.gulimall.product.vo.AttrVo;
+import com.gulimall.common.vo.AttrRespVo;
+import com.gulimall.common.vo.AttrVo;
 import com.gulimall.service.utils.PageUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -87,6 +87,20 @@ public class AttrController {
             attrService.removeAttrInfo(attrIds, attrType);
         }
         return CommonResult.ok();
+    }
+
+
+//    ============================================ 远程调用的方法   ====
+
+    /**
+     * 主要是去获取  属性名
+     * @param attrId
+     * @return
+     */
+    @PostMapping("/info/{attrId}")
+    public CommonResult<AttrRespVo> attrInfo(@PathVariable("attrId") Long attrId){
+        AttrRespVo attrInfo = attrService.getAttrInfo(attrId);
+        return CommonResult.ok(attrInfo) ;
     }
 
 }

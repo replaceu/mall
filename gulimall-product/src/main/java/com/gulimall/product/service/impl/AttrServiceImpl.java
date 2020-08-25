@@ -16,11 +16,13 @@ import com.gulimall.product.service.AttrGroupService;
 import com.gulimall.product.service.AttrService;
 import com.gulimall.product.service.CategoryService;
 import com.gulimall.product.vo.AttrGroupRelationVo;
-import com.gulimall.product.vo.AttrRespVo;
-import com.gulimall.product.vo.AttrVo;
+import com.gulimall.common.vo.AttrRespVo;
+import com.gulimall.common.vo.AttrVo;
 import com.gulimall.service.utils.PageUtils;
 import com.gulimall.service.utils.QueryPage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -30,6 +32,7 @@ import java.util.stream.Collectors;
 
 
 @Service("attrService")
+@CacheConfig(cacheNames = "product:attr")
 public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements AttrService {
 
     @Autowired
@@ -102,6 +105,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         }
     }
 
+    @Cacheable(key = "'info:'+#attrId" , sync = true)
     @Override
     public AttrRespVo getAttrInfo(Long attrId) {
         AttrEntity attrEntity = baseMapper.selectById(attrId);
@@ -134,7 +138,6 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         AttrEntity attrEntity = AttrConvert.INSTANCE.vo2entity(attrVo);
         baseMapper.updateById(attrEntity);
         // 修改关联数据
-
         // 修改分组关联   基本属性 才有分组信息
         if (attrVo.getAttrType() == ProductConstant.BASE_ATTR_TYPE) {
             AttrAttrgroupRelationEntity attrAttrgroupRelationEntity = new AttrAttrgroupRelationEntity();
@@ -143,7 +146,6 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
             attrAttrgroupRelationService.updateRelationByAttrId(attrAttrgroupRelationEntity);
         }
     }
-
     @Override
     public void removeAttrInfo(List<Long> attrIds, Long attrType) {
         //
@@ -221,5 +223,4 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         return baseMapper.selectSearchAttrs(attrValueIds);
 
     }
-
 }

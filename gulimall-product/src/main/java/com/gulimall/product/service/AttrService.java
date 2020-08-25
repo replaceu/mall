@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.gulimall.common.vo.PageVo;
 import com.gulimall.product.entity.AttrEntity;
 import com.gulimall.product.vo.AttrGroupRelationVo;
-import com.gulimall.product.vo.AttrRespVo;
-import com.gulimall.product.vo.AttrVo;
+import com.gulimall.common.vo.AttrRespVo;
+import com.gulimall.common.vo.AttrVo;
 import com.gulimall.service.utils.PageUtils;
 
 import java.util.List;

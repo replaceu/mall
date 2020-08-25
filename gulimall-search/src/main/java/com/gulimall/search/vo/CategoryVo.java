@@ -13,6 +13,12 @@ import lombok.ToString;
 public class CategoryVo {
     private Long categoryId ;
     private String categoryName ;
-    private String categoryValue ;
-    
+
+    public CategoryVo() {
+    }
+
+    public CategoryVo(Long categoryId, String categoryName) {
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+    }
 }

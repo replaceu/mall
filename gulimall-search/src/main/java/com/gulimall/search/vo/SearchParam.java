@@ -38,9 +38,9 @@ public class SearchParam {
     /**
      * 是否只显示有货
      */
-    private Integer hasStock = 1 ; // 1 有 0 无
+    private Integer hasStock ; // 0 不做筛选  1 为有货
     /**
-     * 价格区间
+     * 价格区间   from_to
      */
     private String skuPrice ;
     /**

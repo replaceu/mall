@@ -48,15 +48,15 @@ spring:
           uri: lb://gulimall-search
           predicates:
             - Host=search.gulimall.com
-        - id: gulimall_search_router
-          uri: lb://gulimall-search
-          predicates:
-            - Host=item.gulimall.com
+#        - id: gulimall_search_router
+#          uri: lb://gulimall-search
+#          predicates:
+#            - Host=search.gulimall.com
         # 商品服务路由
-        - id: gulimall_product_router
+        - id: gulimall_host_router
           uri: lb://gulimall-product
           predicates:
-            - Host=*.gulimall.com , gulimall.com
+            - Host=gulimall.com,www.gulimall.com,item.gulimall.com
 
 # 笔记  如果网关处重写 路径 会影响 文档的生成
 # 目前可以  重新写一份

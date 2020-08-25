@@ -1,5 +1,8 @@
 package com.gulimall.product.convert;
 
+import com.gulimall.common.to.ProductAttrTo;
+import com.gulimall.common.vo.AttrRespVo;
+import com.gulimall.common.vo.AttrVo;
 import com.gulimall.common.to.es.Attrs;
 import com.gulimall.product.entity.AttrAttrgroupRelationEntity;
 import com.gulimall.product.entity.AttrEntity;
@@ -36,4 +39,6 @@ public interface AttrConvert {
     AttrGroupWithAttrsRespVo entity2respVo(AttrGroupEntity attrGroup);
 
     Attrs entity2model(ProductAttrValueEntity e);
+
+    ProductAttrTo entity2to(AttrEntity attrEntity);
 }

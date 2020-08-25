@@ -1,17 +1,17 @@
 # docker有关操作笔记
 
-## 1、docker 安装mysql
+## 1、安装mysql
 
 ```
 docker run -p 3306:3306 --name mysql \
--v /mydata/mysql/log:/var/log/mysql \
--v /mydata/mysql/data:/var/lib/mysql \
--v /mydata/mysql/conf:/etc/mysql \
+-v /docker-data/mysql/log:/var/log/mysql \
+-v /docker-data/mysql/data:/var/lib/mysql \
+-v /docker-data/mysql/conf:/etc/mysql \
 -e MYSQL_ROOT_PASSWORD=root
 -d mysql:5.7
 ```
 
-- mysql 配置 `vi /mydata/mysql/conf/my.conf`
+- mysql 配置 `vi /docker-data/mysql/conf/my.conf`
 
 ```conf
 [client]
@@ -42,17 +42,17 @@ skip-name-resolve
 
 - 应用开机自启： 前提是docker 开机自启 `docker update mysql  --restart=always`
 
-## 2、docker 安装redis
+## 2、安装redis
 
 ```cmd
-mkdir -p /mydata/reids/conf
-touch  /mydata/reids/conf/redis.conf
+mkdir -p /docker-data/reids/conf
+touch  /docker-data/reids/conf/redis.conf
 ```
 
 ```cmd
 docker run -p 6379:6379 --name redis \
--v /mydata/redis/data:/data \
--v /mydata/redis/conf/redis.conf:/etc/redis/redis.conf \
+-v /docker-data/redis/data:/data \
+-v /docker-data/redis/conf/redis.conf:/etc/redis/redis.conf \
 -d redis reids-server /etc/redis/redis.conf 
 ```
 
@@ -68,17 +68,17 @@ appendonly yes   # aof 持久化
 
 ```sh
 docker pull elasticsearch:7.4.2
-mkdir -p /mydata/elasticsearch/config
-mkdir -p /mydata/elasticsearch/data
-echo "http.host:0.0.0.0" >> /mydata/elasticsearch/config/elasticsearch.yml
-# 循环授权
-chmod 777 -R /mydata/elasticsearch
-docker run --name elasticsearch -p 9200:9200 -p 9300:9300 \
+mkdir -p /docker-data/elasticsearch/config
+mkdir -p /docker-data/elasticsearch/data
+echo "http.host: 0.0.0.0" >> /docker-data/elasticsearch/config/elasticsearch.yml
+# 循环授权  --privileged=true 
+chmod 777 -R /docker-data/elasticsearch
+docker run --name elasticsearch2222 -p 9200:9200 -p 9300:9300 \
 -e "discovery.type=single-node" \
 -e ES_JAVA_OPTS="-Xms64m -Xmx128m" \
--v /mydata/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
--v /mydata/elasticsearch/data:/usr/share/elasticsearch/data \
--v /mydata/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
+-v /docker-data/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+-v /docker-data/elasticsearch/data:/usr/share/elasticsearch/data  \
+-v /docker-data/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
 -d elasticsearch:7.4.2
 ```
 
@@ -96,11 +96,11 @@ docker stats
 docker pull nginx:1.10
 docker run --name nginx -d nginx:1.10
 docker container cp nginx:/etc/nginx .
-# 文件重命名 然后 放到/mydata/nginx/conf 文件夹下
+# 文件重命名 然后 放到/docker-data/nginx/conf 文件夹下
 docker run --name nginx -p 80:80 \
--v /mydata/nginx/html:/usr/share/nginx/html \
--v /mydata/nginx/logs:/var/log/nginx \
--v /mydata/nginx/conf:/etc/nginx \
+-v /docker-data/nginx/html:/usr/share/nginx/html \
+-v /docker-data/nginx/logs:/var/log/nginx \
+-v /docker-data/nginx/conf:/etc/nginx \
 -d nginx:1.10
 ```
 
@@ -113,8 +113,8 @@ docker pull tomcat:8.5
 docker run --name tomcat -p 8080:8080 -d tomcat:8.5
 
 # 创建文件夹
-mkdir -p /dockerData/tomcat
-cd /dockerData/tomcat 
+mkdir -p /docker-data/tomcat
+cd /docker-data/tomcat 
 
 # 拷贝默认配置
 
@@ -131,16 +131,16 @@ docker rm -f tomcat
 
 ```sh
 docker run --name tomcat \
--v /dockerData/tomcat/webapps:/usr/local/tomcat/webapps \
--v /dockerData/tomcat/logs:/usr/local/tomcat/logs \
--v /dockerData/tomcat/conf:/usr/local/tomcat/conf \
+-v /docker-data/tomcat/webapps:/usr/local/tomcat/webapps \
+-v /docker-data/tomcat/logs:/usr/local/tomcat/logs \
+-v /docker-data/tomcat/conf:/usr/local/tomcat/conf \
 -p 8080:8080 -d tomcat:8.5
 ```
 
 3、测试
 
 ```sh
-cd /dockerData/tomcat/webapps
+cd /docker-data/tomcat/webapps
 mkdir abc
 echo "<h2>hello tomcat</h2>" >> index.html
 
