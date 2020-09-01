@@ -29,7 +29,6 @@ spring:
       use-key-prefix: true
       cache-null-values: true # 是否缓存空值 ，防止缓存穿透
 
-
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   global-config:
@@ -55,3 +54,9 @@ swagger:
   contact: xxxxxxxxxxxx@gmail.com
   authorization: #有auth2 并使用以前的swagger-ui
     key-name: Authorization
+
+gulimall:
+  thread:
+    core-size: 5
+    max-size: 30
+    keep-alive-time: 20
