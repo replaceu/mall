@@ -14,6 +14,7 @@ import com.gulimall.product.service.AttrService;
 import com.gulimall.product.service.CategoryService;
 import com.gulimall.product.vo.AttrGroupVo;
 import com.gulimall.product.vo.AttrGroupWithAttrsRespVo;
+import com.gulimall.product.vo.SpuItemAttrGroupVo;
 import com.gulimall.service.utils.PageUtils;
 import com.gulimall.service.utils.QueryPage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,5 +102,13 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
                     return respVo;
                 }
         ).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long spuId, Long categoryId) {
+//        查出当前spu对应的属性的分组信息以及 分组下所有属性的信息
+
+        // 查看所有分组 通过 categoryId 三级分类Id
+      return   baseMapper.selectAttrGroupWithAttrsBySpuId(spuId,categoryId) ;
     }
 }

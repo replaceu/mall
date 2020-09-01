@@ -18,7 +18,7 @@ import java.util.List;
 public class SkuItemVo {
     //        1 、 sku详细信息  sku_info
     private SkuInfoEntity info;
-
+    private boolean hasStock = true ;
     //        2、sku 图片信息  sku_img
     private List<SkuImagesEntity> images;
     //        3、spu 销售属性组合
@@ -30,30 +30,4 @@ public class SkuItemVo {
 //        5、规格参数信息
 
     private List<SpuItemAttrGroupVo> groupAttrs;
-
-    @Getter
-    @Setter
-    @ToString
-    public static class SkuItemSaleAttrVo {
-        private Long attrId;
-        private String attrName;
-        private List<String> attrValues;
-    }
-
-    @Getter
-    @Setter
-    @ToString
-    public static class SpuItemAttrGroupVo {
-        private String groupName;
-        private List<SpuBaseAttrVo> attrs;
-
-    }
-
-    @Getter
-    @Setter
-    @ToString
-    public static class SpuBaseAttrVo {
-        private String attrName;
-        private String attrValue;
-    }
 }

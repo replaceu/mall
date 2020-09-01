@@ -5,6 +5,7 @@ import com.gulimall.common.vo.PageVo;
 import com.gulimall.product.entity.AttrGroupEntity;
 import com.gulimall.product.vo.AttrGroupVo;
 import com.gulimall.product.vo.AttrGroupWithAttrsRespVo;
+import com.gulimall.product.vo.SpuItemAttrGroupVo;
 import com.gulimall.service.utils.PageUtils;
 
 import java.util.List;
@@ -40,5 +41,14 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
     void removeGroup(List<Long> attrGroupIds);
 
     List<AttrGroupWithAttrsRespVo> getAttrGroupWithAttrByCategoryId(Long categoryId);
+
+    /**
+     * 通过spuId 获取属性分组下的所有属性
+     *
+     * @param spuId
+     * @param categoryId
+     * @return
+     */
+    List<SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long spuId, Long categoryId);
 }
 
