@@ -8,30 +8,30 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <description>三方应用</description>
-    <artifactId>gulimall-third-party</artifactId>
 
+    <artifactId>gulimall-auth-server</artifactId>
+    <description>认证中心(社交登陆)</description>
     <dependencies>
         <dependency>
             <groupId>com.gulimall</groupId>
             <artifactId>gulimall-common</artifactId>
-            <version>${project.version}</version>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
-        <!-- 阿里云 oos 服务 -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alicloud-oss</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
 
         <dependency>
+            <groupId>com.gulimall</groupId>
+            <artifactId>gulimall-web-dependencies</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
     </dependencies>
-
 </project>

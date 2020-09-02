@@ -74,4 +74,9 @@ public class CommonResult<T> {
         this.data = data;
         return this;
     }
+
+
+    public boolean isOk(){
+        return  this.getCode() == 0 ;
+    }
 }

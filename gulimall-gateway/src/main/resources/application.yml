@@ -43,15 +43,16 @@ spring:
             - Path=/api/**
           filters:
             - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
-      # 商品服务路由
+      # 搜索 服务 路由
         - id: gulimall_search_router
           uri: lb://gulimall-search
           predicates:
             - Host=search.gulimall.com
-#        - id: gulimall_search_router
-#          uri: lb://gulimall-search
-#          predicates:
-#            - Host=search.gulimall.com
+#          认证路由
+        - id: gulimall_search_router
+          uri: lb://gulimall-auth
+          predicates:
+            - Host=auth.gulimall.com
         # 商品服务路由
         - id: gulimall_host_router
           uri: lb://gulimall-product

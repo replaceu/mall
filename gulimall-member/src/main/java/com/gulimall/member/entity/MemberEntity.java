@@ -1,11 +1,14 @@
 package com.gulimall.member.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import org.apache.ibatis.type.JdbcType;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 会员
@@ -91,6 +94,7 @@ public class MemberEntity implements Serializable {
 	/**
 	 * 注册时间
 	 */
+	@TableField(fill = FieldFill.INSERT_UPDATE ,jdbcType = JdbcType.DATE  )
 	private Date createTime;
 
 }

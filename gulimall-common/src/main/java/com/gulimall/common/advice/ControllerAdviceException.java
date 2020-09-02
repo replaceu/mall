@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * @author aqiang9  2020-07-28
  */
-@RestControllerAdvice(basePackages = "com.gulimall") // 处理所有异常信息
+@RestControllerAdvice(basePackages = "com.gulimall.*.controller") // 处理所有异常信息
 @Slf4j
 public class ControllerAdviceException {
     /**

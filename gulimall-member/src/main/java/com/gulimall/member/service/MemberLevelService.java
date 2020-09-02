@@ -15,5 +15,8 @@ import com.gulimall.service.utils.PageUtils;
 public interface MemberLevelService extends IService<MemberLevelEntity> {
 
     PageUtils queryPage(PageVo pageParams);
+    MemberLevelEntity getDefaultLevel();
+
+
 }
 

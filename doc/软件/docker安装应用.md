@@ -53,7 +53,7 @@ touch  /docker-data/reids/conf/redis.conf
 docker run -p 6379:6379 --name redis \
 -v /docker-data/redis/data:/data \
 -v /docker-data/redis/conf/redis.conf:/etc/redis/redis.conf \
--d redis reids-server /etc/redis/redis.conf 
+-d redis redis-server /etc/redis/redis.conf 
 ```
 
 redis.conf

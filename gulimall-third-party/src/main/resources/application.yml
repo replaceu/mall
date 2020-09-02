@@ -15,3 +15,11 @@ spring:
       oss:
         bucket: my-gmall-oss
         endpoint: oss-cn-chengdu.aliyuncs.com
+
+gulimall:
+  sms:
+    host: https://smsmsgs.market.alicloudapi.com
+    path: /sms/
+    appcode: 3354d6a7e73f4131b79410e0e0cdcce9
+    sign: 175622
+    skin: 1

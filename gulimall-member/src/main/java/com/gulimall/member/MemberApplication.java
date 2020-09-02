@@ -7,7 +7,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 /**
  * @author aqiang9  2020-07-31
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.gulimall")
 @EnableDiscoveryClient
 public class MemberApplication {
     public static void main(String[] args){

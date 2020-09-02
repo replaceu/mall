@@ -94,34 +94,36 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
 
     @Override
     public SkuItemVo item(Long skuId) {
-        SkuItemVo skuItemVo = new SkuItemVo();
+      return   itemSync(skuId );
 
-
-//        1 、 sku详细信息  sku_info
-        SkuInfoEntity skuInfo = getById(skuId);
-        skuItemVo.setInfo(skuInfo);
-//        2、sku 图片信息  sku_img
-
-        List<SkuImagesEntity> images = skuImagesService.getImagesBySkuId(skuId);
-        skuItemVo.setImages(images);
-//        3、spu 销售属性组合
-        Long spuId = skuInfo.getSpuId();
-        List<SkuItemSaleAttrVo> saleAttr = skuSaleAttrValueService.getSaleAttrBySpuId(spuId);
-        skuItemVo.setSaleAttr(saleAttr);
-
-//        4、spu 的介绍
-        SpuInfoDescEntity spuInfoDesc = spuInfoDescService.getById(spuId);
-        skuItemVo.setDesc(spuInfoDesc);
-
-//        5、spu 规格参数信息
-        Long categoryId = skuInfo.getCategoryId();
-        List<SpuItemAttrGroupVo> groupAttrs = attrGroupService.getAttrGroupWithAttrsBySpuId(spuId, categoryId);
-        skuItemVo.setGroupAttrs(groupAttrs);
-
-        return skuItemVo;
+//        SkuItemVo skuItemVo = new SkuItemVo();
+//
+//
+////        1 、 sku详细信息  sku_info
+//        SkuInfoEntity skuInfo = getById(skuId);
+//        skuItemVo.setInfo(skuInfo);
+////        2、sku 图片信息  sku_img
+//
+//        List<SkuImagesEntity> images = skuImagesService.getImagesBySkuId(skuId);
+//        skuItemVo.setImages(images);
+////        3、spu 销售属性组合
+//        Long spuId = skuInfo.getSpuId();
+//        List<SkuItemSaleAttrVo> saleAttr = skuSaleAttrValueService.getSaleAttrBySpuId(spuId);
+//        skuItemVo.setSaleAttr(saleAttr);
+//
+////        4、spu 的介绍
+//        SpuInfoDescEntity spuInfoDesc = spuInfoDescService.getById(spuId);
+//        skuItemVo.setDesc(spuInfoDesc);
+//
+////        5、spu 规格参数信息
+//        Long categoryId = skuInfo.getCategoryId();
+//        List<SpuItemAttrGroupVo> groupAttrs = attrGroupService.getAttrGroupWithAttrsBySpuId(spuId, categoryId);
+//        skuItemVo.setGroupAttrs(groupAttrs);
+//
+//        return skuItemVo;
     }
 
-    public SkuItemVo itemSync(Long skuId) {
+    private SkuItemVo itemSync(Long skuId) {
         SkuItemVo skuItemVo = new SkuItemVo();
 
         //1 、 sku详细信息  sku_info

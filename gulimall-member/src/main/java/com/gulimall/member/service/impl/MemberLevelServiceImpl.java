@@ -1,5 +1,6 @@
 package com.gulimall.member.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -22,6 +23,11 @@ public class MemberLevelServiceImpl extends ServiceImpl<MemberLevelDao, MemberLe
                 new QueryWrapper<MemberLevelEntity>()
         );
         return new PageUtils(page);
+    }
+
+    @Override
+    public MemberLevelEntity getDefaultLevel() {
+        return baseMapper.selectOne(new LambdaQueryWrapper<MemberLevelEntity>().eq(MemberLevelEntity::getDefaultStatus, 1));
     }
 
 }
