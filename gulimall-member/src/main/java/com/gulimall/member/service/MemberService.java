@@ -3,6 +3,7 @@ package com.gulimall.member.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.gulimall.common.exception.BusinessException;
 import com.gulimall.member.entity.MemberEntity;
+import com.gulimall.member.vo.SocialUser;
 import com.gulimall.service.utils.PageUtils;
 
 import java.util.Map;
@@ -31,5 +32,12 @@ public interface MemberService extends IService<MemberEntity> {
      * @return 用户信息
      */
     MemberEntity login(String loginAccount, String password);
+
+    /**
+     * 社交登陆
+     * @param socialUser 用户信息
+     * @return MemberEntity 用户信息
+     */
+    MemberEntity login(SocialUser socialUser);
 }
 

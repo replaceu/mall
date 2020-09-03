@@ -8,7 +8,9 @@ import com.gulimall.member.exception.MemberErrorCode;
 import com.gulimall.member.service.MemberService;
 import com.gulimall.member.vo.MemberLoginVo;
 import com.gulimall.member.vo.MemberRegisterVo;
+import com.gulimall.member.vo.SocialUser;
 import com.gulimall.service.utils.PageUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +26,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("member/member")
+@Slf4j
 public class MemberController {
     @Autowired
     private MemberService memberService;
@@ -42,13 +45,34 @@ public class MemberController {
         return CommonResult.ok();
     }
 
+    /**
+     * 登陆
+     * @param loginVo 登陆信息
+     */
     @PostMapping("/login")
     public CommonResult<MemberEntity> login(@RequestBody MemberLoginVo  loginVo) {
         MemberEntity memberEntity =  memberService.login(loginVo.getLoginAccount()  , loginVo.getPassword() );
         if (memberEntity == null) {
            return CommonResult.fail(MemberErrorCode.LOGIN_PASSWORD_INVALID_EXCEPTION ) ;
         }
+        log.info("用户登录信息, {} " , memberEntity );
         return CommonResult.ok();
+    }
+
+    /**
+     * 社交登陆
+     * @param socialUser  社交登陆信息
+     */
+    @PostMapping("/oauth2/login")
+    public CommonResult<MemberEntity> oauthLogin(@RequestBody SocialUser socialUser) {
+
+        MemberEntity memberEntity =  memberService.login(socialUser );
+        if (memberEntity == null) {
+            return CommonResult.fail(MemberErrorCode.LOGIN_PASSWORD_INVALID_EXCEPTION ) ;
+        }
+
+        log.info("用户社交 登录信息, {} " , memberEntity );
+        return CommonResult.ok(memberEntity);
     }
 
     /**

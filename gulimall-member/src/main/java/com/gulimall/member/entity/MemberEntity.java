@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.apache.ibatis.type.JdbcType;
 
 import java.io.Serializable;
@@ -17,7 +20,9 @@ import java.util.Date;
  * @email ${email}
  * @date 2020-07-27 10:19:25
  */
-@Data
+@Getter
+@Setter
+@ToString
 @TableName("ums_member")
 public class MemberEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -36,8 +41,9 @@ public class MemberEntity implements Serializable {
 	 */
 	private String username;
 	/**
-	 * 密码
+	 * json 忽略  密码
 	 */
+	@JsonInclude(JsonInclude.Include.NON_ABSENT)
 	private String password;
 	/**
 	 * 昵称
@@ -56,7 +62,8 @@ public class MemberEntity implements Serializable {
 	 */
 	private String header;
 	/**
-	 * 性别
+	 * 性别  男 女 未知
+	 *
 	 */
 	private Integer gender;
 	/**
@@ -94,7 +101,20 @@ public class MemberEntity implements Serializable {
 	/**
 	 * 注册时间
 	 */
-	@TableField(fill = FieldFill.INSERT_UPDATE ,jdbcType = JdbcType.DATE  )
+	@TableField(fill = FieldFill.INSERT ,jdbcType = JdbcType.DATE  )
 	private Date createTime;
+
+	/**
+	 * 社交登陆 uid
+	 */
+	private String socialUid ;
+	/**
+	 * token
+	 */
+	private String accessToken;
+	/**
+	 * 过期时间
+	 */
+	private String  expiresIn ;
 
 }

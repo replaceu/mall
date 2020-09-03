@@ -1,5 +1,6 @@
 package com.gulimall.auth.feign;
 
+import com.gulimall.auth.vo.SocialUser;
 import com.gulimall.auth.vo.UserLoginVo;
 import com.gulimall.auth.vo.UserRegisterVo;
 import com.gulimall.common.utils.CommonResult;
@@ -22,5 +23,8 @@ public interface MemberFeignService {
 
     @PostMapping("/member/login")
     CommonResult<Object> login(@RequestBody UserLoginVo loginVo) ;
+
+    @PostMapping("/oauth2/login")
+    CommonResult<Object> oauthLogin(@RequestBody SocialUser socialUser) ;
 
 }

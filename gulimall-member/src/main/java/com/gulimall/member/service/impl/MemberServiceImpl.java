@@ -11,16 +11,23 @@ import com.gulimall.member.entity.MemberLevelEntity;
 import com.gulimall.member.exception.MemberErrorCode;
 import com.gulimall.member.service.MemberLevelService;
 import com.gulimall.member.service.MemberService;
+import com.gulimall.member.vo.SocialUser;
+import com.gulimall.member.vo.WeiboSocialUserInfo;
 import com.gulimall.service.utils.PageUtils;
 import com.gulimall.service.utils.Query;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 
 
 @Service("memberService")
+@Slf4j
 public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> implements MemberService {
 
     @Autowired
@@ -74,12 +81,69 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
     @Override
     public MemberEntity login(String loginAccount, String password) {
 
-        MemberEntity memberEntity = baseMapper.selectOne(new LambdaQueryWrapper<MemberEntity>().eq(MemberEntity::getUsername, loginAccount).or().eq(MemberEntity::getMobile, loginAccount));
-        if (memberEntity != null && passwordEncoder.matches(  password , memberEntity.getPassword()  ) ) {
-            return memberEntity ;
+        MemberEntity memberEntity = baseMapper.selectOne(
+                new LambdaQueryWrapper<MemberEntity>()
+                        .eq(MemberEntity::getUsername, loginAccount)
+                        .or()
+                        .eq(MemberEntity::getMobile, loginAccount));
+        if (memberEntity != null && passwordEncoder.matches(password, memberEntity.getPassword())) {
+            return memberEntity;
         }
 // 登陆失败
-        return null ;
+        return null;
 
+    }
+
+    @Override
+    public MemberEntity login(SocialUser socialUser) {
+        // TODO 修改表字段
+//        1、判断是否登录过
+        MemberEntity member = baseMapper.selectOne(new LambdaQueryWrapper<MemberEntity>().eq(MemberEntity::getSocialUid, socialUser.getUid()));
+        if (member != null) {
+            // 登陆过
+            MemberEntity memberEntity = new MemberEntity();
+            memberEntity.setId(member.getId());
+            memberEntity.setAccessToken(socialUser.getAccess_token());
+            memberEntity.setExpiresIn(socialUser.getExpires_in());
+            baseMapper.updateById(memberEntity);
+
+            member.setExpiresIn(socialUser.getExpires_in());
+            member.setAccessToken(socialUser.getAccess_token());
+            return member;
+        }
+        // 注册
+        member = new MemberEntity();
+        // 查询用户信息
+        // access_token	true	string	采用OAuth授权方式为必填参数，OAuth授权后获得。
+        //uid
+        member.setSocialUid(socialUser.getUid());
+        member.setAccessToken(socialUser.getAccess_token());
+        member.setExpiresIn(socialUser.getExpires_in());
+
+        try {
+            ResponseEntity<WeiboSocialUserInfo> response = new RestTemplate().getForEntity("https://api.weibo.com/2/users/show.json?access_token={1}&uid={2}", WeiboSocialUserInfo.class,
+                    socialUser.getAccess_token(), socialUser.getUid());
+            if (response.getStatusCodeValue() == 200 && response.getBody() != null) {
+                // 查询成功
+                WeiboSocialUserInfo body = response.getBody();
+
+                member.setNickname(body.getName());
+                member.setGender("m".equals(body.getGender()) ? 1 : 0);
+
+
+                if (!StringUtils.isEmpty(body.getProfile_image_url())) {
+                    member.setHeader(body.getProfile_image_url());
+                }
+//        TODO 更多详细信息
+            }
+        } catch (Exception e) {
+            log.error("详细信息查询错误, {} ", e.getMessage());
+        }
+        MemberLevelEntity defaultLevel = memberLevelService.getDefaultLevel();
+        if (defaultLevel != null) {
+            member.setLevelId(defaultLevel.getId());
+        }
+        baseMapper.insert(member);
+        return member;
     }
 }
