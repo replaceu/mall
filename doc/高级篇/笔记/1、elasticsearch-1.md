@@ -330,7 +330,7 @@ POST _reindex
 
  • 解决：将索引从多类型迁移到单类型，每种类型文档一个独立索引
 
-## 5、分词
+##  5、分词
 
 ```sh
 POST _analyze
@@ -338,38 +338,4 @@ POST _analyze
   "analyzer": "standard",
   "text": "谷粒电商"
 }
-```
-
-### 1)、ik分词器
-
-下载地址：https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.4.2/elasticsearch-analysis-ik-7.4.2.zip
-
-常用的两个分词器
-
-```sh
-ik_smart     # 智能分词
-ik_max_word  # 最大分词
-```
-
-### 2)、自定义词库
-
-用nginx ：/mydata/ngnix/html
-
-```sh
-mkdir es
-vi fenci.txt
-
-vi  /mydata/elasticsearch/plugins/ik/config/IKAnalyzer.cfg.xml
-
-<properties>
-        <comment>IK Analyzer 扩展配置</comment>
-        <!--用户可以在这里配置自己的扩展字典 -->
-        <entry key="ext_dict"></entry>
-         <!--用户可以在这里配置自己的扩展停止词字典-->
-        <entry key="ext_stopwords"></entry>
-        <!--用户可以在这里配置远程扩展字典 -->
-        <entry key="remote_ext_dict">http://66.88.88.200/es/fenci.txt</entry>
-        <!--用户可以在这里配置远程扩展停止词字典-->
-        <!-- <entry key="remote_ext_stopwords">words_location</entry> -->
-</properties>
 ```

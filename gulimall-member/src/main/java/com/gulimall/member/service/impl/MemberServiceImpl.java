@@ -60,6 +60,9 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
             memberEntity.setLevelId(defaultLevel.getId());
         }
         memberEntity.setPassword(passwordEncoder.encode(memberEntity.getPassword()));
+
+        // 添加用户
+        baseMapper.insert(  memberEntity ) ;
     }
 
     @Override

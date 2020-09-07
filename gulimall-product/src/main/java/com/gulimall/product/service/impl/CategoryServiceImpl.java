@@ -16,6 +16,8 @@ import com.gulimall.service.utils.PageUtils;
 import com.gulimall.service.utils.Query;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -26,6 +28,7 @@ import java.util.stream.Collectors;
 
 @Service("categoryService")
 @Slf4j
+@CacheConfig(cacheNames = "product:category" )
 public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService {
     @Autowired
     private CategoryBrandRelationService categoryBrandRelationService;
@@ -41,6 +44,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
     @Override
+    @Cacheable(key = "#root.methodName")
     public List<CategoryVo> listCategoryWithTree() {
         // 查询所有分类
         List<CategoryEntity> allCategory = this.baseMapper.selectList(null);
@@ -51,9 +55,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
     @Override
+    @CacheEvict(allEntries = true)
     public void removeMenuByIds(List<Long> catIds) {
 //        TODO  检查当前 删除菜单 是否 被其他地方 引用
-
 //        逻辑删除
         baseMapper.deleteBatchIds(catIds);
     }
@@ -83,6 +87,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
     @Override
+    @CacheEvict(allEntries = true )
     public void updateCategoryDetail(CategoryVo categoryVo) {
         CategoryEntity categoryEntity = CategoryConvert.INSTANCE.vo2entity(categoryVo);
         baseMapper.updateById(categoryEntity);
@@ -95,6 +100,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
     @Override
+    @Cacheable(key = "#root.methodName")
     public List<CategoryEntity> getCategoryLevel1() {
         return baseMapper.selectList(new LambdaQueryWrapper<CategoryEntity>().eq(CategoryEntity::getCatLevel, 1));
     }
@@ -111,7 +117,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     *
      *
      */
-    @Cacheable(value = "product" , key = "#root.method.name")
+    @Cacheable(key = "#root.methodName")
     @Override
     public Map<String, List<Category2Vo>> getCategoryJson() {
         // 一级分类

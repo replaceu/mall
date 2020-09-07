@@ -16,7 +16,7 @@ import java.util.Date;
  */
 @Configuration
 @EnableTransactionManagement // 开启事务
-@MapperScan("com.gulimall.product.dao")
+@MapperScan("com.gulimall.member.dao")
 public class MybatisConfig {
     // 引入分页插件
     @Bean

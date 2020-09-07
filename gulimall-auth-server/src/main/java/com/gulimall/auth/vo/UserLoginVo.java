@@ -15,4 +15,10 @@ public class UserLoginVo {
     private String loginAccount ;
     @NotEmpty(message = "密码不能为空")
     private String password;
+
+    /**
+     * 来源地址
+     */
+    private String originUrl ;
 }
+

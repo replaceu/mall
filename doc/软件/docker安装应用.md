@@ -1,19 +1,16 @@
 # docker有关操作笔记
 
+>  docker stats 查看内存占用情况
+
 ## 1、安装mysql
 
-```
-docker run -p 3306:3306 --name mysql \
--v /docker-data/mysql/log:/var/log/mysql \
--v /docker-data/mysql/data:/var/lib/mysql \
--v /docker-data/mysql/conf:/etc/mysql \
--e MYSQL_ROOT_PASSWORD=root
--d mysql:5.7
-```
+```sh
+mkdir -p /docker-data/mysql/conf
 
-- mysql 配置 `vi /docker-data/mysql/conf/my.conf`
+vi /docker-data/mysql/conf/my.conf
 
-```conf
+
+# my.conf 内容
 [client]
 default-character-set=utf8
 
@@ -36,6 +33,18 @@ default-storage-engine=INNODB
 skip-character-set-client-handshake
 # 跳过域名解析
 skip-name-resolve
+
+
+
+
+
+docker run -p 3306:3306 --name mysql \
+-v /docker-data/mysql/log:/var/log/mysql \
+-v /docker-data/mysql/data:/var/lib/mysql \
+-v /docker-data/mysql/conf:/etc/mysql \
+-e MYSQL_ROOT_PASSWORD=root \
+--restart=always \
+-d mysql:5.7
 ```
 
 - 查看软件安装的**目录**：`whereis mysql` 
@@ -46,7 +55,10 @@ skip-name-resolve
 
 ```cmd
 mkdir -p /docker-data/reids/conf
-touch  /docker-data/reids/conf/redis.conf
+vi  /docker-data/reids/conf/redis.conf
+
+appendonly yes  # aof 持久化
+requirepass redis   # 访问密码
 ```
 
 ```cmd
@@ -56,39 +68,9 @@ docker run -p 6379:6379 --name redis \
 -d redis redis-server /etc/redis/redis.conf 
 ```
 
-redis.conf
-
-```cmd
-appendonly yes   # aof 持久化
-```
-
 客户端： ` docker exec  -it redis redis-cli`
 
-## 3、elasticsearch安装
 
-```sh
-docker pull elasticsearch:7.4.2
-mkdir -p /docker-data/elasticsearch/config
-mkdir -p /docker-data/elasticsearch/data
-echo "http.host: 0.0.0.0" >> /docker-data/elasticsearch/config/elasticsearch.yml
-# 循环授权  --privileged=true 
-chmod 777 -R /docker-data/elasticsearch
-docker run --name elasticsearch2222 -p 9200:9200 -p 9300:9300 \
--e "discovery.type=single-node" \
--e ES_JAVA_OPTS="-Xms64m -Xmx128m" \
--v /docker-data/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
--v /docker-data/elasticsearch/data:/usr/share/elasticsearch/data  \
--v /docker-data/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
--d elasticsearch:7.4.2
-```
-
-## 4、kibana安装
-
-```sh
-docker pull kibana:7.4.2
-docker run --name kibana -e ELASTICSEARCH_HOSTS=http://66.88.88.200:9200 -p 5601:5601 -d kibana:7.4.2
-docker stats
-```
 
 ## 5、 nginx 安装
 
@@ -96,7 +78,11 @@ docker stats
 docker pull nginx:1.10
 docker run --name nginx -d nginx:1.10
 docker container cp nginx:/etc/nginx .
-# 文件重命名 然后 放到/docker-data/nginx/conf 文件夹下
+mkdir -p /docker-data/nginx/
+mv nginx /docker-data/nginx/conf
+rm -rf /docker-data/nginx/conf/modules
+docker rm -f nginx
+
 docker run --name nginx -p 80:80 \
 -v /docker-data/nginx/html:/usr/share/nginx/html \
 -v /docker-data/nginx/logs:/var/log/nginx \

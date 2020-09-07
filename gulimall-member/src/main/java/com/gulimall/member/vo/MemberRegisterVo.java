@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MemberRegisterVo {
-    private String userName ;
+    private String username ;
     private String password;
     private String mobile;
 }

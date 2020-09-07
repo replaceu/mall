@@ -71,7 +71,7 @@ PUT product
 }
 // ========================== 新的索引 =======================
 
-PUT gulimall_product/_mapping
+PUT gulimall_product
 {
   "mappings": {
     "properties": {

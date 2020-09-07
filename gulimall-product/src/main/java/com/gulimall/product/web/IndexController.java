@@ -9,6 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -22,10 +23,11 @@ public class IndexController {
     CategoryService categoryService;
 
 
-    @GetMapping(value = {"/", "/index", "/index.html"})
-    public String index(ModelMap modelMap) {
+    @GetMapping(value = {"/", "/index", "/index.html" })
+    public String index(ModelMap modelMap , HttpSession session) {
         List<CategoryEntity> categoryEntities = categoryService.getCategoryLevel1();
 
+        System.out.println(session );
         modelMap.put("categories", categoryEntities);
         return "index";
     }
