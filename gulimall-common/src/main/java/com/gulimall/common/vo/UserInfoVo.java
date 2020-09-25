@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
-public class UserInfo implements Serializable {
+public class UserInfoVo implements Serializable {
     private static final long serialVersionUID = -5601507033335315457L;
     private Long id;
     /**

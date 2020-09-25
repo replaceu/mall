@@ -11,9 +11,8 @@ public final class AuthConstant {
 
 
     // 后面接手机号
-    public static final  String  SMS_CODE_CACHE_PREFIX = "sms:code:";
-    public static final String USER_INFO_KEY = "userInfo" ;
-    public static final String ORIGIN_URL_KEY = "originUrl" ;
+    public static final  String SMS_CODE_CACHE_PREFIX = "sms:code:";
+    public static final String  ORIGIN_URL_KEY = "originUrl" ;
 
 
     /**

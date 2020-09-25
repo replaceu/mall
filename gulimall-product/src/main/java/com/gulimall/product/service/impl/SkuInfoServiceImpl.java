@@ -137,6 +137,7 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
             //  3、spu 销售属性组合
             List<SkuItemSaleAttrVo> saleAttr = skuSaleAttrValueService.getSaleAttrBySpuId(skuInfo.getSpuId());
             skuItemVo.setSaleAttr(saleAttr);
+            System.out.println(saleAttr);
         }, executor);
         CompletableFuture<Void> descFuture = infoFuture.thenAcceptAsync(skuInfo -> {
             //  4、spu 的介绍
@@ -148,6 +149,7 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
 //            5、spu 规格参数信息
             Long categoryId = skuInfo.getCategoryId();
             List<SpuItemAttrGroupVo> groupAttrs = attrGroupService.getAttrGroupWithAttrsBySpuId(skuInfo.getSpuId(), categoryId);
+            System.out.println(groupAttrs);
             skuItemVo.setGroupAttrs(groupAttrs);
         }, executor);
 

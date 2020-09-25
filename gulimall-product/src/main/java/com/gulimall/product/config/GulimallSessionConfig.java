@@ -24,6 +24,7 @@ public class GulimallSessionConfig {
     }
 
 
+    // TODO 必须交这个名
     @Bean
     public RedisSerializer<Object> springSessionDefaultRedisSerializer() {
         return new GenericJackson2JsonRedisSerializer();

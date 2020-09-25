@@ -79,6 +79,8 @@ public class MemberController {
         }
         log.info("用户社交 登录信息, {} ", memberEntity);
 
+
+
         MemberVo memberVo = MemberConvert.INSTANCE.entity2vo(memberEntity);
         return CommonResult.ok(memberVo);
     }

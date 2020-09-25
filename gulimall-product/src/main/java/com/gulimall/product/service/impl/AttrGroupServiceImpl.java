@@ -109,6 +109,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
 //        查出当前spu对应的属性的分组信息以及 分组下所有属性的信息
 
         // 查看所有分组 通过 categoryId 三级分类Id
+        System.out.println("spuId:"+spuId + ":::  categoryId:"+ categoryId );
       return   baseMapper.selectAttrGroupWithAttrsBySpuId(spuId,categoryId) ;
     }
 }

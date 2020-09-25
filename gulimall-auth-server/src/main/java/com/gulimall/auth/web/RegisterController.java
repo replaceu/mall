@@ -5,8 +5,9 @@ import com.gulimall.auth.exception.AuthErrorCode;
 import com.gulimall.auth.feign.MemberFeignService;
 import com.gulimall.auth.feign.ThreadPartFeignService;
 import com.gulimall.auth.vo.UserRegisterVo;
+import com.gulimall.common.constant.SessionConstant;
 import com.gulimall.common.utils.CommonResult;
-import com.gulimall.common.vo.UserInfo;
+import com.gulimall.common.vo.UserInfoVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -33,7 +34,7 @@ import java.util.stream.Collectors;
  */
 @Controller
 @Slf4j
-public class RegController {
+public class RegisterController {
     private static final String REDIRECT_HTML = "redirect:http://auth.gulimall.com/reg.html" ;
     @Autowired
     ThreadPartFeignService threadPartFeignService;
@@ -47,17 +48,13 @@ public class RegController {
     @GetMapping("/reg.html")
     public String regHtml(String originUrl , Model model , HttpSession session){
         // 应保存 原来的地址
-        if (session.getAttribute(AuthConstant.USER_INFO_KEY ) == null) {
-
-            model.addAttribute("originUrl" , originUrl ) ;
-
+        if (session.getAttribute( SessionConstant.USER_INFO_KEY ) == null) {
+            model.addAttribute( AuthConstant.ORIGIN_URL_KEY  , originUrl ) ;
             return "reg" ;
         } else {
             return AuthConstant.toOriginUrl( originUrl ) ;
         }
     }
-
-
 
     @GetMapping("/sms/sendcode")
     @ResponseBody
@@ -125,13 +122,13 @@ public class RegController {
             return REDIRECT_HTML ;
         }
         // 调用注册逻辑
-        CommonResult<UserInfo> register = memberFeignService.register(userRegisterVo);
+        CommonResult<UserInfoVo> register = memberFeignService.register(userRegisterVo);
         // 登陆成功 并 登陆
         if (register.isOk()) {
             // 清除redis 缓存
             redisTemplate.delete(codeKey);
             //放入缓存就可以了
-            session.setAttribute(AuthConstant.USER_INFO_KEY , register.getData());
+            session.setAttribute(SessionConstant.USER_INFO_KEY , register.getData());
             // TODO 返回来源地址
            return AuthConstant.toOriginUrl( originUrl  ) ;
         }

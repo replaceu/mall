@@ -10,8 +10,10 @@ import lombok.Setter;
 @Setter
 public class SocialUser {
     private String access_token;
-    private String expires_in;
+    private Long expires_in;
     private String remind_in;
     private String uid;
+
+
 
 }

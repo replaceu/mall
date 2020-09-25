@@ -12,7 +12,6 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 
 
 @EnableRedisHttpSession  // 开启redis-session
-
 @EnableFeignClients(basePackages = "com.gulimall.auth.feign")
 @EnableDiscoveryClient
 @SpringBootApplication

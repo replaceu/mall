@@ -23,11 +23,9 @@ public class SkuItemVo {
     private List<SkuImagesEntity> images;
     //        3、spu 销售属性组合
     private List<SkuItemSaleAttrVo> saleAttr;
-
-
     //        4、spu 的介绍
     private SpuInfoDescEntity desc;
-//        5、规格参数信息
 
+//        5、规格参数信息
     private List<SpuItemAttrGroupVo> groupAttrs;
 }

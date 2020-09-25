@@ -36,7 +36,6 @@ public class SpuInfoController {
     // @RequiresPermissions("product:spuinfo:list")
     public CommonResult list(SpuPageVo params) {
         PageUtils page = spuInfoService.queryPageOnCondition(params);
-
         return CommonResult.ok().data(page);
     }
 
@@ -57,9 +56,8 @@ public class SpuInfoController {
      */
     @GetMapping("/info/{id}")
 //   @RequiresPermissions("product:spuinfo:info")
-    public CommonResult info(@PathVariable("id") Long id) {
+    public CommonResult<SpuInfoEntity> info(@PathVariable("id") Long id) {
         SpuInfoEntity spuInfo = spuInfoService.getById(id);
-
         return CommonResult.ok(spuInfo);
     }
 

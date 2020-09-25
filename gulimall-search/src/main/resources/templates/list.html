@@ -9,7 +9,7 @@
   <link rel="stylesheet" type="text/css" href="/static/search/font/iconfont.css">
   <!--<script src="./js/jquery-3.2.1.min.js"></script>-->
   <script src="/static/search/js/jquery-1.12.4.js"></script>
-  <title>搜索详情</title>
+  <title>搜索-谷粒商城</title>
   <style type="text/css">
       /*当前页样式*/
       .pn-active {
@@ -101,14 +101,16 @@
       </b>
       <ul>
         <li>
-          <a href="#" class="li_2">你好，请登录</a>
+          <a th:if="${session.userInfo != null } "  >欢迎: [[${session.userInfo.nickname}]]</a>
+          <a th:if="${session.userInfo == null}" th:href="@{http://auth.gulimall.com/login.html(originUrl=${#request.getRequestURL()})}">你好，请登录</a>
         </li>
-        <li>
-          <a href="#">免费注册</a>
+        <li th:if="${session.userInfo == null}" >
+          <a  th:href="@{http://auth.gulimall.com/reg.html(originUrl=${#request.getRequestURL()})}" class="li_2">
+            免费注册</a>
         </li>
         <span>|</span>
         <li>
-          <a href="#">我的订单</a>
+          <a href="http://order.gulimall.com/list.html">我的订单</a>
         </li>
         <span>|</span>
         <li class="header_wdjd" style="width:80px;">
@@ -1170,12 +1172,12 @@
                   <a href="#">关注</a>
                 </div>
                 <p class="da">
-                  <a href="#">
+                  <a th:href="|http://item.gulimall.com/item/${product.skuId}.html|">
                     <img th:src="${product.skuImg}" class="dim">
                   </a>
                 </p>
                 <ul class="tab_im">
-                  <li><a th:href="|http://item.gulimall.com/item/${product.skuId}.html|" title="黑色">
+                  <li><a th:href="@{http://item.gulimall.com/item/${product.skuId}.html}" title="黑色">
                     <img th:src="${product.skuImg}">
                   </a></li>
                 </ul>

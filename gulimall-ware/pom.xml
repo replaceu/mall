@@ -12,12 +12,6 @@
     <description>谷粒商城-仓储服务</description>
     <artifactId>gulimall-ware</artifactId>
     <dependencies>
-        <!-- 公共依赖模块-->
-        <dependency>
-            <groupId>com.gulimall</groupId>
-            <artifactId>gulimall-common-dependencies</artifactId>
-            <version>${project.version}</version>
-        </dependency>
         <!-- service 依赖模块-->
         <dependency>
             <groupId>com.gulimall</groupId>

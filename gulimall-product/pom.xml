@@ -63,8 +63,6 @@
             <artifactId>spring-session-data-redis</artifactId>
         </dependency>
 
-
-
         <!--web 的依赖 可以进行独立开发-->
         <dependency>
             <groupId>com.gulimall</groupId>
@@ -75,6 +73,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>29.0-jre</version>
         </dependency>
     </dependencies>
 

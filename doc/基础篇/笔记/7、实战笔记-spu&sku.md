@@ -39,7 +39,7 @@
 ![](./assert/image-20200729171038652.png)
 
 ## 二、Object 划分
-### 1、PO (Persistent Object) 持久对象
+### 1、PO (Persistent Object) /entity 持久对象
 对应表中的记录
 ### 2、DO (Domain Object) 领域对象
 从现实世界中抽象出来的有形或无形的业务实体
@@ -53,4 +53,5 @@
 从业务模型的角度看，见UML元件领域对象，封装业务逻辑的java对象，通过调用dao方法，结合PO,VO 进行业务炒作，Business Object 业务对象，主要作用是吧业务逻辑封装成一个对象
 ### 7、POJO (Plan Ordinary Java Object) 简单无规则java对象
 POJO是 DO/DTO/BO/VO的统称
+
 ### 7、POJO (Data Access Object )数据访问对象

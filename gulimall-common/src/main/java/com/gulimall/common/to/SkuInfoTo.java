@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
  */
 @Getter
 @Setter
+@ToString
 @ApiModel(value = "SkuInfoTo" , description = "sku传输对象")
 public class SkuInfoTo {
 

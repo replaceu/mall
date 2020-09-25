@@ -26,7 +26,7 @@ public class WeiboSocialUserInfo {
     private int friends_count;
     private int statuses_count;
     private int favourites_count;
-    private Date created_at;
+//    private Date created_at;
     private boolean following;
     private boolean allow_all_act_msg;
     private boolean geo_enabled;

@@ -16,6 +16,6 @@ public class OAuth2WeiboConfigProperties {
 
     private String redirectUri = "http://auth.gulimall.com/oauth2/weibo/success" ;
     private String appKey = "3423025082" ;
-    private String appSecret = "b401dc67ea9bea83d3ec6c5f69df312";
+    private String appSecret = "b401dc67ea9bea83d3ec6c5f69df3127";
     private String grantType = "authorization_code" ;
 }

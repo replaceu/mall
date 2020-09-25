@@ -12,7 +12,6 @@
     <modules>
         <module>gulimall-service-dependencies</module>
         <module>gulimall-web-dependencies</module>
-        <module>gulimall-common-dependencies</module>
         <module>gulimall-gateway</module>
         <module>gulimall-third-party</module>
         <module>gulimall-product</module>
@@ -25,8 +24,7 @@
         <module>gulimall-server-doc</module>
         <module>gulimall-search</module>
         <module>gulimall-auth-server</module>
-        <module>gulimall-test-sso-server</module>
-        <module>gulimall-test-sso-client</module>
+        <module>gulimall-cart</module>
     </modules>
 
     <properties>
@@ -72,7 +70,7 @@
                 <scope>import</scope>
                 <version>2.0.4</version>
             </dependency>
-<!--            自已的版本声明-->
+            <!--            自已的版本声明-->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -115,27 +113,71 @@
         </dependencies>
     </dependencyManagement>
     <build>
-        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
                 <configuration>
-                    <fork>true</fork> <!-- 如果没有该配置，devtools不会生效 -->
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-    <repositories>
-        <repository>
-            <id>public</id>
-            <name>a-li-yun</name>
-            <url>http://maven.aliyun.com/nexus/content/repositories/central/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-    </repositories>
+    <!--    <build>-->
+    <!--        <finalName>${project.artifactId}</finalName>-->
+    <!--        <plugins>-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.springframework.boot</groupId>-->
+    <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+    <!--                <configuration>-->
+    <!--                    <classifier>exec</classifier>-->
+    <!--                    <fork>true</fork> &lt;!&ndash; 如果没有该配置，devtools不会生效 &ndash;&gt;-->
+    <!--                </configuration>-->
+    <!--            </plugin>-->
+    <!--        </plugins>-->
+    <!--    </build>-->
+    <!--    <build>-->
+    <!--        <plugins>-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.apache.maven.plugins</groupId>-->
+    <!--                <artifactId>maven-compiler-plugin</artifactId>-->
+    <!--                <version>3.8.1</version>-->
+    <!--                <configuration>-->
+    <!--                    <source>1.8</source>-->
+    <!--                    <target>1.8</target>-->
+    <!--                    <fork>true</fork>-->
+    <!--                    <verbose>true</verbose>-->
+    <!--                    <encoding>UTF-8</encoding>-->
+    <!--                    <meminitial>256m</meminitial>-->
+    <!--                    <maxmem>1024m</maxmem>-->
+    <!--                </configuration>-->
+    <!--            </plugin>-->
+    <!--        </plugins>-->
+    <!--    </build>-->
+
+
+    <!--    <repositories>-->
+    <!--        <repository>-->
+    <!--            <id>public</id>-->
+    <!--            <name>a-li-yun</name>-->
+    <!--            <url>http://maven.aliyun.com/nexus/content/repositories/central/</url>-->
+    <!--            <releases>-->
+    <!--                <enabled>true</enabled>-->
+    <!--            </releases>-->
+    <!--        </repository>-->
+    <!--    </repositories>-->
     <pluginRepositories>
         <pluginRepository>
             <id>public</id>

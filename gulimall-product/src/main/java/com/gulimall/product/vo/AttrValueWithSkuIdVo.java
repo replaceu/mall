@@ -12,6 +12,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class AttrValueWithSkuIdVo {
-    private Long attrValue ;
+    private String attrValue ;
     private String skuIds ;
 }

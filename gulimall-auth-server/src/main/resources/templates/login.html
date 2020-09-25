@@ -10,7 +10,6 @@
       .top-3 #sign .si_out ul li img {
           width: 18px;
       }
-
       .top-3 #sign .si_out ul li {
           margin: 0 4px;
       }
@@ -92,7 +91,8 @@
       <div class="si_out">
         <ul>
           <li>
-            <a th:href="@{'https://api.weibo.com/oauth2/authorize?client_id='+ clientId +'&response_type=code&redirect_uri=http://auth.gulimall.com/oauth2/weibo/success?originUrl='+ originUrl }"
+            <a
+                th:href="@{https://api.weibo.com/oauth2/authorize(client_id='3423025082',response_type='code',redirect_uri='http://auth.gulimall.com/oauth2/weibo/success',originUrl=${originUrl}) } "
                href="https://api.weibo.com/oauth2/authorize?client_id=3423025082&response_type=code&redirect_uri=http://auth.gulimall.com/oauth2/weibo/success">
               <img src="/static/login/JD_img/weibo.ico"/>
               <span>微博</span>

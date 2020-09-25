@@ -45,8 +45,8 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
     /**
      * 通过spuId 获取属性分组下的所有属性
      *
-     * @param spuId
-     * @param categoryId
+     * @param spuId 商品id
+     * @param categoryId 分类id
      * @return
      */
     List<SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long spuId, Long categoryId);

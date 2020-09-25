@@ -22,7 +22,7 @@ import java.util.Arrays;
  * @date 2020-06-10 11:26:28
  */
 @RestController
-@RequestMapping("product/skuinfo")
+@RequestMapping("/product/skuinfo")
 public class SkuInfoController {
     @Autowired
     private SkuInfoService skuInfoService;

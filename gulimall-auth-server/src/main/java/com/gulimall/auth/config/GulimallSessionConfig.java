@@ -20,7 +20,6 @@ public class GulimallSessionConfig {
         serializer.setCookieName( SessionConstant.COOKIE_NAME );
         serializer.setCookiePath(SessionConstant.COOKIE_PATH );
         serializer.setDomainName( SessionConstant.DOMAIN_NAME  ); ;
-
         return serializer;
     }
 

@@ -45,18 +45,18 @@ mybatis-plus:
 logging:
   level:
     com.gulimall.product.dao: debug
-swagger:
-  enabled: true
-  title: 用户服务
-  base-package: com.gulimall.product.controller
-  version: V2.0
-  description: 用户服务
-  license: Apache License, Version 2.0
-  license-url: https://www.apache.org/licenses/LICENSE-2.0.html
-  terms-of-service-url: http://localhost:8002/doc.html
-  contact: xxxxxxxxxxxx@gmail.com
-  authorization: #有auth2 并使用以前的swagger-ui
-    key-name: Authorization
+#swagger:
+#  enabled: true
+#  title: 用户服务
+#  base-package: com.gulimall.product.controller
+#  version: V2.0
+#  description: 用户服务
+#  license: Apache License, Version 2.0
+#  license-url: https://www.apache.org/licenses/LICENSE-2.0.html
+#  terms-of-service-url: http://localhost:8002/doc.html
+#  contact: xxxxxxxxxxxx@gmail.com
+#  authorization: #有auth2 并使用以前的swagger-ui
+#    key-name: Authorization
 
 gulimall:
   thread:

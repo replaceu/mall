@@ -124,15 +124,16 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
         member.setExpiresIn(socialUser.getExpires_in());
 
         try {
-            ResponseEntity<WeiboSocialUserInfo> response = new RestTemplate().getForEntity("https://api.weibo.com/2/users/show.json?access_token={1}&uid={2}", WeiboSocialUserInfo.class,
-                    socialUser.getAccess_token(), socialUser.getUid());
+            String url =
+                    "https://api.weibo.com/2/users/show.json?access_token="+socialUser.getAccess_token()+"&uid=" + socialUser.getUid() ;
+            ResponseEntity<WeiboSocialUserInfo> response = new RestTemplate().getForEntity(url ,
+                    WeiboSocialUserInfo.class);
             if (response.getStatusCodeValue() == 200 && response.getBody() != null) {
                 // 查询成功
                 WeiboSocialUserInfo body = response.getBody();
 
                 member.setNickname(body.getName());
                 member.setGender("m".equals(body.getGender()) ? 1 : 0);
-
 
                 if (!StringUtils.isEmpty(body.getProfile_image_url())) {
                     member.setHeader(body.getProfile_image_url());

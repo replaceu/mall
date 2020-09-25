@@ -14,5 +14,5 @@ import java.util.List;
 @ToString
 public class SpuItemAttrGroupVo {
     private String groupName;
-    private List<SpuItemAttrGroupVo> attrs;
+    private List<SpuItemAttrVo> attrs;
 }
