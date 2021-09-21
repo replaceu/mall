@@ -1,19 +1,18 @@
 package com.gulimall.product.controller;
 
+import java.util.Arrays;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 import com.gulimall.common.utils.CommonResult;
-import com.gulimall.common.utils.R;
 import com.gulimall.product.entity.SpuInfoEntity;
 import com.gulimall.product.service.SpuInfoService;
 import com.gulimall.product.vo.SpuPageVo;
 import com.gulimall.product.vo.SpuSaveVo;
 import com.gulimall.service.utils.PageUtils;
-import jdk.nashorn.internal.objects.annotations.Getter;
-import org.apache.ibatis.annotations.Update;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 
 
 /**
@@ -33,7 +32,7 @@ public class SpuInfoController {
      * 列表
      */
     @RequestMapping("/list")
-    // @RequiresPermissions("product:spuinfo:list")
+    //@RequiresPermissions("product:spuinfo:list")
     public CommonResult list(SpuPageVo params) {
         PageUtils page = spuInfoService.queryPageOnCondition(params);
         return CommonResult.ok().data(page);
@@ -51,11 +50,19 @@ public class SpuInfoController {
         return CommonResult.ok();
     }
 
+    @PostMapping("/{spuId}/up")
+    public CommonResult upProduct(@PathVariable Long spuId){
+        spuInfoService.upProduct(spuId);
+        return CommonResult.ok();
+    }
+
+
+
     /**
      * 信息
      */
     @GetMapping("/info/{id}")
-//   @RequiresPermissions("product:spuinfo:info")
+    //@RequiresPermissions("product:spuinfo:info")
     public CommonResult<SpuInfoEntity> info(@PathVariable("id") Long id) {
         SpuInfoEntity spuInfo = spuInfoService.getById(id);
         return CommonResult.ok(spuInfo);
@@ -65,7 +72,7 @@ public class SpuInfoController {
      * 保存
      */
     @PostMapping("/save")
-//    @RequiresPermissions("product:spuinfo:save")
+    //@RequiresPermissions("product:spuinfo:save")
     public CommonResult save(@RequestBody SpuSaveVo spuSaveVo, HttpServletRequest request) {
         spuInfoService.saveInfo(spuSaveVo);
         return CommonResult.ok();
@@ -75,7 +82,7 @@ public class SpuInfoController {
      * 修改
      */
     @PutMapping("/update")
-//   @RequiresPermissions("product:spuinfo:update")
+    //@RequiresPermissions("product:spuinfo:update")
     public CommonResult update(@RequestBody SpuInfoEntity spuInfo) {
         spuInfoService.updateById(spuInfo);
 
@@ -86,7 +93,7 @@ public class SpuInfoController {
      * 删除
      */
     @DeleteMapping("/delete")
-//    @RequiresPermissions("product:spuinfo:delete")
+    //@RequiresPermissions("product:spuinfo:delete")
     public CommonResult delete(@RequestBody Long[] ids) {
         spuInfoService.removeByIds(Arrays.asList(ids));
 

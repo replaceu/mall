@@ -1,10 +1,10 @@
 package com.gulimall.product.entity;
 
+import java.io.Serializable;
+
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
-import java.io.Serializable;
-import java.util.Date;
 import lombok.Data;
 
 /**
@@ -41,4 +41,47 @@ public class SkuImagesEntity implements Serializable {
 	 */
 	private Integer defaultImg;
 
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getSkuId() {
+		return skuId;
+	}
+
+	public void setSkuId(Long skuId) {
+		this.skuId = skuId;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl == null ? null : imgUrl.trim();
+	}
+
+	public Integer getImgSort() {
+		return imgSort;
+	}
+
+	public void setImgSort(Integer imgSort) {
+		this.imgSort = imgSort;
+	}
+
+	public Integer getDefaultImg() {
+		return defaultImg;
+	}
+
+	public void setDefaultImg(Integer defaultImg) {
+		this.defaultImg = defaultImg;
+	}
 }

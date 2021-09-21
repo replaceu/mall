@@ -7,8 +7,7 @@ import com.gulimall.common.exception.ErrorCode;
  * @author aqiang9  2020-08-15
  */
 public enum SearchErrorCode implements ErrorCode {
-    PRODUCT_UP_ERROR(17001 ,"商品上架错误")
-    ;
+    PRODUCT_UP_ERROR(17001 ,"商品上架错误");
 
     SearchErrorCode(int code, String msg) {
         this.code = code ;

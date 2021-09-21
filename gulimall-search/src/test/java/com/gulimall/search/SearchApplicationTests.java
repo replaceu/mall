@@ -1,6 +1,7 @@
 package com.gulimall.search;
 
-import com.gulimall.search.config.MyElasticsearchConfig;
+import java.io.IOException;
+
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
@@ -16,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.IOException;
+import com.gulimall.search.config.MyElasticsearchConfig;
 
 /**
  * @author aqiang9  2020-08-12

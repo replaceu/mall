@@ -72,4 +72,91 @@ public class AttrVo {
     @ApiModelProperty(value = "值类型[0-单选,1-多选]", allowableValues = "0,1")
     private int valueType;
 
+    public Long getAttrId() {
+        return attrId;
+    }
+
+    public void setAttrId(Long attrId) {
+        this.attrId = attrId;
+    }
+
+    public String getAttrName() {
+        return attrName;
+    }
+
+    public void setAttrName(String attrName) {
+        this.attrName = attrName == null ? null : attrName.trim();
+    }
+
+    public Integer getSearchType() {
+        return searchType;
+    }
+
+    public void setSearchType(Integer searchType) {
+        this.searchType = searchType;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon == null ? null : icon.trim();
+    }
+
+    public String getValueSelect() {
+        return valueSelect;
+    }
+
+    public void setValueSelect(String valueSelect) {
+        this.valueSelect = valueSelect == null ? null : valueSelect.trim();
+    }
+
+    public Integer getAttrType() {
+        return attrType;
+    }
+
+    public void setAttrType(Integer attrType) {
+        this.attrType = attrType;
+    }
+
+    public Long getEnable() {
+        return enable;
+    }
+
+    public void setEnable(Long enable) {
+        this.enable = enable;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public Integer getShowDesc() {
+        return showDesc;
+    }
+
+    public void setShowDesc(Integer showDesc) {
+        this.showDesc = showDesc;
+    }
+
+    public Long getAttrGroupId() {
+        return attrGroupId;
+    }
+
+    public void setAttrGroupId(Long attrGroupId) {
+        this.attrGroupId = attrGroupId;
+    }
+
+    public int getValueType() {
+        return valueType;
+    }
+
+    public void setValueType(int valueType) {
+        this.valueType = valueType;
+    }
 }

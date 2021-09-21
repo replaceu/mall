@@ -1,10 +1,11 @@
 package com.gulimall.product.entity;
 
+import java.io.Serializable;
+
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
 
-import java.io.Serializable;
+import lombok.Data;
 
 /**
  * 商品属性
@@ -60,4 +61,88 @@ public class AttrEntity implements Serializable {
 	 * 值类型 0 单选 1 多选
 	 */
 	private int valueType ;
+
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+
+	public Long getAttrId() {
+		return attrId;
+	}
+
+	public void setAttrId(Long attrId) {
+		this.attrId = attrId;
+	}
+
+	public String getAttrName() {
+		return attrName;
+	}
+
+	public void setAttrName(String attrName) {
+		this.attrName = attrName == null ? null : attrName.trim();
+	}
+
+	public Integer getSearchType() {
+		return searchType;
+	}
+
+	public void setSearchType(Integer searchType) {
+		this.searchType = searchType;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon == null ? null : icon.trim();
+	}
+
+	public String getValueSelect() {
+		return valueSelect;
+	}
+
+	public void setValueSelect(String valueSelect) {
+		this.valueSelect = valueSelect == null ? null : valueSelect.trim();
+	}
+
+	public Integer getAttrType() {
+		return attrType;
+	}
+
+	public void setAttrType(Integer attrType) {
+		this.attrType = attrType;
+	}
+
+	public Long getEnable() {
+		return enable;
+	}
+
+	public void setEnable(Long enable) {
+		this.enable = enable;
+	}
+
+	public Long getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public Integer getShowDesc() {
+		return showDesc;
+	}
+
+	public void setShowDesc(Integer showDesc) {
+		this.showDesc = showDesc;
+	}
+
+	public int getValueType() {
+		return valueType;
+	}
+
+	public void setValueType(int valueType) {
+		this.valueType = valueType;
+	}
 }

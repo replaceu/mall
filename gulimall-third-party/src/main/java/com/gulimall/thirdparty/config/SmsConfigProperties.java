@@ -35,4 +35,44 @@ public class SmsConfigProperties {
      * 模板编号
      */
     private String skin = "1";
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host == null ? null : host.trim();
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path == null ? null : path.trim();
+    }
+
+    public String getAppcode() {
+        return appcode;
+    }
+
+    public void setAppcode(String appcode) {
+        this.appcode = appcode == null ? null : appcode.trim();
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign == null ? null : sign.trim();
+    }
+
+    public String getSkin() {
+        return skin;
+    }
+
+    public void setSkin(String skin) {
+        this.skin = skin == null ? null : skin.trim();
+    }
 }

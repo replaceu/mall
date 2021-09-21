@@ -1,15 +1,17 @@
 package com.gulimall.product.vo;
 
+import javax.validation.constraints.*;
+
+import org.hibernate.validator.constraints.URL;
+
 import com.gulimall.common.valid.AddGroup;
 import com.gulimall.common.valid.ListValue;
 import com.gulimall.common.valid.UpdateGroup;
 import com.gulimall.common.valid.UpdateStatusGroup;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.hibernate.validator.constraints.URL;
-
-import javax.validation.constraints.*;
 
 /**
  * 品牌
@@ -60,5 +62,61 @@ public class BrandVo   {
      */
     @PositiveOrZero(message = "排序字段必须大于等于0",groups = {AddGroup.class , UpdateGroup.class})
     private Integer sort;
+
+    public Long getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(Long brandId) {
+        this.brandId = brandId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo == null ? null : logo.trim();
+    }
+
+    public String getDescript() {
+        return descript;
+    }
+
+    public void setDescript(String descript) {
+        this.descript = descript == null ? null : descript.trim();
+    }
+
+    public Integer getShowStatus() {
+        return showStatus;
+    }
+
+    public void setShowStatus(Integer showStatus) {
+        this.showStatus = showStatus;
+    }
+
+    public String getFirstLetter() {
+        return firstLetter;
+    }
+
+    public void setFirstLetter(String firstLetter) {
+        this.firstLetter = firstLetter == null ? null : firstLetter.trim();
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
 }
 

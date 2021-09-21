@@ -64,6 +64,13 @@
       ]
     }
   },
+  "sort": [
+    {
+      "skuPrice": {
+        "order": "desc"
+      }
+    }
+  ],
   "from": 0,
   "size": 20,
   "highlight": {
@@ -136,5 +143,4 @@
       }
     }
   }
-
 }

@@ -69,4 +69,92 @@ public class SkuInfoTo {
      */
     @ApiModelProperty(value = "销量")
     private Long saleCount;
+
+    public Long getSkuId() {
+        return skuId;
+    }
+
+    public void setSkuId(Long skuId) {
+        this.skuId = skuId;
+    }
+
+    public Long getSpuId() {
+        return spuId;
+    }
+
+    public void setSpuId(Long spuId) {
+        this.spuId = spuId;
+    }
+
+    public String getSkuName() {
+        return skuName;
+    }
+
+    public void setSkuName(String skuName) {
+        this.skuName = skuName == null ? null : skuName.trim();
+    }
+
+    public String getSkuDesc() {
+        return skuDesc;
+    }
+
+    public void setSkuDesc(String skuDesc) {
+        this.skuDesc = skuDesc == null ? null : skuDesc.trim();
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public Long getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(Long brandId) {
+        this.brandId = brandId;
+    }
+
+    public String getSkuDefaultImg() {
+        return skuDefaultImg;
+    }
+
+    public void setSkuDefaultImg(String skuDefaultImg) {
+        this.skuDefaultImg = skuDefaultImg == null ? null : skuDefaultImg.trim();
+    }
+
+    public String getSkuTitle() {
+        return skuTitle;
+    }
+
+    public void setSkuTitle(String skuTitle) {
+        this.skuTitle = skuTitle == null ? null : skuTitle.trim();
+    }
+
+    public String getSkuSubtitle() {
+        return skuSubtitle;
+    }
+
+    public void setSkuSubtitle(String skuSubtitle) {
+        this.skuSubtitle = skuSubtitle == null ? null : skuSubtitle.trim();
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public Long getSaleCount() {
+        return saleCount;
+    }
+
+    public void setSaleCount(Long saleCount) {
+        this.saleCount = saleCount;
+    }
 }

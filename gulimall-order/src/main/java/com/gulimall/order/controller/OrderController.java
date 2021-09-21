@@ -1,16 +1,19 @@
 package com.gulimall.order.controller;
 
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Map;
+import java.util.UUID;
+
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import com.gulimall.common.utils.CommonResult;
 import com.gulimall.common.utils.R;
 import com.gulimall.order.entity.OrderEntity;
 import com.gulimall.order.service.OrderService;
 import com.gulimall.service.utils.PageUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
-import java.util.Map;
-
-
 
 /**
  * 订单
@@ -22,63 +25,78 @@ import java.util.Map;
 @RestController
 @RequestMapping("order/order")
 public class OrderController {
-    @Autowired
-    private OrderService orderService;
+	@Autowired
+	private OrderService orderService;
 
-    /**
-     * 列表
-     */
-    @RequestMapping("/list")
-   // @RequiresPermissions("order:order:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = orderService.queryPage(params);
+	@Autowired
+	private RabbitTemplate rabbitTemplate;
 
-        return R.ok().put("page", page);
-    }
+	@GetMapping("/test/createOrder")
+	public String createOrderTest() {
+		OrderEntity orderEntity = new OrderEntity();
+		orderEntity.setOrderSn(UUID.randomUUID().toString());
+		orderEntity.setModifyTime(new Date());
+		//给MQ发送消息
+		rabbitTemplate.convertAndSend("order-event-exchange", "order.create.order", orderEntity);
+		return "ok";
+	}
 
+	/**
+	 * 列表
+	 */
+	@RequestMapping("/list")
+	public R list(@RequestParam Map<String, Object> params) {
+		PageUtils page = orderService.queryPage(params);
 
-    /**
-     * 信息
-     */
-    @RequestMapping("/info/{id}")
-//   @RequiresPermissions("order:order:info")
-    public R info(@PathVariable("id") Long id){
+		return R.ok().put("page", page);
+	}
+
+	/**
+	 * 信息
+	 */
+	@RequestMapping("/info/{id}")
+	public R info(@PathVariable("id") Long id) {
 		OrderEntity order = orderService.getById(id);
 
-        return R.ok().put("order", order);
-    }
+		return R.ok().put("order", order);
+	}
 
-    /**
-     * 保存
-     */
-    @RequestMapping("/save")
-//    @RequiresPermissions("order:order:save")
-    public R save(@RequestBody OrderEntity order){
+	/**
+	 * 保存
+	 */
+	@RequestMapping("/save")
+
+	public R save(@RequestBody OrderEntity order) {
 		orderService.save(order);
 
-        return R.ok();
-    }
+		return R.ok();
+	}
 
-    /**
-     * 修改
-     */
-    @RequestMapping("/update")
-//   @RequiresPermissions("order:order:update")
-    public R update(@RequestBody OrderEntity order){
+	/**
+	 * 修改
+	 */
+	@RequestMapping("/update")
+
+	public R update(@RequestBody OrderEntity order) {
 		orderService.updateById(order);
 
-        return R.ok();
-    }
+		return R.ok();
+	}
 
-    /**
-     * 删除
-     */
-    @RequestMapping("/delete")
-//    @RequiresPermissions("order:order:delete")
-    public R delete(@RequestBody Long[] ids){
+	/**
+	 * 删除
+	 */
+	@RequestMapping("/delete")
+	public R delete(@RequestBody Long[] ids) {
 		orderService.removeByIds(Arrays.asList(ids));
 
-        return R.ok();
-    }
+		return R.ok();
+	}
+
+	@GetMapping("/status/{orderSn}")
+	public CommonResult getOrderStatus(@PathVariable("orderSn") String orderSn) {
+		OrderEntity orderEntity = orderService.getOrderByOrderSn(orderSn);
+		return CommonResult.ok(orderEntity);
+	}
 
 }

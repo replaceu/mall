@@ -1,13 +1,14 @@
 package com.gulimall.service.utils;
 
+import java.io.Serializable;
+import java.util.List;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.io.Serializable;
-import java.util.List;
 
 /**
  * 分页工具类
@@ -19,37 +20,37 @@ import java.util.List;
 @Setter
 @ApiModel("分页请求统一数据")
 public class PageUtils<T> implements Serializable {
-	private static final long serialVersionUID = 1L;
+	private static final long	serialVersionUID	= 1L;
 	/**
 	 * 总记录数
 	 */
 	@ApiModelProperty("总记录数")
-	private int totalCount;
+	private int					totalCount;
 	/**
 	 * 每页记录数
 	 */
 
 	@ApiModelProperty("每页记录数")
-	private int pageSize;
+	private int					pageSize;
 	/**
 	 * 总页数
 	 */
 
 	@ApiModelProperty("总页数")
-	private int totalPage;
+	private int					totalPage;
 	/**
 	 * 当前页数
 	 */
 
 	@ApiModelProperty("当前页数")
-	private int currPage;
+	private int					currPage;
 	/**
 	 * 列表数据
 	 */
 
 	@ApiModelProperty("列表数据")
-	private List<T> list;
-	
+	private List<T>				list;
+
 	/**
 	 * 分页
 	 * @param list        列表数据
@@ -62,7 +63,7 @@ public class PageUtils<T> implements Serializable {
 		this.totalCount = totalCount;
 		this.pageSize = pageSize;
 		this.currPage = currPage;
-		this.totalPage = (int)Math.ceil((double)totalCount/pageSize);
+		this.totalPage = (int) Math.ceil((double) totalCount / pageSize);
 	}
 
 	/**
@@ -70,9 +71,53 @@ public class PageUtils<T> implements Serializable {
 	 */
 	public PageUtils(IPage<T> page) {
 		this.list = page.getRecords();
-		this.totalCount = (int)page.getTotal();
-		this.pageSize = (int)page.getSize();
-		this.currPage = (int)page.getCurrent();
-		this.totalPage = (int)page.getPages();
+		this.totalCount = (int) page.getTotal();
+		this.pageSize = (int) page.getSize();
+		this.currPage = (int) page.getCurrent();
+		this.totalPage = (int) page.getPages();
+	}
+
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+
+	public int getTotalCount() {
+		return totalCount;
+	}
+
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public int getTotalPage() {
+		return totalPage;
+	}
+
+	public void setTotalPage(int totalPage) {
+		this.totalPage = totalPage;
+	}
+
+	public int getCurrPage() {
+		return currPage;
+	}
+
+	public void setCurrPage(int currPage) {
+		this.currPage = currPage;
+	}
+
+	public List<T> getList() {
+		return list;
+	}
+
+	public void setList(List<T> list) {
+		this.list = list;
 	}
 }

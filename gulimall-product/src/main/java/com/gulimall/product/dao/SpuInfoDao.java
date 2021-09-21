@@ -1,8 +1,9 @@
 package com.gulimall.product.dao;
 
-import com.gulimall.product.entity.SpuInfoEntity;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.gulimall.product.entity.SpuInfoEntity;
 
 /**
  * spu信息
@@ -13,5 +14,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface SpuInfoDao extends BaseMapper<SpuInfoEntity> {
-	
+
+	void upProductStatus(Long spuId);
 }

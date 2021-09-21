@@ -69,4 +69,84 @@ public class CategoryVo {
     @ApiModelProperty(value = "子菜单" , allowEmptyValue = true)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<CategoryVo> children;
+
+    public Long getCatId() {
+        return catId;
+    }
+
+    public void setCatId(Long catId) {
+        this.catId = catId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public Long getParentCid() {
+        return parentCid;
+    }
+
+    public void setParentCid(Long parentCid) {
+        this.parentCid = parentCid;
+    }
+
+    public Integer getCatLevel() {
+        return catLevel;
+    }
+
+    public void setCatLevel(Integer catLevel) {
+        this.catLevel = catLevel;
+    }
+
+    public Integer getShowStatus() {
+        return showStatus;
+    }
+
+    public void setShowStatus(Integer showStatus) {
+        this.showStatus = showStatus;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon == null ? null : icon.trim();
+    }
+
+    public String getProductUnit() {
+        return productUnit;
+    }
+
+    public void setProductUnit(String productUnit) {
+        this.productUnit = productUnit == null ? null : productUnit.trim();
+    }
+
+    public Integer getProductCount() {
+        return productCount;
+    }
+
+    public void setProductCount(Integer productCount) {
+        this.productCount = productCount;
+    }
+
+    public List<CategoryVo> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<CategoryVo> children) {
+        this.children = children;
+    }
 }

@@ -1,11 +1,12 @@
 package com.gulimall.product.dao;
 
-import com.gulimall.product.entity.AttrEntity;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.gulimall.product.entity.AttrEntity;
 
 /**
  * 商品属性
@@ -17,6 +18,7 @@ import java.util.List;
 @Mapper
 public interface AttrDao extends BaseMapper<AttrEntity> {
 
-    List<Long> selectSearchAttrs(@Param("attrIds") List<Long> attrIds);
+	List<Long> selectSearchAttrs(@Param("attrIds") List<Long> attrIds);
 
+	List<Long> selectSearchAttrIds(@Param("attrIds") List<Long> attrIds);
 }

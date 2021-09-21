@@ -14,4 +14,20 @@ import lombok.ToString;
 public class WareSkuPageVo extends PageVo {
     private Long wareId;//仓库id
     private Long skuId; // 商品id
+
+    public Long getWareId() {
+        return wareId;
+    }
+
+    public void setWareId(Long wareId) {
+        this.wareId = wareId;
+    }
+
+    public Long getSkuId() {
+        return skuId;
+    }
+
+    public void setSkuId(Long skuId) {
+        this.skuId = skuId;
+    }
 }

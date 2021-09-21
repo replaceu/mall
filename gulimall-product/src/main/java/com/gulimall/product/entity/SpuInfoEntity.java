@@ -1,15 +1,17 @@
 package com.gulimall.product.entity;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+
+import org.apache.ibatis.type.JdbcType;
+
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import org.apache.ibatis.type.JdbcType;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
+import lombok.Data;
 
 /**
  * spu信息
@@ -63,4 +65,79 @@ public class SpuInfoEntity implements Serializable {
 	@TableField(fill = FieldFill.INSERT_UPDATE ,jdbcType = JdbcType.DATE  )
 	private Date updateTime;
 
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getSpuName() {
+		return spuName;
+	}
+
+	public void setSpuName(String spuName) {
+		this.spuName = spuName == null ? null : spuName.trim();
+	}
+
+	public String getSpuDescription() {
+		return spuDescription;
+	}
+
+	public void setSpuDescription(String spuDescription) {
+		this.spuDescription = spuDescription == null ? null : spuDescription.trim();
+	}
+
+	public Long getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public Long getBrandId() {
+		return brandId;
+	}
+
+	public void setBrandId(Long brandId) {
+		this.brandId = brandId;
+	}
+
+	public BigDecimal getWeight() {
+		return weight;
+	}
+
+	public void setWeight(BigDecimal weight) {
+		this.weight = weight;
+	}
+
+	public Integer getPublishStatus() {
+		return publishStatus;
+	}
+
+	public void setPublishStatus(Integer publishStatus) {
+		this.publishStatus = publishStatus;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 }

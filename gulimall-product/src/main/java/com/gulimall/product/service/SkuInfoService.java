@@ -1,12 +1,13 @@
 package com.gulimall.product.service;
 
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.gulimall.product.entity.SkuInfoEntity;
 import com.gulimall.product.vo.SkuItemVo;
 import com.gulimall.product.vo.SkuPageVo;
 import com.gulimall.service.utils.PageUtils;
-
-import java.util.List;
 
 /**
  * sku信息
@@ -17,18 +18,20 @@ import java.util.List;
  */
 public interface SkuInfoService extends IService<SkuInfoEntity> {
 
+	void saveSkuInfo(SkuInfoEntity skuInfoEntity);
 
-    void saveSkuInfo(SkuInfoEntity skuInfoEntity);
+	PageUtils queryPageOnCondition(SkuPageVo params);
 
-    PageUtils queryPageOnCondition(SkuPageVo params);
+	List<SkuInfoEntity> getSkusBySpuId(Long spuId);
 
-    List<SkuInfoEntity> getSkusBySpuId(Long spuId);
+	/**
+	 * 查询商品详细信息
+	 * @param skuId skuId
+	 * @return 商品详细信息
+	 */
+	SkuItemVo item(Long skuId) throws ExecutionException, InterruptedException;
 
-    /**
-     * 查询商品详细信息
-     * @param skuId skuId
-     * @return 商品详细信息
-     */
-    SkuItemVo item(Long skuId);
+	List<SkuInfoEntity> getSkusBySpuIdByCarter(Long spuId);
+
+	SkuInfoEntity getPriceBySkuId(Long skuId);
 }
-

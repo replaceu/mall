@@ -1,8 +1,8 @@
 package com.gulimall.product.vo;
 
-import lombok.Data;
-
 import java.util.Date;
+
+import lombok.Data;
 
 /**
  * @author aqiang9  2020-07-29
@@ -73,4 +73,132 @@ public class SpuCommentVo  {
      * 评论类型[0 - 对商品的直接评论，1 - 对评论的回复]
      */
     private Integer commentType;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getSkuId() {
+        return skuId;
+    }
+
+    public void setSkuId(Long skuId) {
+        this.skuId = skuId;
+    }
+
+    public Long getSpuId() {
+        return spuId;
+    }
+
+    public void setSpuId(Long spuId) {
+        this.spuId = spuId;
+    }
+
+    public String getSpuName() {
+        return spuName;
+    }
+
+    public void setSpuName(String spuName) {
+        this.spuName = spuName == null ? null : spuName.trim();
+    }
+
+    public String getMemberNickName() {
+        return memberNickName;
+    }
+
+    public void setMemberNickName(String memberNickName) {
+        this.memberNickName = memberNickName == null ? null : memberNickName.trim();
+    }
+
+    public Integer getStar() {
+        return star;
+    }
+
+    public void setStar(Integer star) {
+        this.star = star;
+    }
+
+    public String getMemberIp() {
+        return memberIp;
+    }
+
+    public void setMemberIp(String memberIp) {
+        this.memberIp = memberIp == null ? null : memberIp.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Integer getShowStatus() {
+        return showStatus;
+    }
+
+    public void setShowStatus(Integer showStatus) {
+        this.showStatus = showStatus;
+    }
+
+    public String getSpuAttributes() {
+        return spuAttributes;
+    }
+
+    public void setSpuAttributes(String spuAttributes) {
+        this.spuAttributes = spuAttributes == null ? null : spuAttributes.trim();
+    }
+
+    public Integer getLikesCount() {
+        return likesCount;
+    }
+
+    public void setLikesCount(Integer likesCount) {
+        this.likesCount = likesCount;
+    }
+
+    public Integer getReplyCount() {
+        return replyCount;
+    }
+
+    public void setReplyCount(Integer replyCount) {
+        this.replyCount = replyCount;
+    }
+
+    public String getResources() {
+        return resources;
+    }
+
+    public void setResources(String resources) {
+        this.resources = resources == null ? null : resources.trim();
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
+    }
+
+    public String getMemberIcon() {
+        return memberIcon;
+    }
+
+    public void setMemberIcon(String memberIcon) {
+        this.memberIcon = memberIcon == null ? null : memberIcon.trim();
+    }
+
+    public Integer getCommentType() {
+        return commentType;
+    }
+
+    public void setCommentType(Integer commentType) {
+        this.commentType = commentType;
+    }
 }

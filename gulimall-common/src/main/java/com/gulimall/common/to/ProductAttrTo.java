@@ -18,6 +18,22 @@ public class ProductAttrTo {
     private Long attrId;
     @ApiModelProperty("属性名")
     private String attrName;
+
+    public Long getAttrId() {
+        return attrId;
+    }
+
+    public void setAttrId(Long attrId) {
+        this.attrId = attrId;
+    }
+
+    public String getAttrName() {
+        return attrName;
+    }
+
+    public void setAttrName(String attrName) {
+        this.attrName = attrName == null ? null : attrName.trim();
+    }
 //   属性值 没有
 
 

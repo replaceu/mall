@@ -14,4 +14,16 @@ public class ThreadPoolConfigProperties {
     private Integer coreSize  = 5;
     private Integer maxSize = 200;
     private Integer keepAliveTime = 15 ;
+
+    public Integer getCoreSize() {
+        return coreSize;
+    }
+
+    public Integer getMaxSize() {
+        return maxSize;
+    }
+
+    public Integer getKeepAliveTime() {
+        return keepAliveTime;
+    }
 }

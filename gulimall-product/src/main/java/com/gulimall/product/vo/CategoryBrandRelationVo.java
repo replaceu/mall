@@ -1,10 +1,11 @@
 package com.gulimall.product.vo;
 
-import com.gulimall.common.valid.AddGroup;
-import lombok.Data;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+
+import com.gulimall.common.valid.AddGroup;
+
+import lombok.Data;
 
 /**
  * 品牌 与 分类 关联关系数据
@@ -34,4 +35,43 @@ public class CategoryBrandRelationVo {
      */
     private String categoryName;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(Long brandId) {
+        this.brandId = brandId;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName == null ? null : brandName.trim();
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName == null ? null : categoryName.trim();
+    }
 }

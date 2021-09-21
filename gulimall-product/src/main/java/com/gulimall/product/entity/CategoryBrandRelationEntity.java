@@ -1,10 +1,11 @@
 package com.gulimall.product.entity;
 
+import java.io.Serializable;
+
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
 
-import java.io.Serializable;
+import lombok.Data;
 
 /**
  * 品牌分类关联
@@ -22,21 +23,65 @@ public class CategoryBrandRelationEntity implements Serializable {
 	 * 
 	 */
 	@TableId
-	private Long id;
+	private Long	id;
 	/**
 	 * 品牌id
 	 */
-	private Long brandId;
+	private Long	brandId;
 	/**
 	 * 分类id
 	 */
-	private Long categoryId;
+	private Long	categoryId;
 	/**
 	 *  品牌名
 	 */
-	private String brandName;
+	private String	brandName;
 	/**
 	 * 分类名
 	 */
-	private String categoryName;
+	private String	categoryName;
+
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getBrandId() {
+		return brandId;
+	}
+
+	public void setBrandId(Long brandId) {
+		this.brandId = brandId;
+	}
+
+	public Long getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public String getBrandName() {
+		return brandName;
+	}
+
+	public void setBrandName(String brandName) {
+		this.brandName = brandName == null ? null : brandName.trim();
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName == null ? null : categoryName.trim();
+	}
 }

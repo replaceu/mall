@@ -16,57 +16,54 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author aqiang9  2020-08-12
- * https://www.elastic.co/guide/en/elasticsearch/client/java-rest/7.4/java-rest-high.html
- */
+*@authoraqiang92020-08-12
+*https://www.elastic.co/guide/en/elasticsearch/client/java-rest/7.4/java-rest-high.html
+*/
 @Configuration
 @EnableConfigurationProperties(ReactiveRestClientProperties.class)
 public class MyElasticsearchConfig {
-    public static final RequestOptions COMMON_OPTIONS;
+	public static final RequestOptions COMMON_OPTIONS;
 
+	@Value("${elasticsearch.hosts}")
+	private String	hosts;
+	@Value("${elasticsearch.username}")
+	private String	userName;
+	@Value("${elasticsearch.password}")
+	private String	password;
 
-    @Value("${elasticsearch.hosts}")
-    private String hosts;
-    @Value("${elasticsearch.username}")
-    private String userName;
-    @Value("${elasticsearch.password}")
-    private String password;
+	@Autowired
+	ReactiveRestClientProperties reactiveRestClientProperties;
 
-    @Autowired
-    ReactiveRestClientProperties reactiveRestClientProperties;
+	static {
+		RequestOptions.Builder builder = RequestOptions.DEFAULT.toBuilder();
+		//builder.addHeader("Authorization","Bearer"+TOKEN);
+		//builder.setHttpAsyncResponseConsumerFactory(
+		//newHttpAsyncResponseConsumerFactory
+		//.HeapBufferedResponseConsumerFactory(30*1024*1024*1024));
+		COMMON_OPTIONS = builder.build();
+	}
 
-    static {
-        RequestOptions.Builder builder = RequestOptions.DEFAULT.toBuilder();
-//        builder.addHeader("Authorization", "Bearer " + TOKEN);
-//        builder.setHttpAsyncResponseConsumerFactory(
-//                new HttpAsyncResponseConsumerFactory
-//                        .HeapBufferedResponseConsumerFactory(30 * 1024 * 1024 * 1024));
-        COMMON_OPTIONS = builder.build();
-    }
+	@Bean
+	public RestHighLevelClient esRestClient() {
+		String[] hosts = this.hosts.split(",");
+		HttpHost[] httpHosts = new HttpHost[hosts.length];
+		for (int i = 0; i < hosts.length; i++) {
+			httpHosts[i] = new HttpHost(hosts[i], 9200, "http");
+		}
 
-    @Bean
-    public RestHighLevelClient esRestClient() {
-        String[] hosts = this.hosts.split(",");
-        HttpHost[] httpHosts = new HttpHost[hosts.length];
-        for (int i = 0; i < hosts.length; i++) {
-            httpHosts[i] = new HttpHost(hosts[i], 9200, "http");
-        }
+		final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+		credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(userName, password));
 
-        final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-        credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(userName ,password ));
+		return new RestHighLevelClient(RestClient.builder(httpHosts).setRequestConfigCallback(requestConfigBuilder -> {
+			requestConfigBuilder.setConnectTimeout(-1);
+			requestConfigBuilder.setSocketTimeout(-1);
+			requestConfigBuilder.setConnectionRequestTimeout(-1);
+			return requestConfigBuilder;
+		}).setHttpClientConfigCallback(httpAsyncClientBuilder -> {
+			httpAsyncClientBuilder.disableAuthCaching();
+			return httpAsyncClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
+		})
 
-
-       return new RestHighLevelClient(
-                RestClient.builder(httpHosts).setRequestConfigCallback(requestConfigBuilder -> {
-                    requestConfigBuilder.setConnectTimeout(-1);
-                    requestConfigBuilder.setSocketTimeout(-1);
-                    requestConfigBuilder.setConnectionRequestTimeout(-1);
-                    return requestConfigBuilder;
-                }).setHttpClientConfigCallback(httpAsyncClientBuilder -> {
-                    httpAsyncClientBuilder.disableAuthCaching();
-                    return httpAsyncClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
-                })
-
-        )  ;
-    }
+		);
+	}
 }

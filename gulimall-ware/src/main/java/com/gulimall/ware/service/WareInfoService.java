@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.gulimall.common.vo.PageVo;
 import com.gulimall.service.utils.PageUtils;
 import com.gulimall.ware.entity.WareInfoEntity;
+import com.gulimall.ware.vo.FareResponseVo;
 
 /**
  * 仓库信息
@@ -14,6 +15,7 @@ import com.gulimall.ware.entity.WareInfoEntity;
  */
 public interface WareInfoService extends IService<WareInfoEntity> {
 
-    PageUtils queryPage(PageVo params);
-}
+	PageUtils queryPage(PageVo params);
 
+	FareResponseVo getFare(Long addressId);
+}

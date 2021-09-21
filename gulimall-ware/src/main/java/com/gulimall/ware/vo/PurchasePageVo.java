@@ -11,4 +11,12 @@ import lombok.Setter;
 @Setter
 public class PurchasePageVo extends PageVo {
     private Integer status ; // 状态
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 }

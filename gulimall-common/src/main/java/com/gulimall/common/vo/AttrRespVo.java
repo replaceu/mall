@@ -16,4 +16,28 @@ public class AttrRespVo extends AttrVo {
      * 分类路径
      */
     private List<Long> categoryPath ;
+
+    public String getAttrGroupName() {
+        return attrGroupName;
+    }
+
+    public void setAttrGroupName(String attrGroupName) {
+        this.attrGroupName = attrGroupName == null ? null : attrGroupName.trim();
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName == null ? null : categoryName.trim();
+    }
+
+    public List<Long> getCategoryPath() {
+        return categoryPath;
+    }
+
+    public void setCategoryPath(List<Long> categoryPath) {
+        this.categoryPath = categoryPath;
+    }
 }

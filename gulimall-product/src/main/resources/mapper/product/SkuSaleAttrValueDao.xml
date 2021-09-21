@@ -14,11 +14,11 @@
     </resultMap>
 
     <resultMap id="skuSaleAttrValueVo" type="com.gulimall.product.vo.SkuItemSaleAttrVo">
-        <result property="attrId" column="attr_id"  />
+        <result property="attrId" column="attr_id"/>
         <result property="attrName" column="attr_name"/>
         <collection property="attrValues" ofType="com.gulimall.product.vo.AttrValueWithSkuIdVo">
-            <result property="attrValue" column="attr_value" />
-            <result property="skuIds" column="sku_ids" />
+            <result property="attrValue" column="attr_value"/>
+            <result property="skuIds" column="sku_ids"/>
         </collection>
     </resultMap>
 
@@ -38,5 +38,12 @@
         SELECT CONCAT(attr_name ,':' ,attr_value )
         FROM pms_sku_sale_attr_value
         where  sku_id = #{skuId}
+    </select>
+    <select id="getSaleAttrsBySpuId" resultType="com.gulimall.product.vo.SkuItemSaleAttrVo">
+        SELECT ssav.attr_id attr_id,ssav.attr_name attr_name,GROUP_CONCAT(DISTINCT ssav.attr_value) attr_value
+        from pms_sku_info info
+        left JOIN pms_sku_sale_attr_value ssav.sku_id on info.sku_id
+        where info.spu_id = #{spuId}
+        group by ssav.attr_id,ssav.attr_name
     </select>
 </mapper>

@@ -74,7 +74,7 @@ public class RegisterController {
         // 保存成功
         if (ifAbsent != null && ifAbsent) {
 //            threadPartFeignService.sendSmsCode(phone, code);
-            log.info("验证码： phone: {} , code : {}  ", phone, code);
+            //log.info("验证码： phone: {} , code : {}  ", phone, code);
             return CommonResult.ok("发送成功");
         } else {
             return CommonResult.fail(AuthErrorCode.SMS_FREQUENCY_TOO_HIGH_ERROR);

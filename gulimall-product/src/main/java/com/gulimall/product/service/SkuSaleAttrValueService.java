@@ -1,12 +1,12 @@
 package com.gulimall.product.service;
 
+import java.util.List;
+import java.util.Map;
+
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.gulimall.product.entity.SkuSaleAttrValueEntity;
 import com.gulimall.product.vo.SkuItemSaleAttrVo;
 import com.gulimall.service.utils.PageUtils;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * sku销售属性&值
@@ -17,11 +17,11 @@ import java.util.Map;
  */
 public interface SkuSaleAttrValueService extends IService<SkuSaleAttrValueEntity> {
 
-    PageUtils queryPage(Map<String, Object> params);
+	PageUtils queryPage(Map<String, Object> params);
 
-    List<SkuItemSaleAttrVo> getSaleAttrBySpuId(Long spuId);
+	List<SkuItemSaleAttrVo> getSaleAttrBySpuId(Long spuId);
 
-    List<String> getSkuSaleAttrValueAsStringList(Long skuId);
+	List<String> getSkuSaleAttrValueAsStringList(Long skuId);
 
+	List<SkuItemSaleAttrVo> getSaleAttrBySpuIdByCarter(Long spuId);
 }
-

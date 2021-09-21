@@ -48,4 +48,52 @@ public class PageVo {
      */
     @ApiModelProperty(name = "key" , value = "查询关键字" )
     private String key;
+
+    public Long getPage() {
+        return page;
+    }
+
+    public void setPage(Long page) {
+        this.page = page;
+    }
+
+    public Long getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Long limit) {
+        this.limit = limit;
+    }
+
+    public String getSidx() {
+        return sidx;
+    }
+
+    public void setSidx(String sidx) {
+        this.sidx = sidx == null ? null : sidx.trim();
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order == null ? null : order.trim();
+    }
+
+    public String getAsc() {
+        return asc;
+    }
+
+    public void setAsc(String asc) {
+        this.asc = asc == null ? null : asc.trim();
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key == null ? null : key.trim();
+    }
 }

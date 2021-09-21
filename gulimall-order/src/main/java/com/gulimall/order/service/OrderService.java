@@ -1,10 +1,14 @@
 package com.gulimall.order.service;
 
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.gulimall.order.entity.OrderEntity;
+import com.gulimall.order.vo.OrderConfirmVo;
+import com.gulimall.order.vo.OrderSubmitResponseVo;
+import com.gulimall.order.vo.OrderSubmitVo;
 import com.gulimall.service.utils.PageUtils;
-
-import java.util.Map;
 
 /**
  * 订单
@@ -15,6 +19,22 @@ import java.util.Map;
  */
 public interface OrderService extends IService<OrderEntity> {
 
-    PageUtils queryPage(Map<String, Object> params);
-}
+	PageUtils queryPage(Map<String, Object> params);
 
+	/**
+	 * 返回订单确认页需要的数据
+	 * @return
+	 */
+	OrderConfirmVo confirmOrder() throws ExecutionException, InterruptedException;
+
+	/**
+	 * 下单
+	 * @param orderSubmit
+	 * @return
+	 */
+	OrderSubmitResponseVo submitOrder(OrderSubmitVo orderSubmit);
+
+	OrderEntity getOrderByOrderSn(String orderSn);
+
+	void closeOrder(OrderEntity orderEntity);
+}

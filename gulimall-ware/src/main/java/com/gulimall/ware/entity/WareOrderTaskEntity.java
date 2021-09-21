@@ -77,4 +77,119 @@ public class WareOrderTaskEntity implements Serializable {
 	 */
 	private String taskComment;
 
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(Long orderId) {
+		this.orderId = orderId;
+	}
+
+	public String getOrderSn() {
+		return orderSn;
+	}
+
+	public void setOrderSn(String orderSn) {
+		this.orderSn = orderSn == null ? null : orderSn.trim();
+	}
+
+	public String getConsignee() {
+		return consignee;
+	}
+
+	public void setConsignee(String consignee) {
+		this.consignee = consignee == null ? null : consignee.trim();
+	}
+
+	public String getConsigneeTel() {
+		return consigneeTel;
+	}
+
+	public void setConsigneeTel(String consigneeTel) {
+		this.consigneeTel = consigneeTel == null ? null : consigneeTel.trim();
+	}
+
+	public String getDeliveryAddress() {
+		return deliveryAddress;
+	}
+
+	public void setDeliveryAddress(String deliveryAddress) {
+		this.deliveryAddress = deliveryAddress == null ? null : deliveryAddress.trim();
+	}
+
+	public String getOrderComment() {
+		return orderComment;
+	}
+
+	public void setOrderComment(String orderComment) {
+		this.orderComment = orderComment == null ? null : orderComment.trim();
+	}
+
+	public Integer getPaymentWay() {
+		return paymentWay;
+	}
+
+	public void setPaymentWay(Integer paymentWay) {
+		this.paymentWay = paymentWay;
+	}
+
+	public Integer getTaskStatus() {
+		return taskStatus;
+	}
+
+	public void setTaskStatus(Integer taskStatus) {
+		this.taskStatus = taskStatus;
+	}
+
+	public String getOrderBody() {
+		return orderBody;
+	}
+
+	public void setOrderBody(String orderBody) {
+		this.orderBody = orderBody == null ? null : orderBody.trim();
+	}
+
+	public String getTrackingNo() {
+		return trackingNo;
+	}
+
+	public void setTrackingNo(String trackingNo) {
+		this.trackingNo = trackingNo == null ? null : trackingNo.trim();
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Long getWareId() {
+		return wareId;
+	}
+
+	public void setWareId(Long wareId) {
+		this.wareId = wareId;
+	}
+
+	public String getTaskComment() {
+		return taskComment;
+	}
+
+	public void setTaskComment(String taskComment) {
+		this.taskComment = taskComment == null ? null : taskComment.trim();
+	}
 }
