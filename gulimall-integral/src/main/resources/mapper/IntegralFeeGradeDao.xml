@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.integral.dao.IntegralFeeGradeDao">
+    <resultMap id="BaseResultMap" type="com.gulimall.integral.dao.IntegralFeeGradeDao">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="loc_name" jdbcType="VARCHAR" property="locName"/>
+        <result column="growth_name" jdbcType="VARCHAR" property="growthName"/>
+        <result column="greater_amount" jdbcType="VARCHAR" property="greaterAmount"/>
+        <result column="show_name" jdbcType="VARCHAR" property="showName"/>
+        <result column="last_day" jdbcType="VARCHAR" property="lastDay"/>
+        <result column="sort" jdbcType="VARCHAR" property="sort"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , loc_name, growth_name, greater_amount, show_name,last_day, sort, create_date
+    </sql>
+</mapper>

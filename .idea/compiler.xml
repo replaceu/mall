@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="gulimall-coupon" />
+        <module name="gulimall-cart" />
+        <module name="gulimall-integral" />
+        <module name="gulimall-statistics" />
+        <module name="gulimall-pay" />
+        <module name="gulimall-common" />
+        <module name="gulimall-auth-server" />
+        <module name="gulimall-order" />
+        <module name="gulimall-gateway" />
+        <module name="gulimall-server-doc" />
+        <module name="gulimall-product" />
+        <module name="gulimall-third-party" />
+        <module name="gulimall-authServer" />
+        <module name="gulimall-secondKill" />
+        <module name="renren-fast" />
+        <module name="gulimall-search" />
+        <module name="gulimall-service-dependencies" />
+        <module name="gulimall-member" />
+        <module name="gulimall-ware" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="carter" target="1.8" />
+      <module name="gulimall-auth-server" target="1.8" />
+      <module name="gulimall-authServer" target="1.8" />
+      <module name="gulimall-cart" target="1.8" />
+      <module name="gulimall-census" target="8" />
+      <module name="gulimall-common" target="1.8" />
+      <module name="gulimall-coupon" target="1.8" />
+      <module name="gulimall-gateway" target="1.8" />
+      <module name="gulimall-integral" target="1.8" />
+      <module name="gulimall-member" target="1.8" />
+      <module name="gulimall-order" target="1.8" />
+      <module name="gulimall-pay" target="1.8" />
+      <module name="gulimall-product" target="1.8" />
+      <module name="gulimall-search" target="1.8" />
+      <module name="gulimall-secondKill" target="1.8" />
+      <module name="gulimall-server-doc" target="1.8" />
+      <module name="gulimall-service-dependencies" target="1.8" />
+      <module name="gulimall-statistics" target="1.8" />
+      <module name="gulimall-statistics1" target="1.8" />
+      <module name="gulimall-third-party" target="1.8" />
+      <module name="gulimall-ware" target="1.8" />
+      <module name="gulimall-web-dependencies" target="1.8" />
+      <module name="renren-fast" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

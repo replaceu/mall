@@ -11,19 +11,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.alibaba.fastjson.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gulimall.common.utils.R;
 import com.gulimall.product.dao.SkuInfoDao;
 import com.gulimall.product.entity.SkuImagesEntity;
 import com.gulimall.product.entity.SkuInfoEntity;
 import com.gulimall.product.entity.SpuInfoDescEntity;
+import com.gulimall.product.feign.SecondKillFeignService;
 import com.gulimall.product.service.*;
-import com.gulimall.product.vo.SkuItemSaleAttrVo;
-import com.gulimall.product.vo.SkuItemVo;
-import com.gulimall.product.vo.SkuPageVo;
-import com.gulimall.product.vo.SpuItemAttrGroupVo;
+import com.gulimall.product.vo.*;
 import com.gulimall.service.utils.PageUtils;
 import com.gulimall.service.utils.QueryPage;
 
@@ -38,6 +38,8 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
 	AttrGroupService		attrGroupService;
 	@Autowired
 	SkuSaleAttrValueService	skuSaleAttrValueService;
+	@Autowired
+	SecondKillFeignService	secondKillFeignService;
 
 	/**
 	 * 线程池
@@ -123,8 +125,16 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
 			retVo.setImages(images);
 		}, executor);
 
+		CompletableFuture<Void> secondKilFuture = CompletableFuture.runAsync(() -> {
+			//查询当前sku是否有秒杀优惠
+			R skuSecondKillInfo = secondKillFeignService.getSkuSecondKillInfo(skuId);
+			SecondKillInfoVo data = skuSecondKillInfo.getData(new TypeReference<SecondKillInfoVo>() {
+			});
+			retVo.setSecondKillInfo(data);
+		}, executor);
+
 		//等到所有任务完成
-		CompletableFuture.allOf(saleAttrsFuture, descFuture, attrGroupFuture, imageFuture).get();
+		CompletableFuture.allOf(saleAttrsFuture, descFuture, attrGroupFuture, imageFuture, secondKilFuture).get();
 		return retVo;
 
 	}

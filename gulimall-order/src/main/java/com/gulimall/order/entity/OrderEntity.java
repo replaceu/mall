@@ -3,7 +3,9 @@ package com.gulimall.order.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -190,6 +192,17 @@ public class OrderEntity implements Serializable {
 	 * 修改时间
 	 */
 	private Date		modifyTime;
+
+	@TableField
+	private List<OrderItemEntity> itemEntityList;
+
+	public List<OrderItemEntity> getItemEntityList() {
+		return itemEntityList;
+	}
+
+	public void setItemEntityList(List<OrderItemEntity> itemEntityList) {
+		this.itemEntityList = itemEntityList;
+	}
 
 	public static long getSerialVersionUID() {
 		return serialVersionUID;

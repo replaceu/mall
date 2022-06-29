@@ -40,7 +40,6 @@ public class ProductSaveServiceImpl implements ProductSaveService {
 		BulkRequest bulkRequest = new BulkRequest();
 		for (SkuEsModel skuEsModel : skuEsModels) {
 			IndexRequest indexRequest = new IndexRequest(EsConstant.PRODUCT_INDEX);
-			//indexRequest.id() ;
 			indexRequest.id(skuEsModel.getSkuId().toString());
 			indexRequest.source(JSON.toJSONString(skuEsModel), XContentType.JSON);
 			bulkRequest.add(indexRequest);
@@ -51,10 +50,8 @@ public class ProductSaveServiceImpl implements ProductSaveService {
 
 		if (b) {
 			List<String> collect = Arrays.stream(bulk.getItems()).map(BulkItemResponse::getId).collect(Collectors.toList());
-			//log.error("商品上架错误, : {}" , collect);
 			return false;
 		}
-
 		return true;
 	}
 
@@ -83,7 +80,6 @@ public class ProductSaveServiceImpl implements ProductSaveService {
 		List<String> bulkList = Arrays.stream(bulk.getItems()).map(item -> {
 			return item.getId();
 		}).collect(Collectors.toList());
-
 		return b;
 	}
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.gulimall.common.utils.R;
 import com.gulimall.order.service.OrderService;
 import com.gulimall.order.vo.OrderConfirmVo;
 import com.gulimall.order.vo.OrderSubmitResponseVo;
@@ -36,7 +37,6 @@ public class OrderWebController {
 	public String confirm(HttpServletRequest request) throws ExecutionException, InterruptedException {
 		//展示订单的数据
 		OrderConfirmVo orderConfirm = orderService.confirmOrder();
-
 		return "confirm";
 	}
 
@@ -57,5 +57,15 @@ public class OrderWebController {
 			return "redirect:http://order.gulimall.com/confirm";
 		}
 
+	}
+
+	@GetMapping("/pay.html")
+	public R getOrderPay(String orderSn) {
+		return orderService.getOrderPayByOrderSn(orderSn);
+	}
+
+	@PostMapping("/pay.html")
+	public void updateOrderStatus(String outTradeNo, Integer code) {
+		orderService.updateOrderStatus(outTradeNo, code);
 	}
 }

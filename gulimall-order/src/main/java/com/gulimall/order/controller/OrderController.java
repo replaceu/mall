@@ -17,7 +17,6 @@ import com.gulimall.service.utils.PageUtils;
 
 /**
  * 订单
- *
  * @author aqiang9
  * @email 2903780002@qq.com
  * @date 2020-06-09 10:01:26
@@ -49,6 +48,12 @@ public class OrderController {
 		PageUtils page = orderService.queryPage(params);
 
 		return R.ok().put("page", page);
+	}
+
+	@PostMapping("/listWithItems")
+	public R listWithItems(@RequestBody Map<String, Object> params) {
+		PageUtils page = orderService.queryPageWithItems(params);
+		return R.ok().setData(page);
 	}
 
 	/**
@@ -89,7 +94,6 @@ public class OrderController {
 	@RequestMapping("/delete")
 	public R delete(@RequestBody Long[] ids) {
 		orderService.removeByIds(Arrays.asList(ids));
-
 		return R.ok();
 	}
 

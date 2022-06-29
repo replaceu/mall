@@ -46,9 +46,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 	public List<CategoryVo> listCategoryWithTree() {
 		//查询所有分类
 		List<CategoryEntity> allCategory = this.baseMapper.selectList(null);
-
 		//组装成父子结构
-
 		return null;
 	}
 

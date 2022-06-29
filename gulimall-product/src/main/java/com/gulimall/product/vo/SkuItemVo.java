@@ -28,6 +28,16 @@ public class SkuItemVo {
 	private SpuInfoDescEntity desc;
 	//5、规格参数信息
 	private List<SpuItemAttrGroupVo> groupAttrs;
+	//6.秒杀活动信息
+	private SecondKillInfoVo secondKillInfo;
+
+	public SecondKillInfoVo getSecondKillInfo() {
+		return secondKillInfo;
+	}
+
+	public void setSecondKillInfo(SecondKillInfoVo secondKillInfo) {
+		this.secondKillInfo = secondKillInfo;
+	}
 
 	public SkuInfoEntity getInfo() {
 		return info;

@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <description>server 端 依赖</description>
+    <description>server端依赖</description>
 
     <artifactId>gulimall-service-dependencies</artifactId>
 

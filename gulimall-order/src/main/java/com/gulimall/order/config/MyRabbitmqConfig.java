@@ -29,6 +29,18 @@ public class MyRabbitmqConfig {
 	@Autowired
 	RabbitTemplate rabbitTemplate;
 
+	//创建秒杀队列
+	@Bean
+	public Queue orderSecondKillQueue() {
+		return new Queue("order.secondKill.order.queue", true, false, false);
+	}
+
+	//创建秒杀队列的绑定关系
+	@Bean
+	public Binding orderSecondKillBinding() {
+		return new Binding("order.secondKill.order.queue", Binding.DestinationType.QUEUE, "order-event-exchange", "order.secondKill.order", null);
+	}
+
 	//1.创建队列
 	@Bean
 	public Queue orderDelayQueue() {

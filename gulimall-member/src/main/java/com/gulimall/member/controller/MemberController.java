@@ -74,7 +74,6 @@ public class MemberController {
 
 		MemberEntity memberEntity = memberService.login(socialUser);
 		if (memberEntity == null) { return CommonResult.fail(MemberErrorCode.LOGIN_PASSWORD_INVALID_EXCEPTION); }
-		//log.info("用户社交 登录信息, {} ", memberEntity);
 
 		MemberRespVo MemberRespVo = MemberConvert.INSTANCE.entity2vo(memberEntity);
 		return CommonResult.ok(MemberRespVo);
@@ -84,7 +83,6 @@ public class MemberController {
 	 * 列表
 	 */
 	@GetMapping("/list")
-	//    @RequiresPermissions("member:member:list")
 	public R list(@RequestParam Map<String, Object> params) {
 		PageUtils page = memberService.queryPage(params);
 
@@ -128,7 +126,6 @@ public class MemberController {
 	 * 删除
 	 */
 	@RequestMapping("/delete")
-	//    @RequiresPermissions("member:member:delete")
 	public R delete(@RequestBody Long[] ids) {
 		memberService.removeByIds(Arrays.asList(ids));
 
