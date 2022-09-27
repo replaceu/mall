@@ -5,11 +5,6 @@ package com.gulimall.common.exception;
  * @author aqiang9  2020-07-28
  */
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class BusinessException extends RuntimeException {
 	private ErrorCode errorCode;
 

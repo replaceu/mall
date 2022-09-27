@@ -30,27 +30,27 @@
     <bytecodeTargetLevel>
       <module name="carter" target="1.8" />
       <module name="gulimall-auth-server" target="1.8" />
-      <module name="gulimall-authServer" target="1.8" />
+      <module name="gulimall-authServer" target="1.5" />
       <module name="gulimall-cart" target="1.8" />
       <module name="gulimall-census" target="8" />
       <module name="gulimall-common" target="1.8" />
       <module name="gulimall-coupon" target="1.8" />
-      <module name="gulimall-gateway" target="1.8" />
-      <module name="gulimall-integral" target="1.8" />
-      <module name="gulimall-member" target="1.8" />
-      <module name="gulimall-order" target="1.8" />
-      <module name="gulimall-pay" target="1.8" />
+      <module name="gulimall-gateway" target="1.5" />
+      <module name="gulimall-integral" target="8" />
+      <module name="gulimall-member" target="1.5" />
+      <module name="gulimall-order" target="1.5" />
+      <module name="gulimall-pay" target="8" />
       <module name="gulimall-product" target="1.8" />
-      <module name="gulimall-search" target="1.8" />
-      <module name="gulimall-secondKill" target="1.8" />
-      <module name="gulimall-server-doc" target="1.8" />
-      <module name="gulimall-service-dependencies" target="1.8" />
-      <module name="gulimall-statistics" target="1.8" />
+      <module name="gulimall-search" target="1.5" />
+      <module name="gulimall-secondKill" target="1.5" />
+      <module name="gulimall-server-doc" target="1.5" />
+      <module name="gulimall-service-dependencies" target="1.5" />
+      <module name="gulimall-statistics" target="8" />
       <module name="gulimall-statistics1" target="1.8" />
-      <module name="gulimall-third-party" target="1.8" />
-      <module name="gulimall-ware" target="1.8" />
-      <module name="gulimall-web-dependencies" target="1.8" />
-      <module name="renren-fast" target="1.8" />
+      <module name="gulimall-third-party" target="1.5" />
+      <module name="gulimall-ware" target="1.5" />
+      <module name="gulimall-web-dependencies" target="1.5" />
+      <module name="renren-fast" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

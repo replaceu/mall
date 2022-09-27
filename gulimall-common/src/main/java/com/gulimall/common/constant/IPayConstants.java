@@ -1,7 +1,7 @@
 package com.gulimall.common.constant;
 
 public interface IPayConstants {
-	String pay = "/pay"；
+	String pay = "/pay";
 
 	interface MappingConstants {
 		String	createPay	= "/createPay";
