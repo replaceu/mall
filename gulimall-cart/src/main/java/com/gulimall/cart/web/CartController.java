@@ -30,7 +30,6 @@ public class CartController {
 	*/
 	@GetMapping("/list.html")
 	public String list(Model model) {
-		//UserInfoTo userInfoTo=CartInterceptor.threadLocal.get();
 		CartVo cartVo = cartService.getCartList();
 		model.addAttribute("cart", cartVo);
 		return "list";

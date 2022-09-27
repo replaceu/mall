@@ -48,7 +48,6 @@ public class MemberCollectSubjectController {
 	 * 保存
 	 */
 	@RequestMapping("/save")
-	//    @RequiresPermissions("member:membercollectsubject:save")
 	public R save(@RequestBody MemberCollectSubjectEntity memberCollectSubject) {
 		memberCollectSubjectService.save(memberCollectSubject);
 

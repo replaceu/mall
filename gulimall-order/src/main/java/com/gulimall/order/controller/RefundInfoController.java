@@ -14,9 +14,6 @@ import com.gulimall.service.utils.PageUtils;
 /**
  * 退款信息
  *
- * @author aqiang9
- * @email 2903780002@qq.com
- * @date 2020-06-09 10:01:26
  */
 @RestController
 @RequestMapping("order/refundinfo")

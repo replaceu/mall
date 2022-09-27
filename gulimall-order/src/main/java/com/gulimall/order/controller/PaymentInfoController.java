@@ -11,13 +11,6 @@ import com.gulimall.order.entity.PaymentInfoEntity;
 import com.gulimall.order.service.PaymentInfoService;
 import com.gulimall.service.utils.PageUtils;
 
-/**
- * 支付信息表
- *
- * @author aqiang9
- * @email 2903780002@qq.com
- * @date 2020-06-09 10:01:26
- */
 @RestController
 @RequestMapping("order/paymentinfo")
 public class PaymentInfoController {

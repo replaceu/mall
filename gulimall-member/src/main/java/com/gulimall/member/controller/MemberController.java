@@ -45,7 +45,6 @@ public class MemberController {
 		MemberEntity memberEntity = MemberConvert.INSTANCE.vo2entity(registerVo);
 		memberEntity.setNickname(registerVo.getUsername());
 		memberService.register(memberEntity);
-		//log.info("用户注册成功, {} ", memberEntity);
 		MemberRespVo memberRespVo = MemberConvert.INSTANCE.entity2vo(memberEntity);
 		return CommonResult.ok(memberRespVo);
 	}

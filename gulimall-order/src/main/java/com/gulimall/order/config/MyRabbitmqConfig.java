@@ -135,7 +135,6 @@ public class MyRabbitmqConfig {
 			System.out.println(routingKey);
 		});
 
-		//        rabbitTemplate.containerAckMode(AcknowledgeMode.MANUAL);
 	}
 
 	@Bean
