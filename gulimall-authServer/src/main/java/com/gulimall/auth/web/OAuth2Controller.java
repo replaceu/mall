@@ -42,13 +42,6 @@ public class OAuth2Controller {
 	@GetMapping("/weibo/success")
 	public String weiBoSuccess(@RequestParam("code") String code, RedirectAttributes redirectAttributes, HttpSession session, HttpServletRequest request) {
 		//1、通过code换取tokenpost
-		//ResponseEntity<SocialUser>response=restTemplate.postForEntity(weiboTokenUrl,newObject(),SocialUser.class,
-		//configProperties.getAppKey(),
-		//configProperties.getAppSecret(),
-		//configProperties.getGrantType(),
-		//configProperties.getRedirectUri(),
-		//code
-		//);
 		String url = "https://api.weibo.com/oauth2/access_token?client_id=3423025082&client_secret" + "=b401dc67ea9bea83d3ec6c5f69df3127&grant_type=authorization_code&redirect_uri=http://auth.gulimall" + ".com/oauth2/weibo/success&code=" + code;
 		ResponseEntity<SocialUser> response = restTemplate.postForEntity(url, 1, SocialUser.class);
 		if (response.getStatusCodeValue() != 200) {
@@ -58,9 +51,6 @@ public class OAuth2Controller {
 		}
 		SocialUser socialUser = response.getBody();
 		//2、通过token换取用户信息
-		//restTemplate.getForEntity("https://api.weibo.com/2/users/show.json")
-		//
-
 		//如果是第一次登陆自动注册
 		CommonResult<UserInfoVo> loginUserInfo = memberFeignService.oauthLogin(socialUser);
 		if (loginUserInfo.isOk()) {

@@ -99,12 +99,47 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
+	public CartVo getMallUserCartList() {
+		CartVo cartVo = new CartVo();
+		//1、登陆
+		UserInfoTo userInfoTo = CartInterceptor.threadLocal.get();
+		BoundHashOperations<String, String, CartItemVo> cartOps = getCartOps();
+		if (userInfoTo.getUserId() != null) {
+			//cart ops是已登录的ops
+			String tempCartKey = CartConstant.CART_PREFIX + userInfoTo.getUserKey();
+			BoundHashOperations<String, String, CartItemVo> tempCartOps = redisTemplate.boundHashOps(tempCartKey);
+			List<CartItemVo> tempCartItems = tempCartOps.values();
+			if (tempCartItems != null && tempCartItems.size() > 0) {
+				//需要合并
+				for (CartItemVo tempCartItem : tempCartItems) {
+					CartItemVo cartItemVo = cartOps.get(tempCartItem.getSkuId().toString());
+					if (cartItemVo == null) {
+						cartOps.put(tempCartItem.getSkuId().toString(), tempCartItem);
+					} else {
+						cartItemVo.setCount(tempCartItem.getCount() + cartItemVo.getCount());
+						cartOps.put(tempCartItem.getSkuId().toString(), cartItemVo);
+					}
+				}
+			}
+			//清空购物车
+			clearCart(tempCartKey);
+
+			cartVo.setItems(cartOps.values());
+		} else {
+			List<CartItemVo> values = getCartOps().values();
+			cartVo.setItems(values);
+		}
+		//未登录
+		return cartVo;
+	}
+
+	@Override
 	public void clearCart() {
 
 	}
 
 	@Override
-	public void changeCheck(Long skuId, int check) {
+	public void checkUserShoppingCart(Long skuId, int check) {
 		CartItemVo cartItemInfo = getCartItemInfo(skuId);
 		cartItemInfo.setCheck(check == 1);
 		BoundHashOperations<String, String, CartItemVo> cartOps = getCartOps();
@@ -112,7 +147,7 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public void changeNum(Long skuId, int num) {
+	public void changeUserShoppingCartNum(Long skuId, int num) {
 		CartItemVo cartItemInfo = getCartItemInfo(skuId);
 		cartItemInfo.setCount(num);
 		BoundHashOperations<String, String, CartItemVo> cartOps = getCartOps();

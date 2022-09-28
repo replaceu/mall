@@ -3,20 +3,24 @@ package com.gulimall.cart.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.gulimall.cart.constant.MallCartConstants;
 import com.gulimall.cart.service.CartService;
 import com.gulimall.cart.vo.CartItemVo;
 import com.gulimall.cart.vo.CartVo;
 
+import io.swagger.annotations.Api;
+
 /**
 *@authoraqiang92020-09-08
 */
-@Controller
+@RestController
+@RequestMapping(value = MallCartConstants.mallCartInfo, produces = "application/json;charset=UTF-8")
+@Api(value = "mallCartInfo", description = "用户购物车")
+@CrossOrigin(allowedHeaders = "*", origins = "*")
 public class CartController {
 	@Autowired
 	private CartService cartService;
@@ -28,11 +32,11 @@ public class CartController {
 	*第一次如果没有零食用户来创建临时用户
 	*拦截器
 	*/
-	@GetMapping("/list.html")
-	public String list(Model model) {
-		CartVo cartVo = cartService.getCartList();
-		model.addAttribute("cart", cartVo);
-		return "list";
+	@GetMapping(MallCartConstants.MappingConstants.getUserShoppingCartList)
+	public String getUserShoppingCart(Model model) {
+		CartVo cartVo = cartService.getMallUserCartList();
+		model.addAttribute(MallCartConstants.AttributeConstants.cart, cartVo);
+		return MallCartConstants.MappingConstants.getUserShoppingCartList;
 	}
 
 	/**
@@ -41,10 +45,10 @@ public class CartController {
 	*@paramcheck
 	*@return
 	*/
-	@GetMapping("/changeCheck")
-	public String changeCheck(@RequestParam("skuId") Long skuId, @RequestParam("check") int check) {
-		cartService.changeCheck(skuId, check);
-		return "redirect:http://cart.gulimall.com/list.html";
+	@GetMapping(MallCartConstants.MappingConstants.checkUserShoppingCart)
+	public String checkUserShoppingCart(@RequestParam("skuId") Long skuId, @RequestParam("check") int check) {
+		cartService.checkUserShoppingCart(skuId, check);
+		return MallCartConstants.RedirectConstants.cartListRedirect;
 	}
 
 	/**
@@ -53,16 +57,16 @@ public class CartController {
 	*@paramnum
 	*@return
 	*/
-	@GetMapping("/changeNum")
-	public String changeNum(@RequestParam("skuId") Long skuId, @RequestParam("num") int num) {
-		cartService.changeNum(skuId, num);
-		return "redirect:http://cart.gulimall.com/list.html";
+	@GetMapping(MallCartConstants.MappingConstants.changeUserShoppingCartNum)
+	public String changeUserShoppingCartNum(@RequestParam("skuId") Long skuId, @RequestParam("num") int num) {
+		cartService.changeUserShoppingCartNum(skuId, num);
+		return MallCartConstants.RedirectConstants.cartListRedirect;
 	}
 
-	@GetMapping("/deleteItem")
+	@GetMapping(MallCartConstants.MappingConstants.delUserShoppingCartItem)
 	public String deleteItem(@RequestParam("skuId") Long skuId) {
 		cartService.deleteItem(skuId);
-		return "redirect:http://cart.gulimall.com/list.html";
+		return MallCartConstants.RedirectConstants.cartListRedirect;
 	}
 
 	/**
@@ -74,11 +78,11 @@ public class CartController {
 	*@return
 	*/
 
-	@GetMapping("/addToCart")
+	@GetMapping(MallCartConstants.MappingConstants.addItemUserShoppingCart)
 	public String addToCart(@RequestParam("skuId") Long skuId, @RequestParam("num") Integer num, RedirectAttributes model) {
 		cartService.addToCart(skuId, num);
-		model.addAttribute("skuId", skuId);
-		return "redirect:http://cart.gulimall.com/addToCartSuccess.html";
+		model.addAttribute(MallCartConstants.AttributeConstants.skuId, skuId);
+		return MallCartConstants.RedirectConstants.addCartRedirect;
 	}
 
 	@GetMapping("/addToCartSuccess.html")

@@ -8,7 +8,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-<description>谷粒商城-订单服务</description>
+    <description>谷粒商城-订单服务</description>
     <artifactId>gulimall-order</artifactId>
 
     <dependencies>

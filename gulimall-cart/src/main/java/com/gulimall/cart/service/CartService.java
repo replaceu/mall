@@ -15,6 +15,8 @@ public interface CartService {
 
 	CartVo getCartList();
 
+	CartVo getMallUserCartList();
+
 	/**
 	 * 清空购物车
 	 */
@@ -25,9 +27,9 @@ public interface CartService {
 	 * @param skuId  商品id
 	 * @param check 1 选中 0 不选中
 	 */
-	void changeCheck(Long skuId, int check);
+	void checkUserShoppingCart(Long skuId, int check);
 
-	void changeNum(Long skuId, int num);
+	void changeUserShoppingCartNum(Long skuId, int num);
 
 	/**
 	 * 删除商品
