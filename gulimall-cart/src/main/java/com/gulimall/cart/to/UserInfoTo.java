@@ -11,31 +11,33 @@ import lombok.ToString;
 @Setter
 @ToString
 public class UserInfoTo {
-    private Long userId ;
-    private String userKey ;
-    private Boolean temp ;
+	private Long userId;
 
-    public Long getUserId() {
-        return userId;
-    }
+	private String userKey;
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+	private Boolean temp;
 
-    public String getUserKey() {
-        return userKey;
-    }
+	public Long getUserId() {
+		return userId;
+	}
 
-    public void setUserKey(String userKey) {
-        this.userKey = userKey == null ? null : userKey.trim();
-    }
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 
-    public Boolean getTemp() {
-        return temp;
-    }
+	public String getUserKey() {
+		return userKey;
+	}
 
-    public void setTemp(Boolean temp) {
-        this.temp = temp;
-    }
+	public void setUserKey(String userKey) {
+		this.userKey = userKey == null ? null : userKey.trim();
+	}
+
+	public Boolean getTemp() {
+		return temp;
+	}
+
+	public void setTemp(Boolean temp) {
+		this.temp = temp;
+	}
 }

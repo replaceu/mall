@@ -79,8 +79,8 @@ public class CartController {
 	*/
 
 	@GetMapping(MallCartConstants.MappingConstants.addItemUserShoppingCart)
-	public String addToCart(@RequestParam("skuId") Long skuId, @RequestParam("num") Integer num, RedirectAttributes model) {
-		cartService.addToCart(skuId, num);
+	public String addItemUserShoppingCart(@RequestParam("skuId") Long skuId, @RequestParam("num") Integer num, RedirectAttributes model) {
+		cartService.addItemUserShoppingCart(skuId, num);
 		model.addAttribute(MallCartConstants.AttributeConstants.skuId, skuId);
 		return MallCartConstants.RedirectConstants.addCartRedirect;
 	}
@@ -92,7 +92,7 @@ public class CartController {
 		return "success";
 	}
 
-	@GetMapping("/currentUserItems")
+	@GetMapping(MallCartConstants.MappingConstants.getCurrentUserCartItems)
 	public List<CartItemVo> getCurrentUserCartItems() {
 		return cartService.getCurrentUserCartItems();
 	}

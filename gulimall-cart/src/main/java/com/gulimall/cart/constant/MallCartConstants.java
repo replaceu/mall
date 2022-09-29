@@ -1,7 +1,7 @@
 package com.gulimall.cart.constant;
 
 public interface MallCartConstants {
-	String mallCartInfo = "/integralExchangeLog";
+	String mallCartInfo = "/mallCartInfo";
 
 	interface MappingConstants {
 		String	getUserShoppingCartList		= "/getUserShoppingCartList";
@@ -9,6 +9,7 @@ public interface MallCartConstants {
 		String	changeUserShoppingCartNum	= "/changeUserShoppingCartNum";
 		String	delUserShoppingCartItem		= "/delUserShoppingCartItem";
 		String	addItemUserShoppingCart		= "/addItemUserShoppingCart";
+		String	getCurrentUserCartItems		= "/getCurrentUserCartItems";
 	}
 
 	interface AttributeConstants {

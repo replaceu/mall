@@ -193,7 +193,6 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
 			if (orderStatus.getCode() == 0) {
 				OrderTo orderTo = new OrderTo();
 				BeanUtils.copyProperties(orderStatus, orderTo);
-
 				//3.没有这个订单或者订单已经取消就需要解锁库存
 				if (orderTo == null || orderTo.getStatus() == 0) {
 					//为保证幂等性，只有当工作单详情处于被锁定的情况下才进行解锁

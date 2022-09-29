@@ -9,7 +9,7 @@ import com.gulimall.cart.vo.CartVo;
  * @author aqiang9  2020-09-08
  */
 public interface CartService {
-	CartItemVo addToCart(Long skuId, Integer num);
+	CartItemVo addItemUserShoppingCart(Long skuId, Integer num);
 
 	CartItemVo getCartItemInfo(Long skuId);
 

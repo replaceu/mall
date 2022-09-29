@@ -36,7 +36,7 @@ public class CartServiceImpl implements CartService {
 	ProductFeignService productFeignService;
 
 	@Override
-	public CartItemVo addToCart(Long skuId, Integer num) {
+	public CartItemVo addItemUserShoppingCart(Long skuId, Integer num) {
 		//判断是否有此数据
 		BoundHashOperations<String, String, CartItemVo> cartOps = getCartOps();
 		CartItemVo cartItemVo = cartOps.get(skuId.toString());

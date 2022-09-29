@@ -8,9 +8,9 @@ public interface SecondKillService {
 
 	void uploadSecondKillSkuLatest3Days();
 
-	List<SecondKillSkuRedisTo> getCurrentSecondKillSkus();
+	List<SecondKillSkuRedisTo> getSecondKillSkuList();
 
 	SecondKillSkuRedisTo getSkuSecondKillInfo(Long skuId);
 
-	String secondKill(String killId, String key, Integer num);
+	String mallUserDoSecondKill(String killId, String key, Integer num);
 }

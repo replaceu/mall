@@ -73,7 +73,7 @@ public class SecondKillServiceImpl implements SecondKillService {
 	 * @return
 	 */
 	@Override
-	public List<SecondKillSkuRedisTo> getCurrentSecondKillSkus() {
+	public List<SecondKillSkuRedisTo> getSecondKillSkuList() {
 
 		Set<String> keys = redisTemplate.keys(SESSIONS_CACHE_PREFIX + "*");
 		long currentTime = System.currentTimeMillis();
@@ -131,7 +131,7 @@ public class SecondKillServiceImpl implements SecondKillService {
 	 * @param num
 	 * @return
 	 */
-	public String secondKill(String killId, String key, Integer num) {
+	public String mallUserDoSecondKill(String killId, String key, Integer num) {
 		//从拦截器获取用户信息
 		MemberRespVo currentUser = LoginUserInterceptor.loginUser.get();
 		//todo:获取当前商品的详细信息
