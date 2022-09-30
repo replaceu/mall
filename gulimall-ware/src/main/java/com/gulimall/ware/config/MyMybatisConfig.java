@@ -8,9 +8,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 
-/**
-*@authoraqiang92020-08-09
-*/
 @EnableTransactionManagement
 @MapperScan(basePackages = "com.gulimall.ware.dao")
 @Configuration

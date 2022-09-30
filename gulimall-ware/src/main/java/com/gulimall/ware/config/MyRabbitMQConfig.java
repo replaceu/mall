@@ -60,7 +60,6 @@ public class MyRabbitMQConfig {
 
 	@Bean
 	public Binding stockLockedBinding() {
-
 		Binding binding = new Binding("stock.delay.queue", Binding.DestinationType.QUEUE, "stock-event-exchange", "stock.locked", null);
 		return binding;
 	}

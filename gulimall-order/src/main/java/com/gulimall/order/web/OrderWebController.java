@@ -47,7 +47,6 @@ public class OrderWebController {
 
 	@PostMapping("/submitOrder")
 	public String submitOrder(OrderSubmitVo orderSubmit) {
-
 		//去创建订单，验证令牌，验价，锁库存
 		OrderSubmitResponseVo submitResponse = orderService.submitOrder(orderSubmit);
 
