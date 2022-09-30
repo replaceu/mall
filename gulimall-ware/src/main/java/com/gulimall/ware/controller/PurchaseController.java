@@ -17,10 +17,6 @@ import com.gulimall.ware.vo.PurchasePageVo;
 
 /**
  * 采购信息
- *
- * @author Carter
- * @email 2903780002@qq.com
- * @date 2020-06-09 10:07:54
  */
 @RestController
 @RequestMapping("/ware/purchase")

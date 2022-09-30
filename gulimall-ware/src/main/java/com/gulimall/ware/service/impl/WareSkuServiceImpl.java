@@ -182,7 +182,7 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
 	 */
 	@Transactional
 	@Override
-	public void unLock(StockLockedTo stockLockedTo) {
+	public void wareUnLockStock(StockLockedTo stockLockedTo) {
 		WareOrderTaskDetailEntity orderTaskDetail = orderTaskDetailService.getById(stockLockedTo.getDetailId());
 		//1.如果工作单详情不为空，说明库存锁定成功
 		if (orderTaskDetail != null) {
@@ -199,7 +199,6 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
 						wareSkuDao.unLockStock(orderTaskDetail.getSkuId(), orderTaskDetail.getWareId(), orderTaskDetail.getSkuNum(), orderTaskDetail.getId());
 					}
 				}
-
 			} else {
 				throw new RuntimeException("远程调用订单服务失败");
 			}

@@ -34,7 +34,6 @@ public class WareOrderTaskController {
 	 * 信息
 	 */
 	@RequestMapping("/info/{id}")
-	//   @RequiresPermissions("ware:wareordertask:info")
 	public CommonResult<WareOrderTaskEntity> info(@PathVariable("id") Long id) {
 		WareOrderTaskEntity wareOrderTask = wareOrderTaskService.getById(id);
 		return CommonResult.ok(wareOrderTask);
@@ -44,7 +43,6 @@ public class WareOrderTaskController {
 	 * 保存
 	 */
 	@PostMapping("/save")
-	//    @RequiresPermissions("ware:wareordertask:save")
 	public CommonResult save(@RequestBody WareOrderTaskEntity wareOrderTask) {
 		wareOrderTaskService.save(wareOrderTask);
 
@@ -55,7 +53,6 @@ public class WareOrderTaskController {
 	 * 修改
 	 */
 	@PutMapping("/update")
-	//   @RequiresPermissions("ware:wareordertask:update")
 	public CommonResult update(@RequestBody WareOrderTaskEntity wareOrderTask) {
 		wareOrderTaskService.updateById(wareOrderTask);
 		return CommonResult.ok();
@@ -65,7 +62,6 @@ public class WareOrderTaskController {
 	 * 删除
 	 */
 	@DeleteMapping("/delete")
-	//    @RequiresPermissions("ware:wareordertask:delete")
 	public CommonResult delete(@RequestBody Long[] ids) {
 		wareOrderTaskService.removeByIds(Arrays.asList(ids));
 		return CommonResult.ok();

@@ -30,7 +30,7 @@ public class StockReleaseListener {
 	public void handleStockLockedRelease(StockLockedTo stockLockedTo, Message message, Channel channel) throws IOException {
 		//收到库存解锁的消息
 		try {
-			wareSkuService.unLock(stockLockedTo);
+			wareSkuService.wareUnLockStock(stockLockedTo);
 			channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
 		} catch (Exception e) {
 			channel.basicReject(message.getMessageProperties().getDeliveryTag(), true);

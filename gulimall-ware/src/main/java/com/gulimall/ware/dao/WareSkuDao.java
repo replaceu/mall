@@ -10,10 +10,6 @@ import com.gulimall.ware.entity.WareSkuEntity;
 
 /**
  * 商品库存
- * 
- * @author aqiang9
- * @email 2903780002@qq.com
- * @date 2020-06-09 10:07:53
  */
 @Mapper
 public interface WareSkuDao extends BaseMapper<WareSkuEntity> {

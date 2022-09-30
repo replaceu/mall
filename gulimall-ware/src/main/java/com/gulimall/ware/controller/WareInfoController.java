@@ -15,10 +15,6 @@ import com.gulimall.ware.vo.FareResponseVo;
 
 /**
  * 仓库信息
- *
- * @author Carter
- * @email 2903780002@qq.com
- * @date 2020-06-09 10:07:54
  */
 @RestController
 @RequestMapping("/ware/wareinfo")
