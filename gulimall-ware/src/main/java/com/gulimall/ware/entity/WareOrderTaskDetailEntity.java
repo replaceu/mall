@@ -9,10 +9,6 @@ import lombok.Data;
 
 /**
  * 库存工作单
- * 
- * @author aqiang9
- * @email 2903780002@qq.com
- * @date 2020-06-09 10:07:54
  */
 @Data
 @TableName("wms_ware_order_task_detail")

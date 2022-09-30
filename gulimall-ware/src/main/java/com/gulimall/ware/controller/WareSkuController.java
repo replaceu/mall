@@ -16,10 +16,6 @@ import com.gulimall.ware.vo.WareSkuPageVo;
 
 /**
 *商品库存
-*
-*@authoraqiang9
-*@email2903780002@qq.com
-*@date2020-06-0910:07:53
 */
 @RestController
 @RequestMapping("/ware/waresku")
@@ -61,7 +57,6 @@ public class WareSkuController {
 	*信息
 	*/
 	@GetMapping("/info/{id}")
-	//@RequiresPermissions("ware:waresku:info")
 	public CommonResult<WareSkuEntity> info(@PathVariable("id") Long id) {
 		WareSkuEntity wareSku = wareSkuService.getById(id);
 
@@ -72,7 +67,6 @@ public class WareSkuController {
 	*保存
 	*/
 	@PostMapping("/save")
-	//@RequiresPermissions("ware:waresku:save")
 	public CommonResult save(@RequestBody WareSkuEntity wareSku) {
 		wareSkuService.save(wareSku);
 
@@ -83,7 +77,6 @@ public class WareSkuController {
 	*修改
 	*/
 	@PutMapping("/update")
-	//@RequiresPermissions("ware:waresku:update")
 	public CommonResult update(@RequestBody WareSkuEntity wareSku) {
 		wareSkuService.updateById(wareSku);
 
@@ -94,7 +87,6 @@ public class WareSkuController {
 	*删除
 	*/
 	@DeleteMapping("/delete")
-	//@RequiresPermissions("ware:waresku:delete")
 	public CommonResult delete(@RequestBody Long[] ids) {
 		wareSkuService.removeByIds(Arrays.asList(ids));
 		return CommonResult.ok();

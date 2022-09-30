@@ -23,9 +23,6 @@ import io.swagger.annotations.ApiOperation;
 /**
 *商品三级分类
 *
-*@authoraqiang9
-*@email2903780002@qq.com
-*@date2020-06-1011:26:28
 */
 @RestController
 @RequestMapping("product/category")
@@ -39,7 +36,6 @@ public class CategoryController {
 	*/
 	@ApiOperation(value = "获取所有分类以及子分类,返回json树形结构")
 	@GetMapping("/list/tree")
-	//@RequiresPermissions("product:category:list")
 	public CommonResult<List<CategoryVo>> list() {
 		List<CategoryVo> categoryVo = categoryService.listCategoryWithTree();
 		return CommonResult.ok(categoryVo);
@@ -47,13 +43,10 @@ public class CategoryController {
 
 	/**
 	*通过分类id获取详细信息
-	*
-	*@paramcategoryId分类id
 	*/
 	@ApiOperation("通过分类id获取详细信息")
 	@ApiImplicitParam(name = "categoryId", value = "品牌id", required = true, dataTypeClass = Long.class, paramType = SwaggerParamType.PATH)
 	@GetMapping("/info/{categoryId}")
-	//@RequiresPermissions("product:category:info")
 	public CommonResult<CategoryVo> categoryInfo(@PathVariable Long categoryId) {
 		CategoryEntity categoryEntity = categoryService.getById(categoryId);
 		CategoryVo categoryVo = CategoryConvert.INSTANCE.entity2vo(categoryEntity);
@@ -66,7 +59,6 @@ public class CategoryController {
 
 	@ApiOperation("修改分类")
 	@PutMapping("/update")
-	//@RequiresPermissions("product:category:update")
 	public CommonResult<String> update(@RequestBody CategoryVo categoryVo) {
 		categoryService.updateCategoryDetail(categoryVo);
 		return CommonResult.ok("菜单 修改成功");
@@ -78,7 +70,6 @@ public class CategoryController {
 
 	@ApiOperation("新增分类")
 	@PostMapping("/save")
-	//@RequiresPermissions("product:category:save")
 	public CommonResult<String> save(@RequestBody @Validated({ AddGroup.class }) CategoryVo category) {
 		//数据转换
 		CategoryEntity categoryEntity = CategoryConvert.INSTANCE.vo2entity(category);
@@ -93,7 +84,6 @@ public class CategoryController {
 	@ApiOperation("修改菜单排序")
 	@ApiImplicitParam(value = "categories", dataTypeClass = List.class)
 	@PutMapping("/update/sort")
-	//@RequiresPermissions("product:category:update")
 	public CommonResult updateSort(@RequestBody List<CategoryEntity> categories) {
 		categoryService.updateBatchById(categories);
 		return CommonResult.ok("修改成功");
@@ -105,7 +95,6 @@ public class CategoryController {
 	@ApiOperation(value = "批量删除分类")
 	@ApiImplicitParam(value = "catIds", dataTypeClass = List.class, required = true)
 	@DeleteMapping("/delete")
-	//@RequiresPermissions("product:category:delete")
 	public CommonResult delete(@RequestBody @Validated @NotEmpty(message = "没有需要删除的数据") List<Long> catIds) {
 		categoryService.removeMenuByIds(catIds);
 		return CommonResult.ok("批量删除成功");

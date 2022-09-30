@@ -17,7 +17,7 @@ import com.gulimall.service.utils.PageUtils;
 /**
  * sku信息
  *
- * @author aqiang9
+ * @author Carter
  * @email 2903780002@qq.com
  * @date 2020-06-10 11:26:28
  */

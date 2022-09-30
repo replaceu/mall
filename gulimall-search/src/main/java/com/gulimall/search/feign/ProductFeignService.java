@@ -9,7 +9,7 @@ import com.gulimall.common.utils.CommonResult;
 import com.gulimall.common.vo.AttrRespVo;
 
 /**
- * @author aqiang9  2020-08-22
+ * @author Carter  2020-08-22
  */
 @FeignClient("gulimall-product")
 @RequestMapping("/product")

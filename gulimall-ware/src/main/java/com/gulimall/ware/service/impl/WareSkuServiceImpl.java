@@ -119,7 +119,6 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
 	 * 库存解锁的场景：
 	 * 1.下订单成功，订单过期没有支付被系统自动取消或者用户手动取消
 	 * 2.下订单成功，库存锁定成功但是接下来的业务调用失败，导致订单回滚，之前锁定的库存就需要自动解锁
-	 * 
 	 * @param wareSkuLock
 	 * @return
 	 */

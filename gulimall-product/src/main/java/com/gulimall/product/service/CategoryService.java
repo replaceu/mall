@@ -36,14 +36,12 @@ public interface CategoryService extends IService<CategoryEntity> {
 	/**
 	*获取此三级分类的完整路径
 	*
-	*@param categoryId三级分类的id
 	*@return List<Long>完整路径
 	*/
 	List<Long> findCategoryPath(Long categoryId);
 
 	/**
 	*修改详细信息并级联更新
-	*@param categoryVo更新的信息
 	*/
 	void updateCategoryDetail(CategoryVo categoryVo);
 

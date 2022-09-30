@@ -47,15 +47,12 @@ public class SearchController {
 		modelMap.put("result", result);
 		modelMap.put("keyword", searchParam.getKeyword());
 
-		//log.info(result.toString());
-
 		//构造面包屑数据
 		//属性
 		List<NavVo> navVos = new ArrayList<>();
 		List<String> attrs = searchParam.getAttrs();
 		List<Long> attrIds = new ArrayList<>();
 		String queryString = request.getQueryString();
-		//log.info("---请求参数：{}",queryString);
 		if (attrs != null && attrs.size() > 0) {
 			navVos = attrs.stream().map(attr -> {
 				NavVo navVo = new NavVo();

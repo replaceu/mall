@@ -1,18 +1,15 @@
 package com.gulimall.ware.entity;
 
+import java.io.Serializable;
+import java.util.Date;
+
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
-import java.io.Serializable;
-import java.util.Date;
 import lombok.Data;
 
 /**
  * 库存工作单
- * 
- * @author aqiang9
- * @email 2903780002@qq.com
- * @date 2020-06-09 10:07:54
  */
 @Data
 @TableName("wms_ware_order_task")
@@ -23,59 +20,59 @@ public class WareOrderTaskEntity implements Serializable {
 	 * id
 	 */
 	@TableId
-	private Long id;
+	private Long	id;
 	/**
 	 * order_id
 	 */
-	private Long orderId;
+	private Long	orderId;
 	/**
 	 * order_sn
 	 */
-	private String orderSn;
+	private String	orderSn;
 	/**
 	 * 收货人
 	 */
-	private String consignee;
+	private String	consignee;
 	/**
 	 * 收货人电话
 	 */
-	private String consigneeTel;
+	private String	consigneeTel;
 	/**
 	 * 配送地址
 	 */
-	private String deliveryAddress;
+	private String	deliveryAddress;
 	/**
 	 * 订单备注
 	 */
-	private String orderComment;
+	private String	orderComment;
 	/**
 	 * 付款方式【 1:在线付款 2:货到付款】
 	 */
-	private Integer paymentWay;
+	private Integer	paymentWay;
 	/**
 	 * 任务状态
 	 */
-	private Integer taskStatus;
+	private Integer	taskStatus;
 	/**
 	 * 订单描述
 	 */
-	private String orderBody;
+	private String	orderBody;
 	/**
 	 * 物流单号
 	 */
-	private String trackingNo;
+	private String	trackingNo;
 	/**
 	 * create_time
 	 */
-	private Date createTime;
+	private Date	createTime;
 	/**
 	 * 仓库id
 	 */
-	private Long wareId;
+	private Long	wareId;
 	/**
 	 * 工作单备注
 	 */
-	private String taskComment;
+	private String	taskComment;
 
 	public static long getSerialVersionUID() {
 		return serialVersionUID;

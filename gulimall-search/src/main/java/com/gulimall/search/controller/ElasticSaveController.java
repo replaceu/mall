@@ -17,7 +17,7 @@ import com.gulimall.search.service.ProductSaveService;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author aqiang9  2020-08-15
+ * @author Carter  2020-08-15
  */
 @RestController
 @RequestMapping("/search")

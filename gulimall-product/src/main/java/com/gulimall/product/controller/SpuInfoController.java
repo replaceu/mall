@@ -14,7 +14,6 @@ import com.gulimall.product.vo.SpuPageVo;
 import com.gulimall.product.vo.SpuSaveVo;
 import com.gulimall.service.utils.PageUtils;
 
-
 /**
  * spu信息
  *
@@ -25,79 +24,72 @@ import com.gulimall.service.utils.PageUtils;
 @RestController
 @RequestMapping("/product/spuinfo")
 public class SpuInfoController {
-    @Autowired
-    private SpuInfoService spuInfoService;
+	@Autowired
+	private SpuInfoService spuInfoService;
 
-    /**
-     * 列表
-     */
-    @RequestMapping("/list")
-    //@RequiresPermissions("product:spuinfo:list")
-    public CommonResult list(SpuPageVo params) {
-        PageUtils page = spuInfoService.queryPageOnCondition(params);
-        return CommonResult.ok().data(page);
-    }
+	/**
+	 * 列表
+	 */
+	@RequestMapping("/list")
+	public CommonResult list(SpuPageVo params) {
+		PageUtils page = spuInfoService.queryPageOnCondition(params);
+		return CommonResult.ok().data(page);
+	}
 
-    /**
-     * 商品上架
-     *
-     * @param spuId 需要上架的id
-     * @return
-     */
-    @PutMapping("/{spuId}/up")
-    public CommonResult up(@PathVariable Long spuId) {
-        spuInfoService.up(spuId);
-        return CommonResult.ok();
-    }
+	/**
+	 * 商品上架
+	 *
+	 * @param spuId 需要上架的id
+	 * @return
+	 */
+	@PutMapping("/{spuId}/up")
+	public CommonResult up(@PathVariable Long spuId) {
+		spuInfoService.up(spuId);
+		return CommonResult.ok();
+	}
 
-    @PostMapping("/{spuId}/up")
-    public CommonResult upProduct(@PathVariable Long spuId){
-        spuInfoService.upProduct(spuId);
-        return CommonResult.ok();
-    }
+	@PostMapping("/{spuId}/up")
+	public CommonResult upProduct(@PathVariable Long spuId) {
+		spuInfoService.upProduct(spuId);
+		return CommonResult.ok();
+	}
 
+	/**
+	 * 信息
+	 */
+	@GetMapping("/info/{id}")
+	public CommonResult<SpuInfoEntity> info(@PathVariable("id") Long id) {
+		SpuInfoEntity spuInfo = spuInfoService.getById(id);
+		return CommonResult.ok(spuInfo);
+	}
 
+	/**
+	 * 保存
+	 */
+	@PostMapping("/save")
+	public CommonResult save(@RequestBody SpuSaveVo spuSaveVo, HttpServletRequest request) {
+		spuInfoService.saveInfo(spuSaveVo);
+		return CommonResult.ok();
+	}
 
-    /**
-     * 信息
-     */
-    @GetMapping("/info/{id}")
-    //@RequiresPermissions("product:spuinfo:info")
-    public CommonResult<SpuInfoEntity> info(@PathVariable("id") Long id) {
-        SpuInfoEntity spuInfo = spuInfoService.getById(id);
-        return CommonResult.ok(spuInfo);
-    }
+	/**
+	 * 修改
+	 */
+	@PutMapping("/update")
+	public CommonResult update(@RequestBody SpuInfoEntity spuInfo) {
+		spuInfoService.updateById(spuInfo);
 
-    /**
-     * 保存
-     */
-    @PostMapping("/save")
-    //@RequiresPermissions("product:spuinfo:save")
-    public CommonResult save(@RequestBody SpuSaveVo spuSaveVo, HttpServletRequest request) {
-        spuInfoService.saveInfo(spuSaveVo);
-        return CommonResult.ok();
-    }
+		return CommonResult.ok();
+	}
 
-    /**
-     * 修改
-     */
-    @PutMapping("/update")
-    //@RequiresPermissions("product:spuinfo:update")
-    public CommonResult update(@RequestBody SpuInfoEntity spuInfo) {
-        spuInfoService.updateById(spuInfo);
+	/**
+	 * 删除
+	 */
+	@DeleteMapping("/delete")
+	public CommonResult delete(@RequestBody Long[] ids) {
+		spuInfoService.removeByIds(Arrays.asList(ids));
 
-        return CommonResult.ok();
-    }
-
-    /**
-     * 删除
-     */
-    @DeleteMapping("/delete")
-    //@RequiresPermissions("product:spuinfo:delete")
-    public CommonResult delete(@RequestBody Long[] ids) {
-        spuInfoService.removeByIds(Arrays.asList(ids));
-
-        return CommonResult.ok();
-    }
+		return CommonResult.ok();
+	}
 
 }

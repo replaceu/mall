@@ -24,8 +24,7 @@ import io.swagger.annotations.ApiOperation;
 /**
  * 品牌
  *
- * @author aqiang9
- * @email 2903780002@qq.com
+ * @author Carter
  * @date 2020-06-10 11:26:28
  */
 @Api(value = "商品品牌", tags = "商品品牌-brand")
@@ -39,7 +38,6 @@ public class BrandController {
 	 * 列表
 	 */
 	@GetMapping("/list")
-	// @RequiresPermissions("product:brand:list")
 	public CommonResult list(PageVo pageParam) {
 		PageUtils page = brandService.queryPage(pageParam);
 		return CommonResult.ok().data(page);
@@ -51,7 +49,6 @@ public class BrandController {
 	@ApiOperation("获取品牌详情")
 	@ApiImplicitParam(value = "brandId", paramType = SwaggerParamType.PATH, required = true)
 	@GetMapping("/info/{brandId}")
-	//   @RequiresPermissions("product:brand:info")
 	public CommonResult<BrandVo> info(@PathVariable("brandId") Long brandId) {
 		BrandEntity brand = brandService.getById(brandId);
 		BrandVo brandVo = BrandConvert.INSTANCE.entity2vo(brand);
@@ -62,7 +59,6 @@ public class BrandController {
 	 * 保存
 	 */
 	@PostMapping("/save")
-	//    @RequiresPermissions("product:brand:save")
 	public CommonResult save(@RequestBody BrandEntity brand) {
 		brandService.save(brand);
 		return CommonResult.ok("品牌添加成功");
@@ -95,7 +91,6 @@ public class BrandController {
 	 * 删除
 	 */
 	@DeleteMapping("/delete")
-	//    @RequiresPermissions("product:brand:delete")
 	public CommonResult delete(@RequestBody List<Long> brandIds) {
 		if (brandIds != null && brandIds.size() > 0) brandService.removeByIds(brandIds);
 		return CommonResult.ok("删除成功");
