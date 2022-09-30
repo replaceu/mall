@@ -28,7 +28,6 @@ public class CouponController {
 	 * 列表
 	 */
 	@RequestMapping("/list")
-	// @RequiresPermissions("coupon:coupon:list")
 	public R list(@RequestParam Map<String, Object> params) {
 		PageUtils page = couponService.queryPage(params);
 
@@ -59,7 +58,6 @@ public class CouponController {
 	 * 修改
 	 */
 	@RequestMapping("/update")
-	//   @RequiresPermissions("coupon:coupon:update")
 	public R update(@RequestBody CouponEntity coupon) {
 		couponService.updateById(coupon);
 
@@ -70,7 +68,6 @@ public class CouponController {
 	 * 删除
 	 */
 	@RequestMapping("/delete")
-	//    @RequiresPermissions("coupon:coupon:delete")
 	public R delete(@RequestBody Long[] ids) {
 		couponService.removeByIds(Arrays.asList(ids));
 

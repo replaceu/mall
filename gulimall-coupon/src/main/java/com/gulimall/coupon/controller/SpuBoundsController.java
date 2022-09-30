@@ -1,5 +1,11 @@
 package com.gulimall.coupon.controller;
 
+import java.util.Arrays;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 import com.gulimall.common.to.SpuBoundTo;
 import com.gulimall.common.utils.CommonResult;
 import com.gulimall.common.utils.R;
@@ -7,12 +13,6 @@ import com.gulimall.coupon.convert.SpuConvert;
 import com.gulimall.coupon.entity.SpuBoundsEntity;
 import com.gulimall.coupon.service.SpuBoundsService;
 import com.gulimall.service.utils.PageUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
-import java.util.Map;
-
 
 /**
  * 商品spu积分设置
@@ -24,73 +24,65 @@ import java.util.Map;
 @RestController
 @RequestMapping("coupon/spubounds")
 public class SpuBoundsController {
-    @Autowired
-    private SpuBoundsService spuBoundsService;
+	@Autowired
+	private SpuBoundsService spuBoundsService;
 
+	@PostMapping("/coupon/spubounds/save")
+	public CommonResult saveSpuBounds(@RequestBody SpuBoundTo spuBoundTo) {
 
-    @PostMapping("/coupon/spubounds/save")
-    public CommonResult saveSpuBounds(@RequestBody  SpuBoundTo spuBoundTo){
+		SpuBoundsEntity spuBoundsEntity = SpuConvert.INSTANCE.to2entity(spuBoundTo);
+		spuBoundsService.save(spuBoundsEntity);
+		return CommonResult.ok();
+	}
 
-       SpuBoundsEntity spuBoundsEntity =  SpuConvert.INSTANCE.to2entity(spuBoundTo);
-        spuBoundsService.save(spuBoundsEntity) ;
-        return CommonResult.ok() ;
-    }
+	/**
+	 * 列表
+	 */
+	@RequestMapping("/list")
+	public R list(@RequestParam Map<String, Object> params) {
+		PageUtils page = spuBoundsService.queryPage(params);
 
+		return R.ok().put("page", page);
+	}
 
-    /**
-     * 列表
-     */
-    @RequestMapping("/list")
-   // @RequiresPermissions("coupon:spubounds:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = spuBoundsService.queryPage(params);
-
-        return R.ok().put("page", page);
-    }
-
-
-    /**
-     * 信息
-     */
-    @RequestMapping("/info/{id}")
-//   @RequiresPermissions("coupon:spubounds:info")
-    public R info(@PathVariable("id") Long id){
+	/**
+	 * 信息
+	 */
+	@RequestMapping("/info/{id}")
+	public R info(@PathVariable("id") Long id) {
 		SpuBoundsEntity spuBounds = spuBoundsService.getById(id);
 
-        return R.ok().put("spuBounds", spuBounds);
-    }
+		return R.ok().put("spuBounds", spuBounds);
+	}
 
-    /**
-     * 保存
-     */
-    @RequestMapping("/save")
-//    @RequiresPermissions("coupon:spubounds:save")
-    public R save(@RequestBody SpuBoundsEntity spuBounds){
+	/**
+	 * 保存
+	 */
+	@RequestMapping("/save")
+	public R save(@RequestBody SpuBoundsEntity spuBounds) {
 		spuBoundsService.save(spuBounds);
 
-        return R.ok();
-    }
+		return R.ok();
+	}
 
-    /**
-     * 修改
-     */
-    @RequestMapping("/update")
-//   @RequiresPermissions("coupon:spubounds:update")
-    public R update(@RequestBody SpuBoundsEntity spuBounds){
+	/**
+	 * 修改
+	 */
+	@RequestMapping("/update")
+	public R update(@RequestBody SpuBoundsEntity spuBounds) {
 		spuBoundsService.updateById(spuBounds);
 
-        return R.ok();
-    }
+		return R.ok();
+	}
 
-    /**
-     * 删除
-     */
-    @RequestMapping("/delete")
-//    @RequiresPermissions("coupon:spubounds:delete")
-    public R delete(@RequestBody Long[] ids){
+	/**
+	 * 删除
+	 */
+	@RequestMapping("/delete")
+	public R delete(@RequestBody Long[] ids) {
 		spuBoundsService.removeByIds(Arrays.asList(ids));
 
-        return R.ok();
-    }
+		return R.ok();
+	}
 
 }
