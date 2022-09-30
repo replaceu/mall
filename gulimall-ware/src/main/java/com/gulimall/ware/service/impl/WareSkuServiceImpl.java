@@ -92,7 +92,7 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
 					skuEntity.setSkuName(data.getSkuName());
 				}
 			} catch (Exception e) {
-				//log.error("远程调用异常，{}", e.getMessage());
+				log.error("远程调用异常，{}", e.getMessage());
 			}
 			baseMapper.insert(skuEntity);
 		} else {
