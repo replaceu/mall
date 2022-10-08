@@ -4,7 +4,8 @@ public interface PayConstants {
 	String weixinPay = "/weixinPay";
 
 	interface MappingConstants {
-		String weixinNative = "/weixinNative/{productId}";
+		String	weixinNative			= "/weixinNative/{productId}";
+		String	weixinNativePyCallback	= "/weixinNativePyCallback";
 	}
 
 	interface PayChannel {
