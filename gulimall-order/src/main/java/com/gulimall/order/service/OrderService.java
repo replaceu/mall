@@ -47,4 +47,6 @@ public interface OrderService extends IService<OrderEntity> {
 	void updateOrderStatus(String outTradeNo, Integer code);
 
 	void creatSecondKillOrder(SecondKillOrderTo order);
+
+	void processOrder(Map<String, Object> map);
 }

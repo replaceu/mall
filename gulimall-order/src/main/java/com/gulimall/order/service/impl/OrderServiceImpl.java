@@ -23,6 +23,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.gson.Gson;
 import com.gulimall.common.to.SkuHasStockTo;
 import com.gulimall.common.to.mq.SecondKillOrderTo;
 import com.gulimall.common.utils.CommonResult;
@@ -34,6 +35,7 @@ import com.gulimall.order.entity.OrderEntity;
 import com.gulimall.order.entity.OrderItemEntity;
 import com.gulimall.order.feign.CartFeignService;
 import com.gulimall.order.feign.MemberFeignService;
+import com.gulimall.order.feign.PayFeignService;
 import com.gulimall.order.feign.WmsFeignService;
 import com.gulimall.order.interceptor.LoginUserInterceptor;
 import com.gulimall.order.service.OrderItemService;
@@ -64,6 +66,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 	private StringRedisTemplate	redisTemplate;
 	@Autowired
 	private RabbitTemplate		rabbitTemplate;
+	@Autowired
+	private PayFeignService		payFeignService;
 
 	private ThreadLocal<OrderSubmitVo> submitThreadLocal = new ThreadLocal<>();
 
@@ -205,6 +209,19 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 		orderItemEntity.setRealAmount(payAmount);
 		orderItemEntity.setSkuQuantity(secondKillOrder.getNum());
 		orderItemService.save(orderItemEntity);
+
+	}
+
+	@Override
+	@Transactional
+	public void processOrder(Map<String, Object> map) {
+		//todo:解密报文
+		String plainText = payFeignService.weixinDecrypt(map);
+		Gson gson = new Gson();
+		HashMap plainTextMap = gson.fromJson(plainText, HashMap.class);
+		String orderId = (String) plainTextMap.get("out_trade_no");
+		/**在对业务数据进行状态检查和处理之前，要采用数据锁进行并发控制，
+		以避免函数重入造成的数据混乱*/
 
 	}
 

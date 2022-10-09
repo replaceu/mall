@@ -1,5 +1,7 @@
 package com.gulimall.pay.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,4 +38,11 @@ public class PayCallBackController {
 	public String weixinNativePyCallback(HttpServletRequest request, HttpServletResponse response) {
 		return wxPayCallbackService.weixinNativePyCallback(request, response);
 	}
+
+	@ApiOperation(value = "微信支付解密报文", notes = "解密报文")
+	@PostMapping(value = PayConstants.MappingConstants.weixinDecrypt)
+	public String weixinDecrypt(Map<String, Object> map) {
+		return wxPayCallbackService.weixinDecrypt(map);
+	}
+
 }

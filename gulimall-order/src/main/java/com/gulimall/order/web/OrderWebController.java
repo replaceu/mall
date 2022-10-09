@@ -1,5 +1,6 @@
 package com.gulimall.order.web;
 
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,6 +63,11 @@ public class OrderWebController {
 	public R getOrderPay(String orderSn) {
 		return orderService.getOrderPayByOrderSn(orderSn);
 	}
+
+	@PostMapping("/pay/processOrder")
+	public void processOrder(Map<String, Object> map) {
+		orderService.processOrder(map);
+	};
 
 	@PostMapping("/pay.html")
 	public void updateOrderStatus(String outTradeNo, Integer code) {

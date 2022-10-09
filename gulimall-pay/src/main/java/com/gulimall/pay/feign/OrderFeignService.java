@@ -1,5 +1,7 @@
 package com.gulimall.pay.feign;
 
+import java.util.Map;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,5 +15,8 @@ public interface OrderFeignService {
 
 	@PostMapping("/pay.html")
 	void updateOrderStatus(String outTradeNo, Integer code);
+
+	@RequestMapping("/orderPay/processOrder")
+	void processOrder(Map<String, Object> map);
 
 }
