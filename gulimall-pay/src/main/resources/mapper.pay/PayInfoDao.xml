@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.pay.dao.PayInfoDao">
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.gulimall.pay.entity.PayInfoEntity" id="orderOperateHistoryMap">
+        <result property="orderNo" column="order_no"/>
+        <result property="transactionId" column="transaction_id"/>
+        <result property="paymentType" column="payment_type"/>
+        <result property="tradeType" column="trade_type"/>
+        <result property="tradeState" column="trade_state"/>
+        <result property="payerTotal" column="payer_total"/>
+    </resultMap>
+
+</mapper>

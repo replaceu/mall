@@ -222,6 +222,12 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 		String orderId = (String) plainTextMap.get("out_trade_no");
 		/**在对业务数据进行状态检查和处理之前，要采用数据锁进行并发控制，
 		以避免函数重入造成的数据混乱*/
+		OrderEntity order = getOrderByOrderSn(orderId);
+		if (OrderConstant.OrderStatus.notPay != order.getStatus()) { return; }
+		//todo:更新订单状态
+		updateOrderStatus(orderId,OrderConstant.OrderStatus.paid);
+		//todo:记录支付日志
+		payFeignService.recordPaymentInfo(plainText);
 
 	}
 

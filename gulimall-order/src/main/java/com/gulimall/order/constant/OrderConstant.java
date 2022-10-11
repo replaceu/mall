@@ -6,6 +6,11 @@ package com.gulimall.order.constant;
  * @description:
  * @version:
  */
-public class OrderConstant {
-	public static final String USER_ORDER_TOKEN_PREFIX = "order:token:";
+public interface OrderConstant {
+    public static final String USER_ORDER_TOKEN_PREFIX = "order:token:";
+
+    interface OrderStatus {
+        int notPay = 2;
+        int paid = 3;
+    }
 }

@@ -10,6 +10,11 @@ import io.swagger.annotations.ApiOperation;
 @FeignClient("gulimall-pay")
 public interface PayFeignService {
 	@GetMapping("/pay/decrypt")
-	@ApiOperation("解密报文")
+	@ApiOperation("解密微信支付报文")
 	String weixinDecrypt(Map<String, Object> bodyMap);
+
+	@GetMapping("/pay/recordPaymentInfo")
+	@ApiOperation("记录支付日志")
+	void recordPaymentInfo(String plainText);
+
 }

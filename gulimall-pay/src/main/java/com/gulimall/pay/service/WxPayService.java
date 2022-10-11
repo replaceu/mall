@@ -5,4 +5,6 @@ import com.gulimall.pay.dto.WeixinPayResDto;
 
 public interface WxPayService {
     WeixinPayResDto weixinNativePay(CreatePayReqDto createPayReq);
+
+    void recordPaymentInfo(String plainText);
 }

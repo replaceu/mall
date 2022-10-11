@@ -38,4 +38,10 @@ public class PayController {
 		return R.ok().setData(payRes);
 	}
 
+	@ApiOperation("记录支付日志")
+	@PostMapping(PayConstants.MappingConstants.recordPaymentInfo)
+	public void recordPaymentInfo(String plainText){
+		wxPayService.recordPaymentInfo(plainText);
+	}
+
 }
