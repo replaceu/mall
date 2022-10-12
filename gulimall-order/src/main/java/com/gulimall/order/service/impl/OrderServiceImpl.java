@@ -152,6 +152,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 			BeanUtils.copyProperties(orderEntity, orderTo);
 			//给MQ发送消息
 			rabbitTemplate.convertAndSend("order-event-exchange", "order.release.other", orderTo);
+
 		}
 	}
 
@@ -228,6 +229,14 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 		updateOrderStatus(orderId,OrderConstant.OrderStatus.paid);
 		//todo:记录支付日志
 		payFeignService.recordPaymentInfo(plainText);
+		//todo:发送相关信息给积分系统
+		OrderEntity entity = orderDao.selectById(orderId);
+		if (entity!=null){
+			OrderTo orderTo = new OrderTo();
+			BeanUtils.copyProperties(entity,orderTo);
+			rabbitTemplate.convertAndSend("order-event-exchange", "order.finish.integral", orderTo);
+		}
+
 
 	}
 

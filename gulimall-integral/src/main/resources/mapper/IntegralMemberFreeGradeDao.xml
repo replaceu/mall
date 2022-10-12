@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.integral.dao.IntegralMemberFreeGradeDao">
+    <resultMap id="BaseResultMap" type="com.gulimall.integral.entity.IntegralMemberFreeGradeEntity">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="loc_name" jdbcType="VARCHAR" property="locName" />
+        <result column="growth_name" jdbcType="VARCHAR" property="growthName" />
+        <result column="greater_amount" jdbcType="VARCHAR" property="greaterAmount" />
+        <result column="show_name" jdbcType="VARCHAR" property="showName" />
+        <result column="show_img" jdbcType="VARCHAR" property="showImg" />
+        <result column="line_img" jdbcType="VARCHAR" property="lineImg" />
+        <result column="user_img" jdbcType="VARCHAR" property="userImg" />
+        <result column="locked_img" jdbcType="VARCHAR" property="lockedImg" />
+        <result column="unlock_img" jdbcType="VARCHAR" property="unlockImg" />
+        <result column="current_img" jdbcType="VARCHAR" property="currentImg" />
+        <result column="last_day" jdbcType="VARCHAR" property="lastDay" />
+        <result column="sort" jdbcType="VARCHAR" property="sort" />
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, loc_name, growth_name, greater_amount, show_name, show_img, line_img, user_img,
+    locked_img, unlock_img, current_img, last_day, sort, create_date
+    </sql>
+</mapper>

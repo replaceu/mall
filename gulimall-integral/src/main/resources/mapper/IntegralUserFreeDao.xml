@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.gulimall.integral.dao.IntegralUserFeeDao">
-    <resultMap id="BaseResultMap" type="com.gulimall.integral.entity.IntegralUserFeeEntity">
+<mapper namespace="com.gulimall.integral.dao.IntegralUserFreeDao">
+    <resultMap id="BaseResultMap" type="com.gulimall.integral.entity.IntegralUserFreeEntity">
         <id column="id" jdbcType="VARCHAR" property="id"/>
         <result column="user_id" jdbcType="VARCHAR" property="userId"/>
-        <result column="member_fee_grade_id" jdbcType="VARCHAR" property="memberFeeGradeId"/>
-        <result column="last_ref_data" jdbcType="VARCHAR" property="lastRefData"/>
+        <result column="member_free_grade_id" jdbcType="VARCHAR" property="memberFreeGradeId"/>
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
         <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
         <result column="effect_date" jdbcType="TIMESTAMP" property="effectDate"/>
         <result column="expired_date" jdbcType="TIMESTAMP" property="expiredDate"/>
+        <result column="grade_amount" jdbcType="TIMESTAMP" property="gradeAmount"/>
+
     </resultMap>
     <sql id="Base_Column_List">
         id
-        , user_id, member_fee_grade_id, last_ref_data, create_date, update_date, effect_date,
+        , user_id, member_free_grade_id, grade_amount, create_date, update_date, effect_date,
     expired_date
     </sql>
 </mapper>

@@ -2,12 +2,14 @@ package com.gulimall.integral.entity;
 
 import java.util.Date;
 
-public class IntegralFeeGradeEntity {
+public class IntegralMemberFeeGradeEntity {
 	private String id;
 
 	private String locName;
 
 	private String greaterAmount;
+
+	private String growthName;
 
 	private String showName;
 
@@ -16,6 +18,14 @@ public class IntegralFeeGradeEntity {
 	private String sort;
 
 	private Date createDate;
+
+	public String getGrowthName() {
+		return growthName;
+	}
+
+	public void setGrowthName(String growthName) {
+		this.growthName = growthName == null ? null : growthName.trim();
+	}
 
 	public String getSort() {
 		return sort;
