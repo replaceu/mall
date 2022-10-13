@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gulimall.integral.dao.IntegralUserGradeLogDao">
+    <resultMap id="BaseResultMap" type="com.gulimall.integral.entity.IntegralUserGradeLogEntity">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="ref_type" jdbcType="VARCHAR" property="refType"/>
+        <result column="ref_value" jdbcType="VARCHAR" property="refValue"/>
+        <result column="before_value" jdbcType="VARCHAR" property="beforeValue"/>
+        <result column="change_value" jdbcType="VARCHAR" property="changeValue"/>
+        <result column="current_value" jdbcType="VARCHAR" property="currentValue"/>
+        <result column="reason" jdbcType="VARCHAR" property="reason"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="effect_date" jdbcType="TIMESTAMP" property="effectDate"/>
+        <result column="expired_date" jdbcType="TIMESTAMP" property="expiredDate"/>
+        <result column="is_deleted" jdbcType="INTEGER" property="isDeleted"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , user_id, ref_type, ref_value, before_value, change_value, current_value, reason,
+    create_date, effect_date, expired_date, is_deleted
+    </sql>
+</mapper>
+

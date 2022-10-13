@@ -1,6 +1,32 @@
 package com.gulimall.common.constant;
 
 public interface ICommonConstants {
+	//36个0,总部id
+	String ADMINISTRATOR_ID = "000000000000000000000000000000000000";
+
+	Integer	INT_TRUE	= 1;
+	Integer	INT_FALSE	= 0;
+
+	Boolean	BLN_TRUE	= Boolean.TRUE;
+	Boolean	BLN_FALSE	= Boolean.FALSE;
+
+	String	STR_TRUE	= "1";
+	String	STR_FALSE	= "0";
+
+	String STR_NULL = "null";
+
+	String empty = "";
+
+	String pidRoot = "0";
+
+	String initUseInventory = "0";
+
+	String	splitCommaSympol	= ",";
+	String	splitCombineSympol	= "---";
+
+	String DATE_INIT = "1991-01-01 00:00:01";
+
+	String UNKNOW_COMPANY_ID = "__UNKNOW_COMPANY"; // 触发无法查到数据
 
 	interface RspCode {
 		String	secondKillErr				= "secondKillErr|用户秒杀失败";
