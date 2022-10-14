@@ -41,6 +41,18 @@ public class MyRabbitmqConfig {
 		return new Binding("order.secondKill.order.queue", Binding.DestinationType.QUEUE, "order-event-exchange", "order.secondKill.order", null);
 	}
 
+	//创建积分队列
+	@Bean
+	public Queue orderFinishIntegralQueue() {
+		return new Queue("order.finish.integral.queue", true, false, false);
+	}
+
+	//创建秒杀队列的绑定关系
+	@Bean
+	public Binding orderFinishIntegralBinding() {
+		return new Binding("order.finish.integral.queue", Binding.DestinationType.QUEUE, "order-event-exchange", "order.finish.integral", null);
+	}
+
 	//1.创建队列
 	@Bean
 	public Queue orderDelayQueue() {

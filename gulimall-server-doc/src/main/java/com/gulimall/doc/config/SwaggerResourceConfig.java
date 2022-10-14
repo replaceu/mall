@@ -17,8 +17,7 @@ import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 @Component
 @Primary
 public class SwaggerResourceConfig implements SwaggerResourcesProvider {
-	private static final Logger log = LoggerFactory.getLogger(SwaggerResourceConfig.class);
-
+	private static final Logger		log	= LoggerFactory.getLogger(SwaggerResourceConfig.class);
 	private final RouteLocator		routeLocator;
 	private final GatewayProperties	gatewayProperties;
 

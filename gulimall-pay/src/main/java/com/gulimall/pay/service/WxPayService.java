@@ -4,7 +4,9 @@ import com.gulimall.pay.dto.CreatePayReqDto;
 import com.gulimall.pay.dto.WeixinPayResDto;
 
 public interface WxPayService {
-    WeixinPayResDto weixinNativePay(CreatePayReqDto createPayReq);
+	WeixinPayResDto weixinNativePay(CreatePayReqDto createPayReq);
 
-    void recordPaymentInfo(String plainText);
+	void recordPaymentInfo(String plainText);
+
+	void userCancelOrderPay(String orderId);
 }

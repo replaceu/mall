@@ -50,26 +50,25 @@ import com.gulimall.service.utils.Query;
 @Service("orderService")
 public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> implements OrderService {
 
+	private ThreadLocal<OrderSubmitVo>	submitThreadLocal	= new ThreadLocal<>();
 	@Autowired
-	private MemberFeignService	memberFeignService;
+	private MemberFeignService			memberFeignService;
 	@Autowired
-	private CartFeignService	cartFeignService;
+	private CartFeignService			cartFeignService;
 	@Autowired
-	private WmsFeignService		wmsFeignService;
+	private WmsFeignService				wmsFeignService;
 	@Autowired
-	private OrderItemService	orderItemService;
+	private OrderItemService			orderItemService;
 	@Autowired
-	private OrderDao			orderDao;
+	private OrderDao					orderDao;
 	@Autowired
-	private ThreadPoolExecutor	executor;
+	private ThreadPoolExecutor			executor;
 	@Autowired
-	private StringRedisTemplate	redisTemplate;
+	private StringRedisTemplate			redisTemplate;
 	@Autowired
-	private RabbitTemplate		rabbitTemplate;
+	private RabbitTemplate				rabbitTemplate;
 	@Autowired
-	private PayFeignService		payFeignService;
-
-	private ThreadLocal<OrderSubmitVo> submitThreadLocal = new ThreadLocal<>();
+	private PayFeignService				payFeignService;
 
 	@Override
 	public PageUtils queryPage(Map<String, Object> params) {
@@ -226,17 +225,16 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 		OrderEntity order = getOrderByOrderSn(orderId);
 		if (OrderConstant.OrderStatus.notPay != order.getStatus()) { return; }
 		//todo:更新订单状态
-		updateOrderStatus(orderId,OrderConstant.OrderStatus.paid);
+		updateOrderStatus(orderId, OrderConstant.OrderStatus.paid);
 		//todo:记录支付日志
 		payFeignService.recordPaymentInfo(plainText);
 		//todo:发送相关信息给积分系统
 		OrderEntity entity = orderDao.selectById(orderId);
-		if (entity!=null){
+		if (entity != null) {
 			OrderTo orderTo = new OrderTo();
-			BeanUtils.copyProperties(entity,orderTo);
+			BeanUtils.copyProperties(entity, orderTo);
 			rabbitTemplate.convertAndSend("order-event-exchange", "order.finish.integral", orderTo);
 		}
-
 
 	}
 

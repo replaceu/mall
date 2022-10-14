@@ -21,6 +21,8 @@ public interface ICommonConstants {
 
 	String initUseInventory = "0";
 
+	String SUCCESS = "success";
+
 	String	splitCommaSympol	= ",";
 	String	splitCombineSympol	= "---";
 
