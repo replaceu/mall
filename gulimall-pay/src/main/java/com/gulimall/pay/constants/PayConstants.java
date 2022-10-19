@@ -9,6 +9,8 @@ public interface PayConstants {
 		String	weixinDecrypt			= "/weixinDecrypt";
 		String	recordPaymentInfo		= "/recordPaymentInfo";
 		String	userCancelOrderPay		= "/userCancelOrderPay";
+		String	queryOrderPayStatus		= "/queryOrderPayStatus";
+		String	refundOrderPay			= "/refundOrderPay";
 	}
 
 	interface PayChannel {
@@ -38,6 +40,7 @@ public interface PayConstants {
 	}
 
 	interface WeixinApiType {
-		String closeOrderById = "/v3/pay/transactions/out-trade-no/%s/close";
+		String	closeOrderById	= "/v3/pay/transactions/out-trade-no/%s/close";
+		String	queryPayStatus	= "/v3/pay/transactions/out-trade-no/%s";
 	}
 }

@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import com.gulimall.common.utils.R;
 import com.gulimall.pay.constants.PayConstants;
 import com.gulimall.pay.dto.CreatePayReqDto;
+import com.gulimall.pay.dto.PayRefundDto;
+import com.gulimall.pay.dto.PayStatusDto;
 import com.gulimall.pay.dto.WeixinPayResDto;
 import com.gulimall.pay.service.WxPayService;
 
@@ -44,6 +46,20 @@ public class PayController {
 	public R userCancelOrderPay(@PathVariable String orderId) {
 		wxPayService.userCancelOrderPay(orderId);
 		return R.ok().setData(orderId);
+	}
+
+	@ApiOperation("查询订单支付状态")
+	@GetMapping(PayConstants.MappingConstants.queryOrderPayStatus)
+	public R queryOrderPayStatus(@PathVariable String orderId) {
+		PayStatusDto orderStatus = wxPayService.queryOrderPayStatus(orderId);
+		return R.ok().setData(orderStatus);
+	}
+
+	@ApiOperation("用户申请退款")
+	@PostMapping(PayConstants.MappingConstants.refundOrderPay)
+	public R refundOrderPay(PayRefundDto payRefundDto) {
+		wxPayService.refundOrderPay(payRefundDto);
+		return R.ok();
 	}
 
 }

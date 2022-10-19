@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -21,9 +22,7 @@ import com.gulimall.common.utils.R;
 import com.gulimall.pay.config.WxPayConfig;
 import com.gulimall.pay.constants.PayConstants;
 import com.gulimall.pay.dao.PayInfoDao;
-import com.gulimall.pay.dto.CreatePayReqDto;
-import com.gulimall.pay.dto.OrderDto;
-import com.gulimall.pay.dto.WeixinPayResDto;
+import com.gulimall.pay.dto.*;
 import com.gulimall.pay.entity.PayInfoEntity;
 import com.gulimall.pay.feign.OrderFeignService;
 import com.gulimall.pay.service.WxPayService;
@@ -151,6 +150,47 @@ public class WxPayServiceImpl implements WxPayService {
 		weixinPayCloseOrder(orderId);
 		//todo:openFeign调用方法更改订单状态
 		orderFeignService.updateOrderStatus(orderId, PayConstants.OrderStatus.cancel);
+	}
+
+	/**
+	 * 查询订单支付状态
+	 * @param orderId
+	 * @return
+	 */
+	@Override
+	public PayStatusDto queryOrderPayStatus(String orderId) {
+		PayStatusDto retDto = new PayStatusDto();
+		String url = String.format(PayConstants.WeixinApiType.queryPayStatus, orderId);
+		url = wxPayConfig.getDomain().concat(url).concat("?mchid=").concat(wxPayConfig.getMchId());
+
+		HttpGet httpGet = new HttpGet(url);
+		httpGet.setHeader("Accept", "application/json");
+
+		//完成签名并执行请求
+		CloseableHttpResponse response = null;
+		try {
+			response = wxPayClient.execute(httpGet);
+			String bodyAsString = EntityUtils.toString(response.getEntity());//响应体
+			int statusCode = response.getStatusLine().getStatusCode();//响应状态码
+			retDto.setOrderId(orderId);
+			if (statusCode == 200) { //处理成功
+				retDto.setOrderPayStatus(ICommonConstants.SUCCESS);
+			} else if (statusCode == 204) { //处理成功，无返回Body
+				retDto.setOrderPayStatus(ICommonConstants.SUCCESS);
+			} else {
+				throw new IOException("request failed");
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return retDto;
+
+	}
+
+	@Override
+	public void refundOrderPay(PayRefundDto payRefundDto) {
+
 	}
 
 	/**
