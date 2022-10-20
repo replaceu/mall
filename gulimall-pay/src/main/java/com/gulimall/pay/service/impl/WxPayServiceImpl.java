@@ -25,6 +25,7 @@ import com.gulimall.pay.dao.PayInfoDao;
 import com.gulimall.pay.dto.*;
 import com.gulimall.pay.entity.PayInfoEntity;
 import com.gulimall.pay.feign.OrderFeignService;
+import com.gulimall.pay.service.RefundPayService;
 import com.gulimall.pay.service.WxPayService;
 import com.gulimall.pay.vo.PayVo;
 
@@ -41,6 +42,8 @@ public class WxPayServiceImpl implements WxPayService {
 	WxPayConfig			wxPayConfig;
 	@Autowired
 	PayInfoDao			payInfoDao;
+	@Autowired
+	RefundPayService	refundPayService;
 
 	/**
 	 * 创建订单，调用native支付接口
@@ -190,6 +193,8 @@ public class WxPayServiceImpl implements WxPayService {
 
 	@Override
 	public void refundOrderPay(PayRefundDto payRefundDto) {
+		//todo:根据订单编号创建退款单
+		PayRefundInfoDto refundInfo = refundPayService.createRefundByOrderId(payRefundDto);
 
 	}
 
