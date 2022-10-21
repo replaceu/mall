@@ -1,6 +1,6 @@
 package com.gulimall.pay.entity;
 
-public class PayRefundInfoDo {
+public class PayRefundInfoEntity {
 
 	private String orderId;
 
