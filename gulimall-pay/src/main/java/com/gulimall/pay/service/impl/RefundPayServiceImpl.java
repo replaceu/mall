@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.TypeReference;
 import com.gulimall.common.utils.R;
+import com.gulimall.pay.dao.PayRefundInfoDao;
 import com.gulimall.pay.dto.PayRefundDto;
 import com.gulimall.pay.dto.PayRefundInfoDto;
 import com.gulimall.pay.entity.PayRefundInfoEntity;
@@ -17,7 +18,9 @@ import com.gulimall.pay.vo.PayVo;
 @Service
 public class RefundPayServiceImpl implements RefundPayService {
 	@Autowired
-	OrderFeignService orderFeignService;
+	OrderFeignService	orderFeignService;
+	@Autowired
+	PayRefundInfoDao	payRefundInfoDao;
 
 	@Override
 	public PayRefundInfoDto createRefundByOrderId(PayRefundDto payRefundDto) {
@@ -26,10 +29,12 @@ public class RefundPayServiceImpl implements RefundPayService {
 		PayVo originalOrder = originalOrderR.getData(new TypeReference<PayVo>() {
 		});
 
+		PayRefundInfoEntity insertRefund = new PayRefundInfoEntity();
 		insertRefund.setOrderId(payRefundDto.getOrderId());
 		insertRefund.setReason(payRefundDto.getRefundReason());
 		insertRefund.setRefundFee(originalOrder.getTotalAmount());
 		insertRefund.setRefundId(UUID.randomUUID().toString());
+		payRefundInfoDao.insert(insertRefund);
 		return null;
 	}
 }
