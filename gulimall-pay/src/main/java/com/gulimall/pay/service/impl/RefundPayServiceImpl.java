@@ -2,6 +2,7 @@ package com.gulimall.pay.service.impl;
 
 import java.util.UUID;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,9 @@ public class RefundPayServiceImpl implements RefundPayService {
 		insertRefund.setRefundFee(originalOrder.getTotalAmount());
 		insertRefund.setRefundId(UUID.randomUUID().toString());
 		payRefundInfoDao.insert(insertRefund);
-		return null;
+
+		PayRefundInfoDto retDto = new PayRefundInfoDto();
+		BeanUtils.copyProperties(insertRefund, retDto);
+		return retDto;
 	}
 }
