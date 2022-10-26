@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.gulimall.pay.config.WxPayConfig;
+import com.gulimall.pay.feign.OrderFeignService;
 import com.gulimall.pay.service.WxPayCallbackService;
 import com.gulimall.pay.utils.ValidatorUtils;
 import com.wechat.pay.contrib.apache.httpclient.auth.Verifier;
@@ -25,14 +26,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class WxPayCallbackServiceImpl implements WxPayCallbackService {
 	@Autowired
-	Verifier	verifier;
+	Verifier			verifier;
 	@Autowired
-	WxPayConfig	wxPayConfig;
+	WxPayConfig			wxPayConfig;
+	@Autowired
+	OrderFeignService	orderFeignService;
 
 	@Override
 	public String weixinNativePyCallback(HttpServletRequest request, HttpServletResponse response) {
 		Gson gson = new Gson();
-		Map<String, String> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>();
 		try {
 			BufferedReader br = null;
 			StringBuilder result = new StringBuilder();
@@ -59,7 +62,7 @@ public class WxPayCallbackServiceImpl implements WxPayCallbackService {
 			}
 			log.info("通知验签成功");
 			//todo:处理订单
-
+			orderFeignService.processOrder(map);
 			//todo:成功应答状态码必须为200或者204，否则就是应答失败
 			response.setStatus(200);
 			map.put("code", "success");
