@@ -19,4 +19,6 @@ public interface OrderFeignService {
 	@RequestMapping("/orderPay/processOrder")
 	void processOrder(Map<String, Object> map);
 
+	@RequestMapping("/orderPay/processRefund")
+	void processRefund(Map<String, Object> bodyMap);
 }

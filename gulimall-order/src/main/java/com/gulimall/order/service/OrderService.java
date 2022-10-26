@@ -49,4 +49,6 @@ public interface OrderService extends IService<OrderEntity> {
 	void creatSecondKillOrder(SecondKillOrderTo order);
 
 	void processOrder(Map<String, Object> map);
+
+	void processRefund(Map<String, Object> map);
 }

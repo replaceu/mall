@@ -39,6 +39,11 @@ public interface IPayConstants {
 		String	aliAppPcreditInstallmentPay	= "aliPcreditInstallmentPay";
 	}
 
+	interface RedisScript {
+		String	acquireScript	= "if tonumber(redis.call('get',KEYS[1]))>tonumber(ARGV[1]) then redis.call('set',KEYS[1],tostring(tonumber(redis.call('get',KEYS[1]))-1)) return 1 else return 0 end";
+		String	atomScript		= "if redis.call('get',KEYS[1]) == ARGV[1] then return redis.call('del',KEYS[1]) else return 0 end";
+	}
+
 	/**
 	 * 订单支付方式
 	 */

@@ -24,6 +24,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.gson.Gson;
+import com.gulimall.common.constant.ICommonConstants;
+import com.gulimall.common.constant.IPayConstants;
 import com.gulimall.common.to.SkuHasStockTo;
 import com.gulimall.common.to.mq.SecondKillOrderTo;
 import com.gulimall.common.utils.CommonResult;
@@ -234,6 +236,37 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 			OrderTo orderTo = new OrderTo();
 			BeanUtils.copyProperties(entity, orderTo);
 			rabbitTemplate.convertAndSend("order-event-exchange", "order.finish.integral", orderTo);
+		}
+
+	}
+
+	@Override
+	@Transactional
+	public void processRefund(Map<String, Object> map) {
+		//todo:解密报文
+		String plainText = payFeignService.weixinDecrypt(map);
+		Gson gson = new Gson();
+		HashMap plainTextMap = gson.fromJson(plainText, HashMap.class);
+		String orderId = (String) plainTextMap.get("out_trade_no");
+		/**在对业务数据进行状态检查和处理之前，要采用数据锁进行并发控制，
+		 以避免函数重入造成的数据混乱*/
+		String acquireScript = IPayConstants.RedisScript.atomScript;
+		Long acquire = redisTemplate.execute(new DefaultRedisScript<Long>(acquireScript, Long.class), Arrays.asList(OrderConstant.OrderRedisKey.orderPayToken + orderId), ICommonConstants.STR_FALSE);
+		if (acquire == 1L) {
+			OrderEntity order = getOrderByOrderSn(orderId);
+			if (OrderConstant.OrderStatus.refund != order.getStatus()) { return; }
+			//todo:更新订单状态
+			updateOrderStatus(orderId, OrderConstant.OrderStatus.refund);
+			//todo:记录支付日志
+			payFeignService.recordPaymentInfo(plainText);
+			//todo:发送相关信息给积分系统
+			OrderEntity orderEntity = orderDao.selectById(orderId);
+			if (orderEntity != null) {
+				OrderTo orderTo = new OrderTo();
+				BeanUtils.copyProperties(orderEntity, orderTo);
+				rabbitTemplate.convertAndSend("order-event-exchange", "order.refund.integral", orderTo);
+			}
+
 		}
 
 	}

@@ -11,6 +11,7 @@ public interface PayConstants {
 		String	userCancelOrderPay		= "/userCancelOrderPay";
 		String	queryOrderPayStatus		= "/queryOrderPayStatus";
 		String	refundOrderPay			= "/refundOrderPay";
+		String	weixinRefundCallback	= "/weixinRefundCallback";
 	}
 
 	interface PayChannel {

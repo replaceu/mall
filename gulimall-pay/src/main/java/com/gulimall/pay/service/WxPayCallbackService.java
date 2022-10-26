@@ -6,7 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public interface WxPayCallbackService {
-	String weixinNativePyCallback(HttpServletRequest request, HttpServletResponse response);
+	String weixinNativePayCallback(HttpServletRequest request, HttpServletResponse response);
 
 	String weixinDecrypt(Map<String, Object> map);
+
+	String weixinRefundCallback(HttpServletRequest request, HttpServletResponse response);
 }

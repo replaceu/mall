@@ -33,7 +33,7 @@ public class WxPayCallbackServiceImpl implements WxPayCallbackService {
 	OrderFeignService	orderFeignService;
 
 	@Override
-	public String weixinNativePyCallback(HttpServletRequest request, HttpServletResponse response) {
+	public String weixinNativePayCallback(HttpServletRequest request, HttpServletResponse response) {
 		Gson gson = new Gson();
 		Map<String, Object> map = new HashMap<>();
 		try {
@@ -98,5 +98,51 @@ public class WxPayCallbackServiceImpl implements WxPayCallbackService {
 		}
 		log.info("明文 ===> {}", plainText);
 		return plainText;
+	}
+
+	@Override
+	public String weixinRefundCallback(HttpServletRequest request, HttpServletResponse response) {
+		//todo:退款通知执行
+		Gson gson = new Gson();
+		Map<String, String> map = new HashMap<>();
+		try {
+			//todo:处理通知参数
+			BufferedReader br = null;
+			StringBuilder result = new StringBuilder();
+			br = request.getReader();
+			for (String line; (line = br.readLine()) != null;) {
+				if (result.length() > 0) {
+					result.append("\n");
+				}
+				result.append(line);
+			}
+			String body = result.toString();
+			Map<String, Object> bodyMap = gson.fromJson(body, HashMap.class);
+			String requestId = (String) bodyMap.get("id");
+			log.info("支付通知的id ===> {}", requestId);
+
+			//签名的验证
+			ValidatorUtils validatorRequest = new ValidatorUtils(verifier, requestId, body);
+			if (!validatorRequest.validate(request)) {
+				log.error("通知验签失败");
+				//失败应答
+				response.setStatus(500);
+				map.put("code", "ERROR");
+				map.put("message", "通知验签失败");
+				return gson.toJson(map);
+			}
+			log.info("通知验签成功");
+			//处理退款单
+			orderFeignService.processRefund(bodyMap);
+			//成功应答
+			response.setStatus(200);
+			map.put("code", "SUCCESS");
+			map.put("message", "成功");
+			return gson.toJson(map);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return gson.toJson(map);
 	}
 }

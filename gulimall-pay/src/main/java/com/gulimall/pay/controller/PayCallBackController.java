@@ -35,8 +35,14 @@ public class PayCallBackController {
 
 	@ApiOperation(value = "微信支付回调", notes = "微信支付回调")
 	@PostMapping(value = PayConstants.MappingConstants.weixinNativePyCallback)
-	public String weixinNativePyCallback(HttpServletRequest request, HttpServletResponse response) {
-		return wxPayCallbackService.weixinNativePyCallback(request, response);
+	public String weixinNativePayCallback(HttpServletRequest request, HttpServletResponse response) {
+		return wxPayCallbackService.weixinNativePayCallback(request, response);
+	}
+
+	@ApiOperation(value = "微信退款回调", notes = "微信退款回调")
+	@PostMapping(value = PayConstants.MappingConstants.weixinRefundCallback)
+	public String weixinRefundCallback(HttpServletRequest request, HttpServletResponse response) {
+		return wxPayCallbackService.weixinRefundCallback(request, response);
 	}
 
 	@ApiOperation(value = "微信支付解密报文", notes = "解密报文")

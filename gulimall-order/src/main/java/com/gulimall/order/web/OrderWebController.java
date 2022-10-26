@@ -69,6 +69,11 @@ public class OrderWebController {
 		orderService.processOrder(map);
 	};
 
+	@PostMapping("/pay/processRefund")
+	public void processRefund(Map<String, Object> map) {
+		orderService.processRefund(map);
+	};
+
 	@PostMapping("/pay.html")
 	public void updateOrderStatus(String outTradeNo, Integer code) {
 		orderService.updateOrderStatus(outTradeNo, code);

@@ -7,10 +7,15 @@ package com.gulimall.order.constant;
  * @version:
  */
 public interface OrderConstant {
-    public static final String USER_ORDER_TOKEN_PREFIX = "order:token:";
+	public static final String USER_ORDER_TOKEN_PREFIX = "order:token:";
 
-    interface OrderStatus {
-        int notPay = 2;
-        int paid = 3;
-    }
+	interface OrderStatus {
+		int	notPay	= 2;
+		int	paid	= 3;
+		int	refund	= 4;
+	}
+
+	interface OrderRedisKey {
+		String orderPayToken = "orderPayToken:";
+	}
 }
