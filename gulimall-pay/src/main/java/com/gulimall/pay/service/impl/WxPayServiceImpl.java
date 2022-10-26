@@ -195,6 +195,54 @@ public class WxPayServiceImpl implements WxPayService {
 	public void refundOrderPay(PayRefundDto payRefundDto) {
 		//todo:根据订单编号创建退款单
 		PayRefundInfoDto refundInfo = refundPayService.createRefundByOrderId(payRefundDto);
+		//todo:调用退款API
+		String url = wxPayConfig.getDomain().concat(PayConstants.WeixinApiType.domesticRefunds);
+		HttpPost httpPost = new HttpPost(url);
+
+		// 请求body参数
+		Gson gson = new Gson();
+		Map paramsMap = new HashMap();
+		paramsMap.put("out_trade_no", refundInfo.getOrderId());//订单编号
+		paramsMap.put("out_refund_no", refundInfo.getRefundId());//退款单编号
+		paramsMap.put("reason", refundInfo.getReason());//退款原因
+		paramsMap.put("notify_url", wxPayConfig.getNotifyDomain().concat(PayConstants.WeixinApiType.refundNotify));//退款通知地址
+
+		Map amountMap = new HashMap();
+		amountMap.put("refund", refundInfo.getRefundFee());//退款金额
+		amountMap.put("total", refundInfo.getTotalFee());//原订单金额
+		amountMap.put("currency", "CNY");//退款币种
+		paramsMap.put("amount", amountMap);
+
+		//将参数转换成json字符串
+		String jsonParams = gson.toJson(paramsMap);
+		log.info("请求参数 ===> {}" + jsonParams);
+
+		StringEntity entity = new StringEntity(jsonParams, "utf-8");
+		entity.setContentType("application/json");//设置请求报文格式
+		httpPost.setEntity(entity);//将请求报文放入请求对象
+		httpPost.setHeader("Accept", "application/json");//设置响应报文格式
+
+		//完成签名并执行请求，并完成验签
+		CloseableHttpResponse response = null;
+		try {
+			response = wxPayClient.execute(httpPost);
+			//解析响应结果
+			String bodyAsString = EntityUtils.toString(response.getEntity());
+			int statusCode = response.getStatusLine().getStatusCode();
+			if (statusCode == 200) {
+				log.info("成功, 退款返回结果 = " + bodyAsString);
+			} else if (statusCode == 204) {
+				log.info("成功");
+			} else {
+				throw new RuntimeException("退款异常, 响应码 = " + statusCode + ", 退款返回结果 = " + bodyAsString);
+			}
+			//更新订单状态
+			orderFeignService.updateOrderStatus(refundInfo.getOrderId(), PayConstants.OrderStatus.refund);
+			//更新退款单
+			refundPayService.updateRefundOrder(bodyAsString);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 

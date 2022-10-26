@@ -33,6 +33,7 @@ public interface PayConstants {
 	interface OrderStatus {
 		String	notPay	= "notPay";
 		Integer	cancel	= 3;
+		Integer	refund	= 4;
 	}
 
 	interface NotifyType {
@@ -42,5 +43,7 @@ public interface PayConstants {
 	interface WeixinApiType {
 		String	closeOrderById	= "/v3/pay/transactions/out-trade-no/%s/close";
 		String	queryPayStatus	= "/v3/pay/transactions/out-trade-no/%s";
+		String	domesticRefunds	= "/v3/refund/domestic/refunds";
+		String	refundNotify	= "/api/wx-pay/refunds/notify";
 	}
 }

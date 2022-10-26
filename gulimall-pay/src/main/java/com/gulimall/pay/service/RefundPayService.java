@@ -5,4 +5,6 @@ import com.gulimall.pay.dto.PayRefundInfoDto;
 
 public interface RefundPayService {
 	PayRefundInfoDto createRefundByOrderId(PayRefundDto payRefundDto);
+
+	void updateRefundOrder(String bodyAsString);
 }
