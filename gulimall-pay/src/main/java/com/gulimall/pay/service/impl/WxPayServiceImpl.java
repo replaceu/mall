@@ -93,12 +93,12 @@ public class WxPayServiceImpl implements WxPayService {
 			//响应状态码
 			int statusCode = response.getStatusLine().getStatusCode();
 			if (statusCode == 200) { //处理成功
-				log.info("成功, 返回结果 = " + body);
+				log.info(ICommonConstants.SUCCESS + body);
 			} else if (statusCode == 204) {
 				//处理成功，无返回Body
-				log.info("成功");
+				log.info(ICommonConstants.SUCCESS);
 			} else {
-				log.info("Native下单失败,响应码=" + statusCode + ",返回结果 = " + body);
+				log.info(ICommonConstants.FAIL + statusCode + body);
 				throw new IOException("request failed");
 			}
 			//todo:返回用于支付的二维码以及订单号
