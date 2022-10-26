@@ -21,11 +21,11 @@ public class RefundPayServiceImpl implements RefundPayService {
 
 	@Override
 	public PayRefundInfoDto createRefundByOrderId(PayRefundDto payRefundDto) {
+
 		R originalOrderR = orderFeignService.getOrderPay(payRefundDto.getOrderId());
 		PayVo originalOrder = originalOrderR.getData(new TypeReference<PayVo>() {
 		});
 
-		PayRefundInfoEntity insertRefund = new PayRefundInfoEntity();
 		insertRefund.setOrderId(payRefundDto.getOrderId());
 		insertRefund.setReason(payRefundDto.getRefundReason());
 		insertRefund.setRefundFee(originalOrder.getTotalAmount());
