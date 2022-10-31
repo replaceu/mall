@@ -102,4 +102,9 @@ public class IntegralFeeGradeServiceImpl implements IntegralFeeGradeService {
 
 		}
 	}
+
+	@Override
+	public void reduceUserFreeGrade(OrderTo orderTo) {
+
+	}
 }

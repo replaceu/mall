@@ -3,7 +3,6 @@ package com.gulimall.integral.listener;
 import java.io.IOException;
 
 import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,25 +13,22 @@ import com.gulimall.integral.to.OrderTo;
 import com.rabbitmq.client.Channel;
 
 @Service
-@RabbitListener(queues = { "order.finish.integral.queue" })
-public class IntegralUpdateListener {
+@RabbitListener(queues = { "order.refund.integral.queue" })
+public class IntegralRefundListener {
 	@Autowired
 	IntegralFeeGradeService		integralFeeGradeService;
 	@Autowired
 	IntegralUserPointService	integralUserPointService;
 
-	//todo:监听订单完成之后的会员队列并做相关的处理
-	@RabbitHandler
-	public void handleIntegralUpdate(OrderTo orderTo, Message message, Channel channel) throws IOException {
-		//收到订单购买的消息
+	@RabbitListener
+	public void handleIntegralRefund(OrderTo orderTo, Message message, Channel channel) throws IOException {
+		//收到订单退货的消息
 		try {
-			integralFeeGradeService.updateUserFreeGrade(orderTo);
-			integralUserPointService.updateUserPoint(orderTo);
+			integralFeeGradeService.reduceUserFreeGrade(orderTo);
+			integralUserPointService.reduceUserPoint(orderTo);
 			channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
 		} catch (Exception e) {
 			channel.basicReject(message.getMessageProperties().getDeliveryTag(), true);
 		}
-
 	}
-
 }
